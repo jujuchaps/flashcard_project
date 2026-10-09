@@ -12,7 +12,9 @@ export interface ChapterStats {
 	id: number;
 	name: string;
 	source: string | null;
+	slideCount: number | null;
 	total: number;
+	due: number;
 	counts: MasteryCounts;
 }
 
@@ -20,6 +22,9 @@ export interface CourseStats {
 	id: number;
 	code: string;
 	name: string;
+	sessionId: number | null;
+	number: string | null;
+	teacher: string | null;
 	total: number;
 	due: number;
 	counts: MasteryCounts;
@@ -27,29 +32,39 @@ export interface CourseStats {
 	firstTryRate: number | null;
 }
 
-export async function courseStats(now = new Date()): Promise<CourseStats[]> {
+/** Statistiques par cours et par chapitre (y compris les cours et chapitres encore vides). */
+export async function courseStats(now = new Date(), filter: { sessionId?: number | null; courseId?: number } = {}): Promise<CourseStats[]> {
+	const sessionFilter =
+		filter.sessionId === undefined ? sql`` : filter.sessionId === null ? sql`AND co.session_id IS NULL` : sql`AND co.session_id = ${filter.sessionId}`;
+	const courseFilter = filter.courseId ? sql`AND co.id = ${filter.courseId}` : sql``;
 	const rows = await sql<
 		{
 			course_id: number;
 			code: string;
 			course_name: string;
-			chapter_id: number;
-			chapter_name: string;
+			session_id: number | null;
+			number: string | null;
+			teacher: string | null;
+			chapter_id: number | null;
+			chapter_name: string | null;
 			source: string | null;
+			slide_count: number | null;
+			question_id: number | null;
 			stability: number | null;
 			last_ok: boolean | null;
 			misconception: boolean | null;
 			due: Date | null;
 		}[]
 	>`
-		SELECT co.id AS course_id, co.code, co.name AS course_name, ch.id AS chapter_id, ch.name AS chapter_name,
-			ch.source, c.stability, c.last_ok, c.misconception, c.due
-		FROM question q
-		JOIN chapter ch ON ch.id = q.chapter_id
-		JOIN course co ON co.id = q.course_id
+		SELECT co.id AS course_id, co.code, co.name AS course_name, co.session_id, co.number, co.teacher,
+			ch.id AS chapter_id, ch.name AS chapter_name, ch.source, ch.slide_count, q.id AS question_id,
+			c.stability, c.last_ok, c.misconception, c.due
+		FROM course co
+		LEFT JOIN chapter ch ON ch.course_id = co.id
+		LEFT JOIN question q ON q.chapter_id = ch.id AND NOT q.flagged
 		LEFT JOIN card c ON c.question_id = q.id
-		WHERE NOT q.flagged AND NOT co.archived
-		ORDER BY co.name, ch.position, ch.id`;
+		WHERE NOT co.archived ${sessionFilter} ${courseFilter}
+		ORDER BY co.session_id NULLS LAST, co.position, co.name, ch.position, ch.id`;
 	const rates = await sql<{ course_id: number; n: number; ok: number }[]>`
 		SELECT q.course_id, count(*)::int AS n, count(*) FILTER (WHERE a.correct)::int AS ok
 		FROM attempt a JOIN question q ON q.id = a.question_id
@@ -63,6 +78,9 @@ export async function courseStats(now = new Date()): Promise<CourseStats[]> {
 				id: r.course_id,
 				code: r.code,
 				name: r.course_name,
+				sessionId: r.session_id,
+				number: r.number,
+				teacher: r.teacher,
 				total: 0,
 				due: 0,
 				counts: emptyCounts(),
@@ -71,11 +89,21 @@ export async function courseStats(now = new Date()): Promise<CourseStats[]> {
 			};
 			courses.set(r.course_id, c);
 		}
+		if (r.chapter_id === null) continue;
 		let ch = c.chapters.find((x) => x.id === r.chapter_id);
 		if (!ch) {
-			ch = { id: r.chapter_id, name: r.chapter_name, source: r.source, total: 0, counts: emptyCounts() };
+			ch = {
+				id: r.chapter_id,
+				name: r.chapter_name!,
+				source: r.source,
+				slideCount: r.slide_count,
+				total: 0,
+				due: 0,
+				counts: emptyCounts()
+			};
 			c.chapters.push(ch);
 		}
+		if (r.question_id === null) continue;
 		const m = masteryOf(
 			r.stability === null ? null : { stability: r.stability, lastOk: r.last_ok!, misconception: r.misconception! }
 		);
@@ -83,7 +111,10 @@ export async function courseStats(now = new Date()): Promise<CourseStats[]> {
 		ch.total++;
 		c.counts[m]++;
 		ch.counts[m]++;
-		if (r.due && r.due <= now) c.due++;
+		if (r.due && r.due <= now) {
+			c.due++;
+			ch.due++;
+		}
 	}
 	return [...courses.values()];
 }

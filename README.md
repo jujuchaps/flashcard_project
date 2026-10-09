@@ -15,7 +15,15 @@ docker compose up -d --build
 
 Ouvre ensuite **http://localhost:3000**.
 
-Au premier démarrage, l'app crée la base de données, importe les 609 questions de l'ancien artefact et y applique ta progression récupérée de l'artefact (250 questions, fichier `data/seed/progression-artefact.json`). Chaque étape ne s'exécute qu'une seule fois. Les données sont conservées dans un volume Docker (`etude-db`) : arrêter l'app (`docker compose down`) ne les efface pas.
+Au premier démarrage, l'app crée la base de données, importe les 609 questions de l'ancien artefact rangées par **session → cours → chapitre** (session Automne 2026 avec ton horaire, voir `data/seed/session-automne-2026.json`) et y applique ta progression récupérée de l'artefact (250 questions, fichier `data/seed/progression-artefact.json`). Chaque étape ne s'exécute qu'une seule fois ; une base créée avec une version précédente est réorganisée automatiquement, sans perte de progression.
+
+## Organisation
+
+- **Cours** (menu) ouvre la session en cours : ses cours, leur horaire de la semaine, et un lien vers toutes les sessions.
+- Un **cours** contient ses **chapitres ou sujets** (créer, renommer, réordonner, déplacer vers un autre cours), son horaire, ses examens. On peut aussi fusionner deux cours.
+- Un **chapitre** montre ses questions, la couverture des diapos et les questions signalées.
+- **Hors session** : les cours qui ne dépendent d'aucune session (ex. Culture et intérêts perso).
+- Nouvelle session (ex. Hiver 2027) : page **Sessions**. Les cours des sessions passées continuent de revenir dans les révisions jusqu'à ce que tu les archives. Les données sont conservées dans un volume Docker (`etude-db`) : arrêter l'app (`docker compose down`) ne les efface pas.
 
 Après une mise à jour du code : `docker compose up -d --build`.
 
@@ -25,7 +33,7 @@ Ta progression est déjà appliquée automatiquement. Si tu as étudié sur un a
 ## Ajouter des questions depuis un PowerPoint
 
 1. Dans l'app, **Importer → Télécharge le fichier d'instructions**.
-2. Dans Claude, joins ce fichier et ton PowerPoint (ou PDF), puis écris : *« Suis les instructions du fichier. Cours : Philosophie (code philo). Chapitre : Les présocratiques. »*
+2. Dans Claude, joins ce fichier et ton PowerPoint (ou PDF), puis écris : *« Suis les instructions du fichier. Cours : Philosophie et rationalité (code philo). Chapitre : Les présocratiques. »*
 3. Dépose le `.json` obtenu dans **Importer**, vérifie l'aperçu, puis importe.
 
 Un exemple avec les 9 types de questions : [data/exemples/exemple-tous-les-types.json](data/exemples/exemple-tous-les-types.json).
@@ -76,5 +84,7 @@ Structure :
 | `src/lib/server/planning.ts` | Examens, préparation, plan du jour, prévision de charge, alertes |
 | `src/lib/server/progress.ts` | Historique d'étude et bilan hebdomadaire |
 | `src/lib/server/security.ts` | Protection CSRF et mot de passe optionnel |
+| `src/lib/server/structure.ts` | Sessions, cours, chapitres, horaire : lecture, déplacement, fusion |
+| `src/lib/server/setup.ts` | Migrations de données (réorganisation, session et horaire de départ) |
 | `migrations/` | Schéma de la base de données (appliqué au démarrage) |
 | `tests/` | Tests unitaires |

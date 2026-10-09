@@ -45,10 +45,17 @@ export async function importLots(lots: ImportLot[], target: ImportTarget = {}): 
 				courseId = c.id;
 				courseName = c.name;
 			} else {
-				const [c] = await tx<{ id: number; name: string }[]>`
-					INSERT INTO course (session_id, code, name) VALUES (${sessionId}, ${lot.courseCode}, ${lot.courseName})
-					ON CONFLICT (session_id, code) DO UPDATE SET code = EXCLUDED.code
-					RETURNING id, name`;
+				// Un code désigne le même cours, qu'il soit dans la session en cours ou hors session.
+				const [found] = await tx<{ id: number; name: string }[]>`
+					SELECT id, name FROM course
+					WHERE code = ${lot.courseCode} AND (session_id = ${sessionId} OR session_id IS NULL)
+					ORDER BY (session_id IS NULL) LIMIT 1`;
+				const [c] = found
+					? [found]
+					: await tx<{ id: number; name: string }[]>`
+						INSERT INTO course (session_id, code, name)
+						VALUES (${lot.outsideSession ? null : sessionId}, ${lot.courseCode}, ${lot.courseName})
+						RETURNING id, name`;
 				courseId = c.id;
 				courseName = c.name;
 			}

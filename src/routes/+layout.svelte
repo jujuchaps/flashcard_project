@@ -24,7 +24,11 @@
 				{#each links as l}
 					<a
 						href={l.href}
-						aria-current={(l.href === '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(l.href))
+						aria-current={(l.href === '/'
+							? page.url.pathname === '/'
+							: l.href === '/cours'
+								? ['/cours', '/sessions', '/questions'].some((p) => page.url.pathname.startsWith(p))
+								: page.url.pathname.startsWith(l.href))
 							? 'page'
 							: undefined}>{l.label}</a
 					>

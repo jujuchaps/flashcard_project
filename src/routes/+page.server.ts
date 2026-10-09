@@ -2,6 +2,9 @@ import { fail, redirect } from '@sveltejs/kit';
 import { getSetting } from '$lib/server/db';
 import { alerts, dailyPlan, evaluationsWithReadiness, takeSnapshot } from '$lib/server/planning';
 import { counts, courseStats, streak, todayActivity, weakQuestions } from '$lib/server/stats';
+import { activeSessionId } from '$lib/server/importer';
+import { activeSlots, getSession } from '$lib/server/structure';
+import { classesSoon } from '$lib/schedule';
 import { currentSeriesId, startSeries, type SeriesMode } from '$lib/server/study';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -19,9 +22,17 @@ export const load: PageServerLoad = async () => {
 	const [evs, plan] = await Promise.all([evaluationsWithReadiness({ upcoming: true }), dailyPlan()]);
 	await takeSnapshot(courses);
 	const { examNew: _, ...planView } = plan;
+	const sessionId = await activeSessionId();
+	const session = await getSession(sessionId);
+	// Accueil : la session en cours et les cours hors session.
+	const visible = courses.filter((co) => co.sessionId === sessionId || co.sessionId === null);
+	const soon = classesSoon(await activeSlots());
 	return {
 		counts: c,
-		courses,
+		courses: visible,
+		otherSessionsCourses: courses.length - visible.length,
+		session,
+		classes: soon,
 		streak: s,
 		today,
 		weak,

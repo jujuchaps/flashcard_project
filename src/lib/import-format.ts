@@ -21,6 +21,8 @@ export interface ImportQuestion {
 export interface ImportLot {
 	courseCode: string;
 	courseName: string;
+	/** Cours hors session (intérêts personnels) : « cours.hors_session »: true. */
+	outsideSession: boolean;
 	chapterName: string;
 	source: string | null;
 	slideCount: number | null;
@@ -217,6 +219,7 @@ function parseLot(raw: Record<string, unknown>): ImportLot {
 	const lot: ImportLot = {
 		courseCode,
 		courseName,
+		outsideSession: cours.hors_session === true,
 		chapterName: str(chapitre.nom) || 'Général',
 		source: str(chapitre.source) || null,
 		slideCount: Number.isInteger(Number(chapitre.diapos)) && Number(chapitre.diapos) > 0 ? Number(chapitre.diapos) : null,
@@ -252,6 +255,7 @@ function parseLegacy(list: Record<string, unknown>[], courseNames: Record<string
 			lot = {
 				courseCode: code,
 				courseName: courseNames[code] ?? code,
+				outsideSession: false,
 				chapterName: 'Général',
 				source: null,
 				slideCount: null,

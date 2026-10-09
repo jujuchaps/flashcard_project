@@ -1,0 +1,49 @@
+{
+ "session": "Automne 2026",
+ "cours": [
+  {
+   "code": "fr", "nom": "Écriture et littérature", "numero": "601-101-MQ", "enseignant": "Émilie Varin Ferron",
+   "horaire": [
+    { "jour": 3, "debut": "08:15", "fin": "10:05", "local": "E206", "type": "T" },
+    { "jour": 5, "debut": "08:15", "fin": "10:05", "local": "CR11", "type": "T" }
+   ]
+  },
+  {
+   "code": "philo", "nom": "Philosophie et rationalité", "numero": "340-101-MQ", "enseignant": "Jean-François Veilleux",
+   "horaire": [
+    { "jour": 3, "debut": "12:15", "fin": "14:05", "local": "CR09", "type": "L" },
+    { "jour": 5, "debut": "15:15", "fin": "17:05", "local": "E102", "type": "T" }
+   ]
+  },
+  {
+   "code": "hist", "nom": "Histoire du monde", "numero": "330-1A4-VI", "enseignant": "Boris Déry",
+   "horaire": [
+    { "jour": 1, "debut": "10:15", "fin": "12:05", "local": "E205", "type": "L" },
+    { "jour": 3, "debut": "14:15", "fin": "16:05", "local": "E205", "type": "T" }
+   ]
+  },
+  {
+   "code": "stat", "nom": "Analyse quantitative", "numero": "360-223-RE", "enseignant": "Joanie Gagné",
+   "horaire": [
+    { "jour": 2, "debut": "10:15", "fin": "12:05", "local": "E304", "type": "L" },
+    { "jour": 4, "debut": "13:15", "fin": "15:05", "local": "E209", "type": "T" }
+   ]
+  },
+  {
+   "code": "gest", "nom": "Gestion des organisations", "numero": "401-1B3-VI", "enseignant": "Anthony Vallée",
+   "horaire": [
+    { "jour": 1, "debut": "14:15", "fin": "17:05", "local": "J119", "type": "L" }
+   ]
+  },
+  {
+   "code": "edu", "nom": "Activité physique et santé", "numero": "109-101-MQ", "enseignant": "Marie-Pier Beaudoin",
+   "horaire": [
+    { "jour": 5, "debut": "13:15", "fin": "14:05", "local": "CS07", "type": "T" },
+    { "jour": 5, "debut": "14:15", "fin": "15:05", "local": "PISTE-ATL;XMuscu", "type": "L" }
+   ]
+  }
+ ],
+ "hors_session": [
+  { "code": "perso", "nom": "Culture et intérêts perso" }
+ ]
+}

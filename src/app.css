@@ -214,6 +214,7 @@ button {
 input[type='text'],
 input[type='number'],
 input[type='date'],
+input[type='time'],
 input[type='password'],
 select,
 textarea {

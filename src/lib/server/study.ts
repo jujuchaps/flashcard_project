@@ -2,6 +2,8 @@ import { DEVELOPPEMENT_SEUIL, grade } from '$lib/grading';
 import { applyAnswer, createSeries, finishNow, progress, type PoolEntry, type SeriesState } from '$lib/mastery';
 import type { Answer, Confidence, Payload, QuizQuestion } from '$lib/types';
 import { getSetting, sql } from './db';
+import { classesSoon } from '$lib/schedule';
+import { activeSlots } from './structure';
 import { dailyPlan, evaluationScope, examMoment, listEvaluations, readinessOf } from './planning';
 import { cardFromJson, cardToJson, countsAsSuccess, ratingFor, retrievability, review } from './srs';
 
@@ -150,10 +152,17 @@ export async function selectQuestions(p: SeriesParams, now = new Date()) {
 		// Les nouvelles questions des examens les plus proches passent en premier, selon le plan du jour.
 		const plan = await dailyPlan(now);
 		const newQuota = Math.max(await getSetting('newPerSeries', 10), plan.newToday);
+		// Puis les cours qui ont lieu aujourd'hui ou demain : arriver en classe avec la matière fraîche.
+		const soon = classesSoon(await activeSlots(), now);
+		const classSoon = new Set([...soon.today, ...soon.tomorrow].map((sl) => sl.courseId));
+		const soonFirst = (a: Candidate, b: Candidate) => Number(classSoon.has(b.courseId)) - Number(classSoon.has(a.courseId));
 		const freshByExam = [...fresh].sort(
-			(a, b) => (plan.examNew.get(a.id) ?? Infinity) - (plan.examNew.get(b.id) ?? Infinity)
+			(a, b) => (plan.examNew.get(a.id) ?? Infinity) - (plan.examNew.get(b.id) ?? Infinity) || soonFirst(a, b)
 		);
-		const reviews = [...fragile.filter((c) => c.card!.due <= now || c.card!.misconception), ...due].slice(0, count);
+		const reviews = [
+			...fragile.filter((c) => c.card!.due <= now || c.card!.misconception),
+			...[...due].sort(soonFirst)
+		].slice(0, count);
 		chosen = [...reviews, ...freshByExam.slice(0, Math.max(0, Math.min(newQuota, count - reviews.length)))];
 	} else if (p.mode === 'sprint') {
 		// Ce qui risque le plus d'être oublié le jour de l'examen, puis le jamais vu.

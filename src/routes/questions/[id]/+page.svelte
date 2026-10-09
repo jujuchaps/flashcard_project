@@ -7,7 +7,7 @@
 
 <svelte:head><title>Modifier une question · Étude</title></svelte:head>
 
-<p><a href="/cours/{data.question.courseId}">← {data.question.courseName}</a></p>
+<p><a href="/cours/{data.question.courseId}/chapitres/{data.question.chapterId}">← {data.question.courseName} · {data.chapters.find((c) => c.id === data.question.chapterId)?.name}</a></p>
 <h1>Modifier la question</h1>
 <p class="sub">Même format que les fichiers produits par Claude (voir le fichier d’instructions). L’app vérifie tout avant d’enregistrer.</p>
 

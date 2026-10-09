@@ -3,12 +3,14 @@
 	import MasteryBar from '$lib/components/MasteryBar.svelte';
 	import MasteryLegend from '$lib/components/MasteryLegend.svelte';
 	import Meter from '$lib/components/Meter.svelte';
+	import { hhmm } from '$lib/schedule';
 
 	let { data, form } = $props();
 
 	const STORE_KEY = 'etude:cible';
 	let count = $state(10);
 	let selected = $state<number[]>([]);
+	let selectedChapters = $state<number[]>([]);
 
 	$effect.pre(() => {
 		try {
@@ -28,8 +30,18 @@
 
 	function toggle(id: number) {
 		selected = selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id];
+		selectedChapters = [];
 		remember();
 	}
+
+	function toggleChapter(id: number) {
+		selectedChapters = selectedChapters.includes(id) ? selectedChapters.filter((x) => x !== id) : [...selectedChapters, id];
+	}
+
+	/** Un seul cours choisi : on peut préciser les chapitres. */
+	const chapterChoices = $derived(
+		selected.length === 1 ? (data.courses.find((c) => c.id === selected[0])?.chapters.filter((ch) => ch.total) ?? []) : []
+	);
 
 	const totals = $derived(
 		data.courses.reduce(
@@ -78,6 +90,25 @@
 		{#if a.href}<a href={a.href}>Voir</a>{/if}
 	</p>
 {/each}
+
+{#if data.classes.today.length || data.classes.tomorrow.length}
+	<section class="panel classes">
+		{#each [{ title: 'Aujourd’hui en classe', list: data.classes.today }, { title: 'Demain', list: data.classes.tomorrow }] as { title, list }}
+			{#if list.length}
+				<div>
+					<p class="label">{title}</p>
+					{#each list as s}
+						<a href="/cours/{s.courseId}" class="cls">
+							<b>{s.courseName}</b>
+							<span class="note">{hhmm(s.starts)} à {hhmm(s.ends)}{s.room ? ` · ${s.room}` : ''}</span>
+						</a>
+					{/each}
+				</div>
+			{/if}
+		{/each}
+		<p class="note full">Les révisions de ces cours passent en premier : arrive en classe avec la matière fraîche.</p>
+	</section>
+{/if}
 
 <section class="panel today">
 	<h2>Révision du jour</h2>
@@ -165,13 +196,22 @@
 				<button type="button" class="chip" aria-pressed={count === n} onclick={() => { count = n; remember(); }}>{n}</button>
 			{/each}
 		</div>
-		<p class="label">Matières <span class="note">(aucune = toutes)</span></p>
+		<p class="label">Cours <span class="note">(aucun = tous)</span></p>
 		<div class="chips">
-			{#each data.courses as c}
+			{#each data.courses.filter((c) => c.total) as c}
 				<button type="button" class="chip" aria-pressed={selected.includes(c.id)} onclick={() => toggle(c.id)}>{c.name}</button>
 			{/each}
 		</div>
+		{#if chapterChoices.length > 1}
+			<p class="label">Chapitres <span class="note">(aucun = tout le cours)</span></p>
+			<div class="chips">
+				{#each chapterChoices as ch}
+					<button type="button" class="chip" aria-pressed={selectedChapters.includes(ch.id)} onclick={() => toggleChapter(ch.id)}>{ch.name}</button>
+				{/each}
+			</div>
+		{/if}
 		{#each selected as id}<input type="hidden" name="course" value={id} />{/each}
+		{#each selectedChapters as id}<input type="hidden" name="chapter" value={id} />{/each}
 		<button class="go" style="margin-top:16px">Commencer</button>
 	</form>
 	{#if data.counts.misconceptions + data.weak.length > 0}
@@ -185,13 +225,13 @@
 </section>
 
 <section class="panel">
-	<h2>Où tu en es</h2>
+	<h2>Où tu en es{data.session ? ` · ${data.session.name}` : ''}</h2>
 	<p class="note" style="margin-top:-6px">
-		{totals.done} / {totals.total} questions maîtrisées ou ancrées
+		{totals.done} / {totals.total} questions maîtrisées ou ancrées · <a href="/sessions">Toutes les sessions</a>
 	</p>
 	{#each data.courses as c}
 		<a class="course" href="/cours/{c.id}">
-			<b>{c.name}</b>
+			<b>{c.name}{c.sessionId === null ? ' (hors session)' : ''}</b>
 			<small>
 				{c.counts.maitrisee + c.counts.ancree}/{c.total}
 				{#if c.firstTryRate !== null}· {Math.round(c.firstTryRate * 100)} % du 1er coup{/if}
@@ -225,6 +265,26 @@
 </section>
 
 <style>
+	.classes {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 4px 16px;
+	}
+	.classes .label {
+		margin: 0 0 6px;
+	}
+	.cls {
+		display: flex;
+		flex-direction: column;
+		padding: 6px 0;
+		border-top: 1px solid var(--line);
+		color: var(--ink);
+		text-decoration: none;
+	}
+	.full {
+		grid-column: 1 / -1;
+		margin: 6px 0 0;
+	}
 	.alert a {
 		margin-left: 6px;
 	}

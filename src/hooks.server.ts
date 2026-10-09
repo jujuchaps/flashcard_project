@@ -2,11 +2,13 @@ import { error, redirect, type Handle, type ServerInit } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import { migrate } from '$lib/server/db';
 import { applyLegacyProgressOnce, seedIfEmpty } from '$lib/server/importer';
+import { runDataMigrations } from '$lib/server/setup';
 import { AUTH_COOKIE, authToken, isCrossSite, isPublicPath, safeEqual } from '$lib/server/security';
 
 export const init: ServerInit = async () => {
 	await migrate();
 	await seedIfEmpty();
+	await runDataMigrations();
 	await applyLegacyProgressOnce();
 };
 

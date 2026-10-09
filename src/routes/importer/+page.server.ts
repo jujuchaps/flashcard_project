@@ -6,9 +6,11 @@ import { courseNamesByCode, importLots, restoreLegacyCode } from '$lib/server/im
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const courses = await sql<{ id: number; name: string; code: string }[]>`
-		SELECT id, name, code FROM course WHERE NOT archived ORDER BY name`;
-	return { courses };
+	const courses = await sql<{ id: number; name: string; code: string; session: string | null }[]>`
+		SELECT co.id, co.name, co.code, s.name AS session FROM course co LEFT JOIN study_session s ON s.id = co.session_id
+		WHERE NOT co.archived ORDER BY co.session_id NULLS LAST, co.position, co.name`;
+	const chapters = await sql<{ course_id: number; name: string }[]>`SELECT course_id, name FROM chapter ORDER BY position, id`;
+	return { courses, chapters };
 };
 
 async function readInput(form: FormData): Promise<string> {

@@ -1,4 +1,8 @@
-import { courseStats } from '$lib/server/stats';
+import { redirect } from '@sveltejs/kit';
+import { activeSessionId } from '$lib/server/importer';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => ({ courses: await courseStats() });
+/** « Cours » ouvre la session en cours. */
+export const load: PageServerLoad = async () => {
+	redirect(307, `/sessions/${await activeSessionId()}`);
+};

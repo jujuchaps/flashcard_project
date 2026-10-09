@@ -1,94 +1,104 @@
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import { sql } from '$lib/server/db';
-import { masteryOf } from '$lib/server/srs';
+import { evaluationsWithReadiness } from '$lib/server/planning';
 import { courseStats } from '$lib/server/stats';
-import type { Mastery, QuestionType } from '$lib/types';
+import { allCourses, getCourse, listSessions, mergeCourse, MoveError, slotsFor } from '$lib/server/structure';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const id = Number(params.id);
-	const evaluations = await sql<{ id: number; name: string; date: string }[]>`
-		SELECT id, name, to_char(date, 'YYYY-MM-DD') AS date FROM evaluation WHERE course_id = ${id} AND date >= current_date ORDER BY date`;
-	const [course] = await sql<{ id: number; name: string; code: string; archived: boolean }[]>`
-		SELECT id, name, code, archived FROM course WHERE id = ${id}`;
+	const course = await getCourse(id);
 	if (!course) error(404, 'Cours introuvable.');
-	const stats = (await courseStats()).find((c) => c.id === id) ?? null;
-	const rows = await sql<
-		{
-			id: number;
-			chapter_id: number;
-			type: QuestionType;
-			concept: string;
-			prompt: string;
-			slide: number | null;
-			flagged: boolean;
-			flag_note: string | null;
-			stability: number | null;
-			last_ok: boolean | null;
-			misconception: boolean | null;
-			right_count: number | null;
-			wrong_count: number | null;
-		}[]
-	>`
-		SELECT q.id, q.chapter_id, q.type, q.concept, q.prompt, q.slide, q.flagged, q.flag_note,
-			c.stability, c.last_ok, c.misconception, c.right_count, c.wrong_count
-		FROM question q LEFT JOIN card c ON c.question_id = q.id
-		WHERE q.course_id = ${id} ORDER BY q.chapter_id, q.position, q.id`;
-	const chapters = await sql<{ id: number; name: string; source: string | null; slide_count: number | null }[]>`
-		SELECT id, name, source, slide_count FROM chapter WHERE course_id = ${id} ORDER BY position, id`;
-	const questions = rows.map((r) => ({
-		id: r.id,
-		chapterId: r.chapter_id,
-		type: r.type,
-		concept: r.concept,
-		prompt: r.prompt,
-		slide: r.slide,
-		flagged: r.flagged,
-		flagNote: r.flag_note,
-		right: r.right_count ?? 0,
-		wrong: r.wrong_count ?? 0,
-		mastery: masteryOf(
-			r.stability === null ? null : { stability: r.stability, lastOk: r.last_ok!, misconception: r.misconception! }
-		) as Mastery
-	}));
-	return { course, stats, chapters, questions, evaluations };
+	const [stats] = await courseStats(new Date(), { courseId: id });
+	const [slots, evaluations, sessions, courses, flagged] = await Promise.all([
+		slotsFor([id]),
+		evaluationsWithReadiness({ courseId: id, upcoming: true }),
+		listSessions(),
+		allCourses(),
+		sql<{ n: number }[]>`SELECT count(*)::int AS n FROM question WHERE course_id = ${id} AND flagged`
+	]);
+	return {
+		course,
+		stats: stats ?? null,
+		slots,
+		evaluations,
+		sessions,
+		otherCourses: courses.filter((c) => c.id !== id),
+		flagged: flagged[0].n
+	};
 };
 
+const time = (v: FormDataEntryValue | null) => (/^\d{1,2}:\d{2}$/.test(String(v ?? '')) ? String(v) : null);
+
 export const actions: Actions = {
-	renommer: async ({ request, params }) => {
+	modifier: async ({ request, params }) => {
+		const id = Number(params.id);
 		const form = await request.formData();
 		const name = String(form.get('name') ?? '').trim();
-		if (!name) return fail(400, { error: 'Le nom est obligatoire.' });
-		await sql`UPDATE course SET name = ${name} WHERE id = ${Number(params.id)}`;
-		return { ok: 'Cours renommé.' };
+		const code = String(form.get('code') ?? '').trim().toLowerCase();
+		if (!name || !code) return fail(400, { error: 'Le nom et le code sont obligatoires.' });
+		const rawSession = String(form.get('sessionId') ?? '');
+		const sessionId = rawSession === 'hors' ? null : Number(rawSession) || null;
+		const [dup] = await sql`SELECT 1 FROM course WHERE code = ${code} AND id <> ${id} AND session_id IS NOT DISTINCT FROM ${sessionId}`;
+		if (dup) return fail(400, { error: `Le code « ${code} » est déjà utilisé dans cette session.` });
+		await sql`UPDATE course SET name = ${name}, code = ${code}, session_id = ${sessionId},
+			number = ${String(form.get('number') ?? '').trim() || null}, teacher = ${String(form.get('teacher') ?? '').trim() || null}
+			WHERE id = ${id}`;
+		return { ok: 'Cours mis à jour.' };
 	},
-	renommerChapitre: async ({ request, params }) => {
+	ajouterChapitre: async ({ request, params }) => {
+		const id = Number(params.id);
+		const name = String((await request.formData()).get('name') ?? '').trim();
+		if (!name) return fail(400, { error: 'Donne un nom au chapitre.' });
+		const [exists] = await sql`SELECT 1 FROM chapter WHERE course_id = ${id} AND name = ${name}`;
+		if (exists) return fail(400, { error: 'Ce chapitre existe déjà.' });
+		await sql`INSERT INTO chapter (course_id, name, position)
+			VALUES (${id}, ${name}, (SELECT coalesce(max(position), 0) + 1 FROM chapter WHERE course_id = ${id}))`;
+		return { ok: `Chapitre « ${name} » ajouté. Pour y mettre des questions, choisis ce cours et ce chapitre à l’import.` };
+	},
+	ordreChapitre: async ({ request, params }) => {
+		const id = Number(params.id);
 		const form = await request.formData();
-		const name = String(form.get('name') ?? '').trim();
 		const chapterId = Number(form.get('chapterId'));
-		const slides = Number(form.get('slideCount'));
-		const slideCount = Number.isInteger(slides) && slides > 0 && slides <= 1000 ? slides : null;
-		if (!name) return fail(400, { error: 'Le nom est obligatoire.' });
-		try {
-			await sql`UPDATE chapter SET name = ${name}, slide_count = ${slideCount}
-				WHERE id = ${chapterId} AND course_id = ${Number(params.id)}`;
-		} catch {
-			return fail(400, { error: 'Un chapitre porte déjà ce nom.' });
-		}
-		return { ok: 'Chapitre mis à jour.' };
+		const dir = form.get('dir') === 'up' ? -1 : 1;
+		const chapters = await sql<{ id: number }[]>`SELECT id FROM chapter WHERE course_id = ${id} ORDER BY position, id`;
+		const i = chapters.findIndex((c) => c.id === chapterId);
+		const j = i + dir;
+		if (i < 0 || j < 0 || j >= chapters.length) return;
+		[chapters[i], chapters[j]] = [chapters[j], chapters[i]];
+		await sql.begin(async (tx) => {
+			for (const [k, c] of chapters.entries()) await tx`UPDATE chapter SET position = ${k + 1} WHERE id = ${c.id}`;
+		});
+	},
+	ajouterCreneau: async ({ request, params }) => {
+		const form = await request.formData();
+		const weekday = Number(form.get('weekday'));
+		const starts = time(form.get('starts'));
+		const ends = time(form.get('ends'));
+		if (!(weekday >= 1 && weekday <= 7) || !starts || !ends || ends <= starts)
+			return fail(400, { error: 'Vérifie le jour et les heures (la fin doit être après le début).' });
+		await sql`INSERT INTO course_slot (course_id, weekday, starts, ends, room, kind)
+			VALUES (${Number(params.id)}, ${weekday}, ${starts}, ${ends}, ${String(form.get('room') ?? '').trim() || null},
+				${['T', 'L'].includes(String(form.get('kind'))) ? String(form.get('kind')) : null})`;
+		return { ok: 'Plage horaire ajoutée.' };
+	},
+	supprimerCreneau: async ({ request, params }) => {
+		const slotId = Number((await request.formData()).get('slotId'));
+		await sql`DELETE FROM course_slot WHERE id = ${slotId} AND course_id = ${Number(params.id)}`;
+		return { ok: 'Plage horaire retirée.' };
 	},
 	archiver: async ({ params }) => {
 		await sql`UPDATE course SET archived = NOT archived WHERE id = ${Number(params.id)}`;
 		return { ok: 'C’est noté.' };
 	},
-	retablir: async ({ request }) => {
-		const form = await request.formData();
-		await sql`UPDATE question SET flagged = false, flag_note = NULL WHERE id = ${Number(form.get('questionId'))}`;
-		return { ok: 'Question remise dans les quiz.' };
-	},
-	supprimer: async ({ request, params }) => {
-		const form = await request.formData();
-		await sql`DELETE FROM question WHERE id = ${Number(form.get('questionId'))} AND course_id = ${Number(params.id)}`;
-		return { ok: 'Question supprimée.' };
+	fusionner: async ({ request, params }) => {
+		const target = Number((await request.formData()).get('targetId'));
+		try {
+			await mergeCourse(Number(params.id), target);
+		} catch (e) {
+			if (e instanceof MoveError) return fail(400, { error: e.message });
+			throw e;
+		}
+		redirect(303, `/cours/${target}`);
 	}
 };

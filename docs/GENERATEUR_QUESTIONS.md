@@ -53,6 +53,8 @@ Adapte ces proportions à la matière : beaucoup de `numerique` en stats, plus d
 
 - `cours.code` : un identifiant court, en minuscules et sans espace. Utilise le code donné par l'étudiant ; sinon, invente-en un (ex. `stat`, `gest`, `hist`).
 - `cours.nom` et `chapitre.nom` : les noms lisibles.
+- Un cours contient plusieurs chapitres (ou sujets) : garde le même `cours.code` pour tous les chapitres d'un même cours.
+- `cours.hors_session` (optionnel) : `true` pour un cours qui ne fait partie d'aucune session (intérêts personnels).
 - `chapitre.source` : le nom du fichier fourni.
 - `chapitre.diapos` : le nombre total de diapos (ou de pages) du document. L'app s'en sert pour montrer les diapos qui n'ont encore aucune question.
 

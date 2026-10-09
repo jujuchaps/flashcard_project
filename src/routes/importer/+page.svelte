@@ -13,6 +13,13 @@
 	};
 
 	const lots = $derived(form && 'lots' in form ? form.lots : null);
+	let targetCourse = $state('');
+	const fileCourse = $derived(lots?.length === 1 ? data.courses.find((c) => c.code === lots[0].code) : undefined);
+	const chapterOptions = $derived(
+		data.chapters
+			.filter((ch) => ch.course_id === (Number(targetCourse) || fileCourse?.id))
+			.map((ch) => ch.name)
+	);
 	const importable = $derived(lots ? lots.reduce((s, l) => s + l.count, 0) : 0);
 </script>
 
@@ -25,7 +32,7 @@
 	<h2>Comment faire</h2>
 	<ol>
 		<li><a href="/instructions.md" download>Télécharge le fichier d’instructions</a> (GENERATEUR_QUESTIONS.md).</li>
-		<li>Dans Claude, joins ce fichier <strong>et</strong> ton PowerPoint ou PDF, puis écris par exemple : <em>« Suis les instructions du fichier. Cours : Philosophie (code philo). Chapitre : Les présocratiques. »</em></li>
+		<li>Dans Claude, joins ce fichier <strong>et</strong> ton PowerPoint ou PDF, puis écris par exemple : <em>« Suis les instructions du fichier. Cours : Philosophie et rationalité (code philo). Chapitre : Les présocratiques. »</em></li>
 		<li>Dépose ici le fichier <code>.json</code> que Claude te donne, ou colle son contenu.</li>
 	</ol>
 	{#if data.courses.length}
@@ -33,7 +40,14 @@
 			<summary>Codes de tes cours actuels</summary>
 			<p class="note">Donne le même code à Claude pour que les questions s’ajoutent au bon cours.</p>
 			<ul class="codes">
-				{#each data.courses as c}<li><code>{c.code}</code> {c.name}</li>{/each}
+				{#each data.courses as c}
+					<li>
+						<code>{c.code}</code> {c.name}
+						{#if data.chapters.some((ch) => ch.course_id === c.id)}
+							<span class="note">: {data.chapters.filter((ch) => ch.course_id === c.id).map((ch) => ch.name).join(', ')}</span>
+						{/if}
+					</li>
+				{/each}
 			</ul>
 		</details>
 	{/if}
@@ -97,14 +111,17 @@
 				<div class="grid">
 					<label class="field">
 						<span>Cours</span>
-						<select name="courseId">
+						<select name="courseId" bind:value={targetCourse}>
 							<option value="">Selon le fichier ({lots[0].course})</option>
-							{#each data.courses as c}<option value={c.id}>{c.name}</option>{/each}
+							{#each data.courses as c}<option value={c.id}>{c.name}{c.session ? '' : ' (hors session)'}</option>{/each}
 						</select>
 					</label>
 					<label class="field">
 						<span>Chapitre</span>
-						<input type="text" name="chapterName" placeholder={lots[0].chapter} />
+						<input type="text" name="chapterName" placeholder={lots[0].chapter} list="chapitres" />
+						<datalist id="chapitres">
+							{#each chapterOptions as name}<option value={name}></option>{/each}
+						</datalist>
 					</label>
 				</div>
 			{/if}
@@ -147,7 +164,7 @@
 		margin-bottom: 6px;
 	}
 	.codes {
-		columns: 2;
+		columns: 1;
 		padding-left: 18px;
 		font-size: 0.92rem;
 	}

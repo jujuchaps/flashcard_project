@@ -81,7 +81,8 @@ export const actions: Actions = {
 		return { ok: reset ? 'Question enregistrée et progression remise à zéro.' : 'Question enregistrée.' };
 	},
 	supprimer: async ({ params }) => {
-		const [q] = await sql<{ course_id: number }[]>`DELETE FROM question WHERE id = ${Number(params.id)} RETURNING course_id`;
-		redirect(303, q ? `/cours/${q.course_id}` : '/cours');
+		const [q] = await sql<{ course_id: number; chapter_id: number }[]>`
+			DELETE FROM question WHERE id = ${Number(params.id)} RETURNING course_id, chapter_id`;
+		redirect(303, q ? `/cours/${q.course_id}/chapitres/${q.chapter_id}` : '/cours');
 	}
 };

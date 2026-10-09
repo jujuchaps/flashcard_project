@@ -15,12 +15,12 @@ docker compose up -d --build
 
 Ouvre ensuite **http://localhost:3000**.
 
-Au premier démarrage, l'app crée la base de données et importe les 609 questions de l'ancien artefact. Les données sont conservées dans un volume Docker (`etude-db`) : arrêter l'app (`docker compose down`) ne les efface pas.
+Au premier démarrage, l'app crée la base de données, importe les 609 questions de l'ancien artefact et y applique ta progression récupérée de l'artefact (250 questions, fichier `data/seed/progression-artefact.json`). Chaque étape ne s'exécute qu'une seule fois. Les données sont conservées dans un volume Docker (`etude-db`) : arrêter l'app (`docker compose down`) ne les efface pas.
 
 Après une mise à jour du code : `docker compose up -d --build`.
 
-### Récupérer ta progression de l'artefact
-Dans l'artefact, ouvre « Sauvegarder ou restaurer ma progression », clique sur **Créer mon code**, puis colle le texte `QC1:…` dans **Importer → Récupérer ma progression de l'artefact**.
+### Récupérer une autre progression de l'artefact
+Ta progression est déjà appliquée automatiquement. Si tu as étudié sur un autre appareil, ouvre l'artefact sur cet appareil, puis « Sauvegarder ou restaurer ma progression » → **Créer mon code**, et colle le texte `QC1:…` dans **Importer → Récupérer ma progression de l'artefact**. Les questions déjà suivies ne sont pas écrasées.
 
 ## Ajouter des questions depuis un PowerPoint
 

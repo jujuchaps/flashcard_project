@@ -127,16 +127,25 @@ export interface LegacyRestoreSummary {
 	customAdded: number;
 }
 
+type LegacyData = {
+	prog?: Record<string, { box: number; due: number; right?: number; wrong?: number }>;
+	custom?: unknown[];
+};
+
 /** Restaure la progression d'un code « QC1:… » généré par l'artefact. */
 export async function restoreLegacyCode(code: string): Promise<LegacyRestoreSummary> {
 	const raw = code.trim().replace(/\s+/g, '');
 	if (!raw.startsWith('QC1:')) throw new Error('Le code doit commencer par « QC1: ».');
-	let data: { prog?: Record<string, { box: number; due: number; right?: number; wrong?: number }>; custom?: unknown[] };
+	let data: LegacyData;
 	try {
 		data = JSON.parse(Buffer.from(raw.slice(4), 'base64').toString('utf8'));
 	} catch {
 		throw new Error('Code illisible : vérifie qu’il est complet.');
 	}
+	return restoreLegacyData(data);
+}
+
+export async function restoreLegacyData(data: LegacyData): Promise<LegacyRestoreSummary> {
 	if (!data || typeof data.prog !== 'object' || Array.isArray(data.prog))
 		throw new Error('Code incomplet : aucune progression trouvée.');
 
@@ -169,4 +178,23 @@ export async function restoreLegacyCode(code: string): Promise<LegacyRestoreSumm
 		}
 	});
 	return summary;
+}
+
+/**
+ * Applique une seule fois, au démarrage, la progression récupérée de l'artefact
+ * (data/seed/progression-artefact.json). Les questions déjà suivies dans l'app ne sont pas touchées.
+ */
+export async function applyLegacyProgressOnce(file = join(process.cwd(), 'data/seed/progression-artefact.json')) {
+	if (await getSetting('legacyProgressApplied', false)) return;
+	let data: LegacyData;
+	try {
+		data = JSON.parse(await readFile(file, 'utf8'));
+	} catch {
+		return; // Pas de fichier : rien à appliquer.
+	}
+	const s = await restoreLegacyData(data);
+	await setSetting('legacyProgressApplied', true);
+	console.log(
+		`[progression] ${s.restored} questions restaurées depuis l'artefact (${s.alreadyTracked} déjà suivies, ${s.unknown} introuvables).`
+	);
 }

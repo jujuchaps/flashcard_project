@@ -81,3 +81,14 @@ describe('toV2', () => {
 		}
 	});
 });
+
+describe('progression de l’artefact', () => {
+	it('chaque question du fichier de progression existe dans le fichier de départ', () => {
+		const seed = JSON.parse(readFileSync(new URL('../data/seed/artefact-cegep.json', import.meta.url), 'utf8'));
+		const prog = JSON.parse(readFileSync(new URL('../data/seed/progression-artefact.json', import.meta.url), 'utf8'));
+		const ids = new Set(seed.flatMap((l: { questions: { id: string }[] }) => l.questions.map((q) => q.id)));
+		const keys = Object.keys(prog.prog);
+		expect(keys.length).toBe(250);
+		expect(keys.filter((k) => !ids.has(k))).toEqual([]);
+	});
+});

@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: etude
+      POSTGRES_PASSWORD: etude
+      POSTGRES_DB: etude
+      TZ: America/Toronto
+      PGTZ: America/Toronto
+    ports:
+      - '5432:5432'
+    volumes:
+      - etude-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U etude']
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://etude:etude@db:5432/etude
+      ORIGIN: http://localhost:3000
+      TZ: America/Toronto
+    ports:
+      - '3000:3000'
+
+volumes:
+  etude-db:

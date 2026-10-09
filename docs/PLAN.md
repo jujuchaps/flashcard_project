@@ -255,6 +255,12 @@ Série de jours, objectifs quotidiens, jalons (« 100 concepts ancrés »). Tout
 
 ## 13. Feuille de route
 
+> **État au 9 octobre 2026**
+> - ✅ **Phase 0** : terminée (609 questions et 20 cours importés, restauration du code `QC1:`).
+> - ✅ **Phase 1** : terminée, sauf le filtre par étiquette dans le quiz ciblé (les étiquettes sont déjà enregistrées).
+> - 🟡 **Phase 2** : « J'avais raison » et « Demander à Claude » sont faits ; restent l'édition des questions dans l'app, la carte de couverture par diapo et l'ajustement manuel des notes de développement.
+> - ⬜ Phases 3 à 5 : à venir.
+
 Chaque phase est utilisable seule. On ne passe à la suivante que lorsque la précédente sert réellement à étudier.
 
 ### Phase 0 : Fondations et migration

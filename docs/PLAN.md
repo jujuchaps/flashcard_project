@@ -1,7 +1,7 @@
 # Plan du projet : outil d'étude à rétention maximale
 
 > Document vivant. Il décrit **quoi** on construit et **pourquoi**. La technique est volontairement reléguée à l'annexe.
-> Les décisions encore ouvertes sont marquées **❓** et regroupées à la section 14.
+> Les décisions prises sont résumées à la section 14.
 
 ---
 
@@ -32,10 +32,10 @@
 > **Un seul endroit où je dépose mes cours, et qui me dit chaque jour quoi réviser, pendant combien de temps, pour arriver à l'examen en maîtrisant tout, et m'en souvenir encore après.**
 
 L'outil :
-1. **avale** tes documents (PowerPoint, PDF, notes) et en tire des questions de qualité, rattachées à la diapo source ;
+1. **importe** les questions que Claude tire de tes documents (PowerPoint, PDF) grâce à un fichier d'instructions, chaque question étant rattachée à sa diapo source ;
 2. **t'interroge** de la bonne façon, au bon moment, avec plusieurs formats de questions ;
 3. **ne te lâche pas** tant qu'une notion n'est pas réellement acquise ;
-4. **corrige** aussi les réponses à développement ;
+4. **corrige tout automatiquement**, sans IA intégrée, y compris des réponses écrites (réponse courte, texte à trous, explication par éléments clés) ;
 5. **mesure, prédit et rend compte** : où tu en es, ce qui est en train de s'effacer, à quel point tu es prêt pour chaque examen ;
 6. **dure** : tes données t'appartiennent, survivent aux sessions et peuvent être hébergées plus tard.
 
@@ -61,12 +61,12 @@ Chaque fonction de l'outil doit servir au moins un de ces principes, qui sont pa
 
 1. **Rappel actif** (*testing effect*) : se forcer à produire la réponse grave l'information bien plus que relire. → On privilégie la réponse courte, le texte à trous et le développement plutôt que le QCM seul.
 2. **Répétition espacée** : revoir une notion juste avant de l'oublier. → Un algorithme adaptatif calcule pour chaque question le meilleur moment pour la revoir.
-3. **Rétroaction immédiate et expliquée** : savoir *pourquoi* on s'est trompé. → Chaque question a une explication, la source (diapo) et, si besoin, une réexplication par l'IA.
+3. **Rétroaction immédiate et expliquée** : savoir *pourquoi* on s'est trompé. → Chaque question a une explication et la source (diapo).
 4. **Maîtrise avant progression** (*mastery learning*) : on ne passe pas à autre chose tant que ce n'est pas acquis. → C'est la boucle de maîtrise (section 7).
 5. **Entrelacement** : mélanger les matières et les chapitres améliore la discrimination entre notions proches. → La révision du jour mélange tout ; les modes ciblés restent disponibles.
 6. **Difficulté désirable** : un effort raisonnable consolide la mémoire. → Questions reformulées, formats variés, choix mélangés, pas de question reposée immédiatement après un échec.
 7. **Métacognition** : savoir ce qu'on sait vraiment. → On te demande ton niveau de confiance, et une bonne réponse devinée ne compte pas comme maîtrisée.
-8. **Élaboration** : relier, expliquer dans ses mots. → Questions « explique dans tes mots » corrigées par l'IA.
+8. **Élaboration** : relier, expliquer dans ses mots. → Questions à développement corrigées par éléments clés.
 
 ---
 
@@ -87,33 +87,36 @@ Session (ex. Automne 2026)
 - **Concept = unité de maîtrise.** Plusieurs questions testent le même concept sous des angles différents. On peut ainsi dire « tu maîtrises 18 concepts sur 25 du chapitre 3 », pas seulement « 70 % des questions ».
 - **Étiquettes libres** (ex. « dates », « définitions », « formules ») pour des quiz transversaux.
 - **Historique conservé entre les sessions** : un cours terminé passe en mode *archive* (rien n'est perdu) ou en mode *entretien* (quelques révisions légères, utile pour les cours cumulatifs comme Philo 1 → 2 ou Français).
-- **Migration** : les 20 cours et 610 questions actuels sont importés tels quels dans une session « Automne 2026 » (à confirmer **❓**), avec ta progression si tu fournis ton code de sauvegarde `QC1:`.
+- **Migration** : les 20 cours et 610 questions actuels sont importés tels quels dans ta première session, avec ta progression si tu fournis ton code de sauvegarde `QC1:`.
 
 ---
 
 ## 6. Types de questions
 
-| Type | Exemple | Correction | Priorité |
+**Règle d'or : toute question doit pouvoir être corrigée automatiquement par l'app.** Il n'y a pas d'IA dans l'app. Le format exact de chaque type est défini dans [GENERATEUR_QUESTIONS.md](GENERATEUR_QUESTIONS.md).
+
+| Type | Exemple | Correction automatique | Valeur pour la rétention |
 |---|---|---|---|
-| **QCM, une bonne réponse** | Format actuel | Automatique | V1 |
-| **QCM, plusieurs bonnes réponses** | « Lesquelles sont des coûts variables? » | Automatique, points partiels | V1 |
-| **Vrai / Faux** (+ justification optionnelle) | « La médiane est sensible aux valeurs extrêmes. » | Automatique (la justification par l'IA) | V1 |
-| **Réponse courte** | « Nom romain d'Héra? » → *Junon* | Automatique, tolère accents, majuscules et petites fautes ; variantes acceptées | V1 |
-| **Texte à trous** | « Le traité de ___ (1494) partage… » | Automatique | V1 |
-| **Carte recto / verso** (flashcard) | Terme → définition | Auto-évaluation : *Raté / Difficile / Bien / Facile* | V1 |
-| **Numérique** | « Fréquence relative de 15 sur 60? » | Automatique, avec tolérance et unités | V1 |
-| **Association** | Dieu grec ↔ dieu romain | Automatique, points partiels | V2 |
-| **Mise en ordre** | Classer des événements chronologiquement | Automatique, points partiels | V2 |
-| **Réponse à développement** | « Expliquez la critique platonicienne du relativisme de Protagoras. » | **IA avec grille de correction** (section 8) | V2 |
-| **Explique dans tes mots** | « Explique la surcharge progressive à un ami. » | IA : exactitude, complétude, clarté | V2 |
-| **Question sur image** | Identifier une partie d'un schéma | Automatique | V3 |
+| **Réponse courte** (`courte`) | « Nom romain d'Héra? » → *Junon* | Ignore les majuscules, les accents, la ponctuation et les articles ; tolère une petite faute de frappe ; accepte une liste de variantes | ★★★ (rappel pur) |
+| **Texte à trous** (`trous`) | « Le traité de ___ (1494) partage… » | Comme la réponse courte, trou par trou | ★★★ |
+| **Numérique** (`numerique`) | « Fréquence relative de 15 sur 60? » | Tolérance chiffrée ; virgule ou point acceptés | ★★★ |
+| **Développement par éléments clés** (`developpement`) | « Explique la position de Protagoras… » | Points accordés pour chaque idée clé repérée par ses mots-clés, puis réponse modèle affichée | ★★★ (correction approximative) |
+| **Mise en ordre** (`ordre`) | Classer des événements | Automatique, points partiels | ★★ |
+| **Association** (`association`) | Dieu grec ↔ dieu romain | Automatique, points partiels | ★★ |
+| **QCM, une bonne réponse** (`qcm`) | Format actuel | Automatique | ★★ (reconnaissance) |
+| **QCM, plusieurs réponses** (`qcm_multi`) | « Lesquels sont des coûts fixes? » | Automatique, tout ou rien | ★★ |
+| **Vrai / Faux** (`vrai_faux`) | « La médiane est sensible aux valeurs extrêmes. » | Automatique | ★ (utile contre les fausses croyances) |
+
+Le fichier d'instructions demande à Claude de privilégier les types qui font **produire** la réponse (courte, trous, numérique) et de garder les QCM pour distinguer des notions proches.
+
+**Limite honnête du développement** : la correction par mots-clés vérifie la présence des idées, pas la qualité du raisonnement. C'est pourquoi l'app affiche toujours la réponse modèle à côté de la tienne, et que tu peux corriger la note à la main (« j'avais l'idée, mais pas le mot exact »).
 
 **Règles communes à toutes les questions**
 - Une **explication** (pourquoi c'est la bonne réponse et pourquoi les autres choix sont faux).
 - Un **lien vers la source** (document et numéro de diapo) quand elle existe.
-- Une **difficulté estimée**, ajustée ensuite selon tes vrais résultats.
+- Un **concept** (plusieurs questions par concept) et une **difficulté estimée**.
 - Les **choix sont mélangés** à chaque affichage, pour qu'on ne retienne pas une position.
-- Des **variantes** : une même notion peut avoir 2 ou 3 formulations, qui alternent pour qu'on ne retienne pas la phrase par cœur.
+- Des **angles variés** : une même notion est testée par 2 à 4 questions de types différents, pour qu'on ne retienne pas une phrase par cœur.
 - Un bouton **« Signaler »** (question ambiguë, fausse ou mal formulée) qui retire la question des quiz jusqu'à correction.
 
 ---
@@ -128,7 +131,7 @@ C'est la partie la plus importante. Deux échelles de temps s'emboîtent.
 2. **Une question ratée doit être réussie pour terminer la série.** La barre de progression montre les questions *réglées* et les questions *encore en jeu*.
 3. **Ratée 2 fois dans la même série** :
    - l'outil affiche une **explication approfondie** et ouvre la diapo source ;
-   - la question doit être réussie **2 fois** avant de sortir, idéalement une fois sous une **autre forme** (variante ou autre format sur le même concept).
+   - la question doit être réussie **2 fois** avant de sortir, et une autre question du **même concept** est ajoutée à la série.
 4. **Renforcement automatique**, ce que tu demandes avec « s'il échoue, il doit recommencer plus de questions de la matière » : si, dans une série, un chapitre ou un concept dépasse un seuil d'échec au premier essai (proposition : 40 %, ou au moins 3 échecs), l'outil **ajoute des questions supplémentaires de ce chapitre** (des nouvelles d'abord, puis les plus fragiles) et le signale clairement : « Renforcement : +5 questions sur *Les présocratiques* ».
 5. **Plafond anti-épuisement** : une série ne peut pas gonfler sans fin (proposition : au plus 2 fois sa taille de départ). Au-delà, on te propose d'arrêter, et les questions non réglées passent **en tête de la prochaine série**.
 6. **Sortie possible à tout moment** : rien n'est perdu, la série reprend là où tu l'as laissée.
@@ -158,50 +161,33 @@ Pour chaque question, puis agrégés par concept, chapitre et cours :
 
 **Nouvelle → En apprentissage → Fragile → Maîtrisée → Ancrée** (souvenir prévu à plus d'un mois)
 
-En plus, une **« sangsue »** est une question ratée 5 fois ou plus au total. Elle est signalée, et l'outil propose de la reformuler, de la scinder, d'ajouter un moyen mnémotechnique ou de demander à Claude une autre explication.
+En plus, une **« sangsue »** est une question ratée 5 fois ou plus au total. Elle est signalée au tableau de bord, et l'app propose de la reformuler, de la scinder ou de copier un message tout prêt pour demander à Claude une autre explication.
 
 ---
 
-## 8. Réponses à développement corrigées
+## 8. Réponses écrites corrigées automatiquement
 
-**Objectif** : t'entraîner aux questions longues (philo, français, histoire, gestion) avec une correction utile, pas seulement une note.
+**Objectif** : te faire **produire** des réponses (la meilleure méthode pour retenir) tout en gardant une correction automatique.
 
-**Chaque question à développement contient**
-- l'énoncé, et éventuellement une longueur visée et un temps limite ;
-- une **réponse modèle** tirée du cours ;
-- une **grille de correction** : des critères pondérés (ex. « définit le relativisme (2 pts) », « cite Protagoras (1 pt) », « présente l'objection de Platon (3 pts) », « structure et clarté (2 pts) »).
-
-**Déroulement**
-1. Tu rédiges, avec un chronomètre optionnel pour les conditions d'examen.
-2. L'IA corrige **critère par critère** : points obtenus, ce qui est présent, ce qui manque, les erreurs factuelles, et en option la qualité de la langue (utile en français).
-3. Tu vois ta **note**, une **rétroaction concrète** (« il te manque l'exemple; ta définition confond X et Y ») et la **réponse modèle** à côté de la tienne.
-4. Tu peux **contester** (« mon 2ᵉ paragraphe couvre ce critère ») et obtenir une réévaluation.
-5. La note alimente la répétition espacée : à 80 % ou plus, c'est réussi ; sinon la question revient plus tôt.
-6. **Repli sans IA** : tu t'auto-évalues avec la grille, critère par critère.
-
-**Garde-fous** : l'IA corrige à partir de la grille et du contenu du cours, pas de ses connaissances générales, et elle explique chaque point retiré.
-
----
+- **Réponse courte et texte à trous** : comparaison souple (majuscules, accents, articles et petite faute de frappe tolérés) avec une liste de réponses acceptées. Si l'app te refuse une réponse que tu juges bonne, un bouton **« J'avais raison »** compte la réponse comme réussie et ajoute ta formulation aux variantes acceptées.
+- **Développement par éléments clés** : tu écris quelques phrases. L'app repère les idées clés grâce à leurs mots-clés, donne une note sur le total des points et montre les éléments **trouvés** et **manquants**, avec la **réponse modèle** à côté. Tu peux ajuster la note à la main. À 80 % ou plus, c'est réussi pour la répétition espacée.
+- **(Optionnel, plus tard) Correction approfondie par Claude** : l'app prépare un message tout prêt (question, grille, réponse modèle, ta réponse) à coller dans Claude.ai, sans clé API.
 
 ## 9. Ajouter du contenu : du PowerPoint au quiz en quelques minutes
 
-### 9.1 Génération à partir d'un document (V2)
-1. Tu déposes un **PowerPoint ou un PDF** (plus tard : photos de notes manuscrites) dans un chapitre.
-2. L'outil extrait le texte diapo par diapo et le garde consultable.
-3. Claude génère des questions **de formats variés**, regroupées par **concept**, chacune rattachée à sa **diapo source**, avec explication.
-4. Tu passes par une **file de validation** : tu acceptes, modifies ou rejettes chaque question (ou tu acceptes tout en un clic).
-5. Une **carte de couverture** montre les diapos qui n'ont encore aucune question, et tu peux en demander davantage sur une diapo ou un concept précis.
-6. Un **détecteur de doublons** empêche qu'une même question soit importée deux fois.
+### 9.1 Le flux principal, sans clé API
+1. Dans Claude.ai, tu joins **[GENERATEUR_QUESTIONS.md](GENERATEUR_QUESTIONS.md)** et ton **PowerPoint ou PDF**, et tu précises le cours et le chapitre.
+2. Claude répond avec un **fichier `.json`** au format `quiz-etude/v2`.
+3. Dans l'app, **Importer** : tu déposes le fichier (ou tu colles le texte). L'app **valide** chaque question et affiche un **aperçu** : cours et chapitre cibles (modifiables), nombre de questions par type, erreurs éventuelles, doublons ignorés.
+4. Tu confirmes : les questions sont immédiatement disponibles dans les quiz.
 
 ### 9.2 Autres façons d'ajouter du contenu
-- **Import JSON** compatible avec le format actuel de l'artefact (`c`, `q`, `o`, `a`, `e`), étendu aux nouveaux types de questions. Ça te permet de continuer à faire générer des questions dans Claude.ai et de les coller dans l'outil.
-- **Création et édition manuelles** de n'importe quelle question.
-- **(V4) Connexion directe avec Claude** : Claude (Desktop, Code, puis claude.ai une fois l'outil hébergé) peut lire et écrire dans ton outil d'étude. Tu lui donnes ton PowerPoint dans la conversation et il **ajoute lui-même** les questions dans le bon chapitre, ou il **lit tes stats** pour te coacher.
+- **Ancien format** de l'artefact (`c`, `q`, `o`, `a`, `e`) toujours accepté.
+- **Signalement et retrait** d'une question fautive en un clic pendant un quiz.
+- **(Plus tard) Édition directe** d'une question dans l'app, et connexion directe avec Claude Desktop ou Claude Code (il pourrait ajouter les questions lui-même ou lire tes stats).
 
 ### 9.3 Modifier une question sans casser l'historique
-Corriger une coquille garde la progression. Changer le fond de la question (la bonne réponse change) la remet à zéro, et l'outil te demande lequel des deux cas s'applique.
-
----
+Réimporter une question corrigée (même énoncé) la met à jour sans perdre ta progression.
 
 ## 10. Modes d'étude
 
@@ -214,7 +200,7 @@ Corriger une coquille garde la progression. Changer le fond de la question (la b
 | **Examen blanc** | Se mettre en conditions réelles | Contenu d'une évaluation, chronométré, **aucune rétroaction avant la fin**, note sur 100, corrigé détaillé |
 | **Sprint pré-examen** | Les 2 ou 3 derniers jours | Priorise le contenu de l'examen selon la probabilité d'oubli et le poids des chapitres |
 | **Flashcards rapides** | 5 minutes dans l'autobus | Recto / verso, auto-évaluation, gros boutons, idéal sur téléphone |
-| **Développement** | Pratiquer les questions longues | Une ou plusieurs questions à développement, corrigées par l'IA |
+| **Développement** | Pratiquer les explications | Seulement les questions `developpement`, corrigées par éléments clés |
 
 **Confort d'utilisation** : raccourcis clavier (1 à 4 pour répondre, Entrée pour continuer), mode sombre, lisible sur téléphone, accessible.
 
@@ -226,7 +212,7 @@ Corriger une coquille garde la progression. Changer le fond de la question (la b
 - **Par série** : % de réussite **au premier essai** (le vrai indicateur), nombre de questions réglées, renforcements déclenchés, temps passé.
 - **Par concept, chapitre et cours** : % de maîtrise (selon les niveaux de la section 7.4) et rétention estimée aujourd'hui.
 - **Indice de préparation à un examen** : la probabilité moyenne que tu réussisses les questions de son contenu le jour J, pondérée par chapitre. Il est affiché sous forme de **note prédite** (ex. « Philo intra, 24 oct. : note prédite ≈ 84 % »).
-- **Développement** : moyenne des notes et critères le plus souvent manqués.
+- **Développement** : moyenne des notes et éléments clés le plus souvent manqués.
 
 ### 11.2 Tableau de bord
 - **Aujourd'hui** : ce qu'il y a à faire, la durée estimée et la série de jours.
@@ -234,7 +220,7 @@ Corriger une coquille garde la progression. Changer le fond de la question (la b
 - **Carte de chaleur** de tes jours d'étude (comme GitHub).
 - **Courbes** : maîtrise dans le temps par cours, et rétention réelle comparée à la cible.
 - **Alertes** : « Le chapitre 2 de Gestion s'efface (rétention estimée 68 %) », « 3 fausses croyances en Stats ».
-- **Points faibles** : concepts les plus fragiles, sangsues, critères de développement manqués.
+- **Points faibles** : concepts les plus fragiles, sangsues, éléments clés manqués.
 
 ### 11.3 Planification
 - Tu entres tes **dates d'évaluation** et leur contenu.
@@ -242,12 +228,12 @@ Corriger une coquille garde la progression. Changer le fond de la question (la b
 - Il **lisse la charge** : il prévient si un jour risque d'être trop chargé et propose d'avancer du travail.
 
 ### 11.4 Le suivi avec moi (Claude)
-- **Bilan hebdomadaire** automatique : progrès, temps, matières en retard, prévisions d'examen, et 3 recommandations concrètes pour la semaine.
+- **Bilan hebdomadaire** automatique : progrès, temps, matières en retard, prévisions d'examen et recommandations concrètes, calculées par des règles simples.
 - **Export « pour Claude »** en un clic : un résumé texte de tes stats à me coller dans une conversation pour qu'on fasse le point ensemble. Plus tard, avec la connexion directe (9.2), je pourrai le lire moi-même.
 - **Journal d'examen** : après un vrai examen, tu entres ta note réelle. Ça calibre les prédictions et montre ce qui a fonctionné.
-- **« Explique-moi autrement »** : sur n'importe quelle question, Claude réexplique la notion avec une analogie ou un exemple, à partir de la diapo source.
+- **« Demander à Claude »** : sur n'importe quelle question, un bouton copie un message tout prêt (question, ta réponse, explication) à coller dans Claude.ai pour obtenir une autre explication.
 
-### 11.5 Motivation (sans gadget inutile) ❓
+### 11.5 Motivation (sans gadget inutile)
 Série de jours, objectifs quotidiens, jalons (« 100 concepts ancrés »). Tout est désactivable, et rien ne récompense la quantité au détriment de la qualité.
 
 ---
@@ -260,8 +246,8 @@ Série de jours, objectifs quotidiens, jalons (« 100 concepts ancrés »). Tout
 | **Sauvegarde automatique** quotidienne et **export complet** (JSON / CSV) | Zéro perte, et tu restes propriétaire de tes données |
 | **Formats ouverts** d'import et d'export | Pas de dépendance à l'outil |
 | **Prêt pour l'hébergement** : comptes et connexion, mais aussi un mode local sans mot de passe | Local aujourd'hui, en ligne demain sans réécrire l'outil |
-| **Utilisable sur téléphone** (application web installable), hors ligne plus tard | Étudier n'importe où |
-| **IA optionnelle et remplaçable** | L'outil reste pleinement utilisable sans IA, avec auto-évaluation et import manuel |
+| **Interface adaptée au téléphone** dès le départ, même si l'accès mobile vient plus tard | Pas de refonte le jour où on l'héberge |
+| **Aucune dépendance à une IA** | L'app corrige tout elle-même ; Claude sert seulement à produire les fichiers d'import, avec un format documenté et versionné (`quiz-etude/v2`) |
 | **Multi-sessions et multi-années** | Cégep aujourd'hui, université demain |
 | **Tests automatisés** sur la logique de maîtrise et de planification | Ces règles doivent rester fiables quand on ajoute des fonctions |
 
@@ -277,19 +263,18 @@ Chaque phase est utilisable seule. On ne passe à la suivante que lorsque la pr�
 - **Critère de réussite** : tu peux faire exactement ce que l'artefact faisait, sans perte.
 
 ### Phase 1 : MVP d'étude
-- Sessions, cours, chapitres, concepts et étiquettes, avec création et édition.
-- Types de questions V1 : QCM simple et multiple, vrai/faux, réponse courte, texte à trous, flashcard, numérique.
+- Sessions, cours et chapitres ; concepts et étiquettes.
+- **Les 9 types de questions** du format `quiz-etude/v2`, tous corrigés automatiquement.
+- **Import** `quiz-etude/v2` et ancien format, avec aperçu et validation.
 - **Boucle de maîtrise complète** (7.1), **répétition espacée adaptative** (7.2), **confiance** (7.3).
-- Modes : révision du jour, quiz ciblé, mes erreurs, flashcards.
-- Import JSON étendu, bouton « Signaler », tableau de bord de base (maîtrise par cours et chapitre, série de jours).
-- **Critère de réussite** : tu étudies tous les jours avec l'outil et tu n'ouvres plus l'artefact.
+- Modes : révision du jour, quiz ciblé, mes erreurs.
+- Bouton « Signaler », tableau de bord de base (maîtrise par cours, série de jours, points faibles).
+- **Critère de réussite** : tu étudies tous les jours avec l'app et tu n'ouvres plus l'artefact.
 
-### Phase 2 : IA
-- Génération depuis PowerPoint et PDF, avec file de validation et carte de couverture.
-- Réponses à développement et « explique dans tes mots » corrigées avec grille.
-- « Explique-moi autrement », reformulation des sangsues, génération de variantes.
-- Types association et mise en ordre.
-- **Critère de réussite** : un nouveau PowerPoint devient un quiz validé en moins de 5 minutes.
+### Phase 2 : Qualité du contenu
+- Édition des questions dans l'app, bouton « J'avais raison », ajustement manuel des notes de développement.
+- Carte de couverture par diapo, détection des sangsues, message « Demander à Claude ».
+- Amélioration continue du fichier d'instructions selon les questions qui fonctionnent mal.
 
 ### Phase 3 : Examens et suivi
 - Évaluations datées, examen blanc, sprint pré-examen.
@@ -300,11 +285,11 @@ Chaque phase est utilisable seule. On ne passe à la suivante que lorsque la pr�
 
 ### Phase 4 : Mobilité et hébergement
 - Application web installable sur téléphone, comptes, hébergement externe, sauvegardes distantes.
-- **Connexion directe avec Claude** : il ajoute des questions et lit tes stats.
+- Connexion directe avec Claude (optionnelle).
 
 ### Phase 5 : Bonus (selon tes envies)
 - Moyens mnémotechniques générés, cartes conceptuelles par chapitre, questions sur image.
-- Lecture audio des questions, mode hors ligne complet, partage d'un cours avec des amis ❓.
+- Lecture audio des questions, mode hors ligne complet, partage d'un cours avec des amis.
 
 ### Hors de portée (pour l'instant)
 - Réseau social, classement public, application native iOS ou Android.
@@ -312,26 +297,23 @@ Chaque phase est utilisable seule. On ne passe à la suivante que lorsque la pr�
 
 ---
 
-## 14. Questions ouvertes pour toi ❓
+## 14. Décisions prises
 
-1. **IA intégrée et coût** : es-tu d'accord pour utiliser une **clé API Claude** (paiement à l'usage, généralement quelques sous par PowerPoint ou par correction) ? Sinon, la génération passe par Claude.ai avec copier-coller, et le développement se fait en auto-évaluation.
-2. **Téléphone** : veux-tu étudier sur ton téléphone dès le début ? Si oui, l'accès en réseau local, puis l'hébergement, remontent dans les priorités.
-3. **Utilisateurs** : l'outil sert-il seulement à toi, ou aussi à des amis plus tard ?
-4. **Session actuelle** : quels sont tes cours de cette session et tes **prochaines dates d'examen** ? Les 20 cours de l'artefact sont-ils tous de cette session ?
-5. **Progression existante** : veux-tu la récupérer ? Il faudra ton code `QC1:` (bouton « Créer mon code » dans l'artefact).
-6. **Temps d'étude** : combien de minutes par jour, en semaine normale et en période d'examens ?
-7. **Documents** : surtout des PowerPoint ? Aussi des PDF, des Word, des notes manuscrites, des manuels ?
-8. **Sévérité de la boucle de maîtrise** : les seuils proposés (revient après 3 à 5 questions, renforcement à partir de 40 % d'échec, plafond à 2 fois la taille de la série) te conviennent-ils, ou tu veux plus ou moins strict ?
-9. **Motivation** : série de jours et jalons, ou interface sobre sans gamification ?
-10. **Types d'examens** à tes cours : surtout du choix multiple, des questions courtes, du développement, des dissertations ? Ça oriente les types de questions à prioriser.
+| Sujet | Décision |
+|---|---|
+| IA | **Pas de clé API.** Claude.ai génère les questions avec [GENERATEUR_QUESTIONS.md](GENERATEUR_QUESTIONS.md), et l'app ne fait qu'importer |
+| Correction | **100 % automatique** dans l'app ; types choisis pour la rétention **et** la correction automatique |
+| Téléphone | Souhaité, mais pas prioritaire (phase 4) ; l'interface est quand même pensée pour le mobile |
+| Session | Toutes les questions actuelles appartiennent à ta **première session** |
+| Progression existante | À récupérer avec le code `QC1:` de l'artefact |
 
----
+**Encore à préciser plus tard** : tes dates d'examen (phase 3), ton temps d'étude quotidien cible, si l'app sert un jour à des amis.
 
 ## Annexe : choix techniques (résumé)
 
 - **Interface et serveur** : SvelteKit (Svelte 5, TypeScript).
 - **Données** : PostgreSQL dans Docker, schéma versionné par migrations.
 - **Lancement** : `docker compose up`, ce qui démarre la base de données et l'application.
-- **IA** : API Claude pour la génération et la correction, isolée derrière une couche remplaçable et désactivable.
+- **Contenu** : format d'import JSON `quiz-etude/v2` (documenté dans `GENERATEUR_QUESTIONS.md`), validé à l'import.
 - **Répétition espacée** : implémentation FSRS (bibliothèque open source), paramètres ajustables.
 - **Tests** : tests unitaires sur la boucle de maîtrise, la planification et la correction automatique.

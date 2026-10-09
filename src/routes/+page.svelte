@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import MasteryBar from '$lib/components/MasteryBar.svelte';
 	import MasteryLegend from '$lib/components/MasteryLegend.svelte';
+	import Meter from '$lib/components/Meter.svelte';
 
 	let { data, form } = $props();
 
@@ -40,10 +41,15 @@
 			{ total: 0, done: 0 }
 		)
 	);
-	const reviewCount = $derived(
-		Math.min(data.reviewSize, data.counts.due + Math.min(data.newPerSeries, data.counts.fresh))
-	);
+	const newQuota = $derived(Math.min(Math.max(data.newPerSeries, data.plan.newToday), data.counts.fresh));
+	const reviewCount = $derived(Math.min(data.reviewSize, data.counts.due + newQuota));
 	const minutes = $derived(Math.max(1, Math.round((reviewCount * 25) / 60)));
+
+	function when(days: number) {
+		if (days === 0) return 'aujourd’hui';
+		if (days === 1) return 'demain';
+		return `dans ${days} jours`;
+	}
 </script>
 
 <svelte:head><title>Accueil · Étude</title></svelte:head>
@@ -66,11 +72,18 @@
 	<a class="resume msg warn" href="/serie/{data.current}">Tu as une série en cours : la reprendre →</a>
 {/if}
 
+{#each data.alerts as a}
+	<p class="msg {a.level === 'bad' ? 'ko' : 'warn'} alert">
+		{a.text}
+		{#if a.href}<a href={a.href}>Voir</a>{/if}
+	</p>
+{/each}
+
 <section class="panel today">
 	<h2>Révision du jour</h2>
 	<div class="kpis">
 		<div><b>{data.counts.due}</b><span>à réviser</span></div>
-		<div><b>{Math.min(data.newPerSeries, data.counts.fresh)}</b><span>nouvelles</span></div>
+		<div><b>{newQuota}</b><span>nouvelles</span></div>
 		<div><b>{data.today.answers}</b><span>réponses aujourd’hui</span></div>
 	</div>
 	<form method="POST" action="?/start" use:enhance>
@@ -80,8 +93,65 @@
 			{reviewCount ? `Commencer (${reviewCount} questions, ≈ ${minutes} min)` : 'Rien à réviser pour l’instant'}
 		</button>
 	</form>
-	<p class="note">Toutes les matières mélangées : d’abord ce qui est sur le point de s’effacer, puis quelques nouvelles questions.</p>
+	{#if data.plan.items.length}
+		<div class="plan">
+			<p class="label">Plan du jour selon tes examens</p>
+			<ul>
+				{#each data.plan.items as it}
+					<li>
+						<strong>{it.courseName}</strong> : {it.remainingToday
+							? `${it.remainingToday} nouvelle${it.remainingToday > 1 ? 's' : ''} à voir aujourd’hui`
+							: 'objectif du jour atteint ✔'}
+						<span class="note">({it.fresh} jamais vues avant « {it.evaluation} », {when(it.daysLeft)})</span>
+					</li>
+				{/each}
+			</ul>
+			<p class="note">
+				Charge estimée : {data.plan.reviews} révisions + {data.plan.newToday} nouvelles ≈ {data.plan.minutes} min
+				(objectif : {data.plan.targetMinutes} min).
+			</p>
+			{#if data.plan.overloaded}
+				<p class="msg warn">Journée chargée : fais au moins tes révisions, et augmente ton temps d’étude ou commence plus tôt pour les prochains examens.</p>
+			{/if}
+		</div>
+	{:else}
+		<p class="note">Toutes les matières mélangées : d’abord ce qui est sur le point de s’effacer, puis quelques nouvelles questions. <a href="/examens">Ajoute tes dates d’examen</a> pour obtenir un plan quotidien.</p>
+	{/if}
 </section>
+
+{#if data.evaluations.length}
+	<section class="panel">
+		<h2>Examens à venir</h2>
+		{#each data.evaluations as ev}
+			<div class="exam">
+				<div class="exam-top">
+					<span><strong>{ev.name}</strong> <span class="note">· {ev.courseName}</span></span>
+					<span class="pill {ev.daysLeft <= 7 ? 'warn' : ''}">{when(ev.daysLeft)}</span>
+				</div>
+				<Meter value={ev.readiness.index} label="Préparation pour {ev.name}" />
+				<p class="note">
+					Préparation {Math.round(ev.readiness.index * 100)} % · {ev.readiness.seen}/{ev.readiness.total} questions vues
+				</p>
+				<div class="row">
+					<form method="POST" action="?/start" use:enhance>
+						<input type="hidden" name="mode" value="sprint" />
+						<input type="hidden" name="evaluationId" value={ev.id} />
+						<input type="hidden" name="count" value="20" />
+						<button class="btn small">Sprint (20)</button>
+					</form>
+					<form method="POST" action="?/start" use:enhance>
+						<input type="hidden" name="mode" value="examen" />
+						<input type="hidden" name="evaluationId" value={ev.id} />
+						<input type="hidden" name="count" value="20" />
+						<input type="hidden" name="durationMin" value="20" />
+						<button class="btn small">Examen blanc (20 min)</button>
+					</form>
+				</div>
+			</div>
+		{/each}
+		<p class="note"><a href="/examens">Gérer les examens</a></p>
+	</section>
+{/if}
 
 <section class="panel">
 	<h2>Quiz ciblé</h2>
@@ -155,6 +225,33 @@
 </section>
 
 <style>
+	.alert a {
+		margin-left: 6px;
+	}
+	.plan ul {
+		margin: 0 0 8px;
+		padding-left: 18px;
+	}
+	.plan li {
+		margin-bottom: 4px;
+	}
+	.exam {
+		padding: 10px 0;
+		border-top: 1px solid var(--line);
+	}
+	.exam:first-of-type {
+		border-top: 0;
+	}
+	.exam-top {
+		display: flex;
+		justify-content: space-between;
+		gap: 8px;
+		margin-bottom: 6px;
+		flex-wrap: wrap;
+	}
+	.exam p {
+		margin: 4px 0 8px;
+	}
 	.resume {
 		display: block;
 		text-decoration: none;

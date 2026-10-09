@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { getSetting } from '$lib/server/db';
+import { alerts, dailyPlan, evaluationsWithReadiness, takeSnapshot } from '$lib/server/planning';
 import { counts, courseStats, streak, todayActivity, weakQuestions } from '$lib/server/stats';
 import { currentSeriesId, startSeries, type SeriesMode } from '$lib/server/study';
 import type { Actions, PageServerLoad } from './$types';
@@ -15,18 +16,35 @@ export const load: PageServerLoad = async () => {
 		getSetting('reviewSize', 30),
 		getSetting('newPerSeries', 10)
 	]);
-	return { counts: c, courses, streak: s, today, weak, current, reviewSize, newPerSeries };
+	const [evs, plan] = await Promise.all([evaluationsWithReadiness({ upcoming: true }), dailyPlan()]);
+	await takeSnapshot(courses);
+	const { examNew: _, ...planView } = plan;
+	return {
+		counts: c,
+		courses,
+		streak: s,
+		today,
+		weak,
+		current,
+		reviewSize,
+		newPerSeries,
+		evaluations: evs.slice(0, 4),
+		plan: planView,
+		alerts: await alerts(evs)
+	};
 };
 
 export const actions: Actions = {
 	start: async ({ request }) => {
 		const form = await request.formData();
 		const mode = String(form.get('mode') ?? 'cible') as SeriesMode;
-		if (!['revision', 'cible', 'erreurs'].includes(mode)) return fail(400, { error: 'Mode inconnu.' });
+		if (!['revision', 'cible', 'erreurs', 'sprint', 'examen'].includes(mode)) return fail(400, { error: 'Mode inconnu.' });
 		const count = Number(form.get('count') ?? 10) || 10;
 		const courseIds = form.getAll('course').map(Number).filter(Boolean);
 		const chapterIds = form.getAll('chapter').map(Number).filter(Boolean);
-		const id = await startSeries({ mode, count, courseIds, chapterIds });
+		const evaluationId = Number(form.get('evaluationId')) || undefined;
+		const durationMin = Math.max(0, Math.min(300, Number(form.get('durationMin')) || 0));
+		const id = await startSeries({ mode, count, courseIds, chapterIds, evaluationId, durationMin });
 		if (!id)
 			return fail(400, {
 				error:
@@ -34,7 +52,9 @@ export const actions: Actions = {
 						? 'Rien à réviser pour l’instant. Lance un quiz ciblé pour apprendre de nouvelles questions.'
 						: mode === 'erreurs'
 							? 'Aucune erreur à retravailler. Bravo!'
-							: 'Aucune question dans cette sélection.'
+							: mode === 'sprint'
+								? 'Tout le contenu de cet examen est déjà solide. Fais un examen blanc pour vérifier!'
+								: 'Aucune question dans cette sélection.'
 			});
 		redirect(303, `/serie/${id}`);
 	}

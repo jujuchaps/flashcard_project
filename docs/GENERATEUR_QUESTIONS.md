@@ -46,7 +46,7 @@ Adapte ces proportions à la matière : beaucoup de `numerique` en stats, plus d
 {
   "format": "quiz-etude/v2",
   "cours": { "code": "philo", "nom": "Philosophie" },
-  "chapitre": { "nom": "Les présocratiques", "source": "Philo_cours3.pptx" },
+  "chapitre": { "nom": "Les présocratiques", "source": "Philo_cours3.pptx", "diapos": 32 },
   "questions": [ ... ]
 }
 ```
@@ -54,6 +54,7 @@ Adapte ces proportions à la matière : beaucoup de `numerique` en stats, plus d
 - `cours.code` : un identifiant court, en minuscules et sans espace. Utilise le code donné par l'étudiant ; sinon, invente-en un (ex. `stat`, `gest`, `hist`).
 - `cours.nom` et `chapitre.nom` : les noms lisibles.
 - `chapitre.source` : le nom du fichier fourni.
+- `chapitre.diapos` : le nombre total de diapos (ou de pages) du document. L'app s'en sert pour montrer les diapos qui n'ont encore aucune question.
 
 ### Champs communs à toutes les questions
 

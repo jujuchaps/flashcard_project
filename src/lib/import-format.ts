@@ -23,6 +23,7 @@ export interface ImportLot {
 	courseName: string;
 	chapterName: string;
 	source: string | null;
+	slideCount: number | null;
 	questions: ImportQuestion[];
 	errors: { index: number; message: string }[];
 }
@@ -218,6 +219,7 @@ function parseLot(raw: Record<string, unknown>): ImportLot {
 		courseName,
 		chapterName: str(chapitre.nom) || 'Général',
 		source: str(chapitre.source) || null,
+		slideCount: Number.isInteger(Number(chapitre.diapos)) && Number(chapitre.diapos) > 0 ? Number(chapitre.diapos) : null,
 		questions: [],
 		errors: []
 	};
@@ -252,6 +254,7 @@ function parseLegacy(list: Record<string, unknown>[], courseNames: Record<string
 				courseName: courseNames[code] ?? code,
 				chapterName: 'Général',
 				source: null,
+				slideCount: null,
 				questions: [],
 				errors: []
 			};
@@ -312,4 +315,35 @@ export function parseImport(text: string, courseNames: Record<string, string> = 
 /** Clé de déduplication d'une question à l'intérieur d'un cours. */
 export function dedupKey(q: Pick<ImportQuestion, 'type' | 'prompt'>): string {
 	return `${q.type}:${normalize(q.prompt)}`;
+}
+
+/** Inverse de parseQuestion : question enregistrée → objet au format v2 (pour l'édition). */
+export function toV2(q: {
+	extId?: string | null;
+	type: string;
+	concept: string;
+	prompt: string;
+	explanation: string;
+	slide: number | null;
+	difficulty: number | null;
+	tags: string[];
+	payload: Payload;
+}): Record<string, unknown> {
+	const { type: _, ...fields } = q.payload as Payload & Record<string, unknown>;
+	let prompt: string | undefined = q.prompt;
+	if (q.payload.type === 'trous') {
+		const i = q.prompt.lastIndexOf('\n');
+		prompt = i > 0 ? q.prompt.slice(0, i) : undefined;
+	}
+	return {
+		...(q.extId ? { id: q.extId } : {}),
+		type: q.payload.type,
+		concept: q.concept,
+		...(prompt !== undefined ? { q: prompt } : {}),
+		...fields,
+		explication: q.explanation,
+		...(q.slide ? { diapo: q.slide } : {}),
+		...(q.difficulty ? { difficulte: q.difficulty } : {}),
+		...(q.tags.length ? { tags: q.tags } : {})
+	};
 }

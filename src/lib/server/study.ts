@@ -1,16 +1,21 @@
-import { grade } from '$lib/grading';
-import { applyAnswer, createSeries, progress, type PoolEntry, type SeriesState } from '$lib/mastery';
+import { DEVELOPPEMENT_SEUIL, grade } from '$lib/grading';
+import { applyAnswer, createSeries, finishNow, progress, type PoolEntry, type SeriesState } from '$lib/mastery';
 import type { Answer, Confidence, Payload, QuizQuestion } from '$lib/types';
 import { getSetting, sql } from './db';
+import { dailyPlan, evaluationScope, examMoment, listEvaluations, readinessOf } from './planning';
 import { cardFromJson, cardToJson, countsAsSuccess, ratingFor, retrievability, review } from './srs';
 
-export type SeriesMode = 'revision' | 'cible' | 'erreurs';
+export type SeriesMode = 'revision' | 'cible' | 'erreurs' | 'sprint' | 'examen';
 
 export interface SeriesParams {
 	mode: SeriesMode;
 	count: number;
 	courseIds?: number[];
 	chapterIds?: number[];
+	/** Sprint et examen blanc : l'évaluation visée. */
+	evaluationId?: number;
+	/** Examen blanc : durée en minutes (0 = sans limite). */
+	durationMin?: number;
 }
 
 interface Candidate extends PoolEntry {
@@ -114,7 +119,18 @@ function urgency(c: Candidate, now: Date): number {
 	return 1 - retrievability(cardFromJson(c.card.fsrs), now);
 }
 
+async function evaluationOf(p: SeriesParams) {
+	if (!p.evaluationId) throw new Error('Évaluation manquante.');
+	const [ev] = (await listEvaluations()).filter((e) => e.id === p.evaluationId);
+	if (!ev) throw new Error('Évaluation introuvable.');
+	return ev;
+}
+
 export async function selectQuestions(p: SeriesParams, now = new Date()) {
+	if (p.mode === 'sprint' || p.mode === 'examen') {
+		const ev = await evaluationOf(p);
+		p = { ...p, courseIds: [ev.courseId], chapterIds: ev.chapterIds };
+	}
 	const all = await loadCandidates(p);
 	const count = Math.max(1, Math.min(200, p.count));
 	const seen = all.filter((c) => c.card);
@@ -131,15 +147,29 @@ export async function selectQuestions(p: SeriesParams, now = new Date()) {
 
 	let chosen: Candidate[];
 	if (p.mode === 'revision') {
-		const newQuota = await getSetting('newPerSeries', 10);
+		// Les nouvelles questions des examens les plus proches passent en premier, selon le plan du jour.
+		const plan = await dailyPlan(now);
+		const newQuota = Math.max(await getSetting('newPerSeries', 10), plan.newToday);
+		const freshByExam = [...fresh].sort(
+			(a, b) => (plan.examNew.get(a.id) ?? Infinity) - (plan.examNew.get(b.id) ?? Infinity)
+		);
 		const reviews = [...fragile.filter((c) => c.card!.due <= now || c.card!.misconception), ...due].slice(0, count);
-		chosen = [...reviews, ...fresh.slice(0, Math.max(0, Math.min(newQuota, count - reviews.length)))];
+		chosen = [...reviews, ...freshByExam.slice(0, Math.max(0, Math.min(newQuota, count - reviews.length)))];
+	} else if (p.mode === 'sprint') {
+		// Ce qui risque le plus d'être oublié le jour de l'examen, puis le jamais vu.
+		const ev = await evaluationOf(p);
+		const r = readinessOf(await evaluationScope(ev), examMoment(ev.date)).byQuestion;
+		const risk = seen.sort((a, b) => (r.get(a.id) ?? 0) - (r.get(b.id) ?? 0)).filter((c) => (r.get(c.id) ?? 0) < 0.95);
+		chosen = [...risk, ...fresh].slice(0, count);
+	} else if (p.mode === 'examen') {
+		chosen = shuffle(all).slice(0, count);
 	} else if (p.mode === 'erreurs') {
 		const leeches = notDue.filter((c) => c.card!.wrong_count >= 3 && c.card!.stability < 7);
 		chosen = [...fragile, ...leeches].slice(0, count);
 	} else {
 		chosen = [...fragile, ...due, ...fresh, ...notDue].slice(0, count);
 	}
+	if (p.mode === 'examen') return { initial: chosen.map((c) => ({ id: c.id, chapterId: c.chapterId, concept: c.concept })), pool: [] };
 	const ids = new Set(chosen.map((c) => c.id));
 	const pool = [...fresh, ...fragile, ...due, ...notDue].filter((c) => !ids.has(c.id));
 	const strip = (c: Candidate): PoolEntry => ({ id: c.id, chapterId: c.chapterId, concept: c.concept });
@@ -150,7 +180,7 @@ export async function startSeries(p: SeriesParams): Promise<number | null> {
 	const { initial, pool } = await selectQuestions(p);
 	if (!initial.length) return null;
 	await sql`UPDATE series SET abandoned = true WHERE finished_at IS NULL AND NOT abandoned`;
-	const state = createSeries(initial, pool);
+	const state = createSeries(initial, pool, { exam: p.mode === 'examen' });
 	const [row] = await sql<{ id: number }[]>`
 		INSERT INTO series (mode, params, state) VALUES (${p.mode}, ${sql.json(p as never)}, ${sql.json(state as never)})
 		RETURNING id`;
@@ -206,10 +236,24 @@ export interface SeriesView {
 	current: (QuizQuestion & { attempts: number; needed: number; streak: number; origin: string }) | null;
 	notices: string[];
 	missed: { prompt: string; course: string; payload: Payload; explanation: string }[] | null;
+	/** Examen blanc terminé : toutes les questions avec le résultat. */
+	review: { prompt: string; course: string; payload: Payload; explanation: string; ok: boolean | null }[] | null;
 	askConfidence: boolean;
+	exam: { title: string; endsAt: string | null } | null;
 }
 
-async function buildView(id: number, mode: SeriesMode, state: SeriesState): Promise<SeriesView> {
+async function examInfo(params: SeriesParams, createdAt: Date): Promise<SeriesView['exam']> {
+	const ev = params.evaluationId ? (await listEvaluations()).find((e) => e.id === params.evaluationId) : null;
+	const ends = params.durationMin ? new Date(createdAt.getTime() + params.durationMin * 60_000).toISOString() : null;
+	return { title: ev ? `Examen blanc : ${ev.name}` : 'Examen blanc', endsAt: ends };
+}
+
+async function buildView(
+	id: number,
+	mode: SeriesMode,
+	state: SeriesState,
+	meta: { params: SeriesParams; createdAt: Date }
+): Promise<SeriesView> {
 	const prog = progress(state);
 	const names = await chapterNames([
 		...new Set(state.events.filter((e) => e.kind === 'renfort').map((e) => (e as { chapterId: number }).chapterId))
@@ -233,7 +277,14 @@ async function buildView(id: number, mode: SeriesMode, state: SeriesState): Prom
 		if (q) current = { ...q, attempts: item.attempts, needed: item.needed, streak: item.streak, origin: item.origin };
 	}
 	let missed: SeriesView['missed'] = null;
-	if (prog.finished) {
+	let review: SeriesView['review'] = null;
+	if (prog.finished && state.exam) {
+		review = [];
+		for (const item of state.items) {
+			const q = await loadQuestion(item.id);
+			if (q) review.push({ prompt: q.prompt, course: q.courseName, payload: q.payload, explanation: q.explanation, ok: item.firstOk });
+		}
+	} else if (prog.finished) {
 		const ids = state.items.filter((i) => i.firstOk === false).map((i) => i.id);
 		missed = [];
 		for (const qid of ids) {
@@ -248,15 +299,17 @@ async function buildView(id: number, mode: SeriesMode, state: SeriesState): Prom
 		current,
 		notices,
 		missed,
-		askConfidence: await getSetting('askConfidence', true)
+		review,
+		askConfidence: !state.exam && (await getSetting('askConfidence', true)),
+		exam: state.exam ? await examInfo(meta.params, meta.createdAt) : null
 	};
 }
 
 export async function getSeries(id: number): Promise<SeriesView | null> {
-	const [row] = await sql<{ id: number; mode: SeriesMode; state: SeriesState }[]>`
-		SELECT id, mode, state FROM series WHERE id = ${id}`;
+	const [row] = await sql<{ id: number; mode: SeriesMode; state: SeriesState; params: SeriesParams; created_at: Date }[]>`
+		SELECT id, mode, state, params, created_at FROM series WHERE id = ${id}`;
 	if (!row) return null;
-	return buildView(row.id, row.mode, { ...row.state, events: [] });
+	return buildView(row.id, row.mode, { ...row.state, events: [] }, { params: row.params, createdAt: row.created_at });
 }
 
 export interface AnswerInput {
@@ -264,20 +317,30 @@ export interface AnswerInput {
 	answer: Answer;
 	confidence: Confidence;
 	override?: boolean;
+	/** Développement : éléments clés corrigés à la main par l'étudiant. */
+	adjusted?: boolean[];
 	durationMs?: number;
 }
 
 export async function answerSeries(id: number, input: AnswerInput): Promise<SeriesView> {
 	const now = new Date();
 	const view = await sql.begin(async (tx) => {
-		const [row] = await tx<{ id: number; mode: SeriesMode; state: SeriesState; finished_at: Date | null }[]>`
-			SELECT id, mode, state, finished_at FROM series WHERE id = ${id} FOR UPDATE`;
+		const [row] = await tx<
+			{ id: number; mode: SeriesMode; state: SeriesState; finished_at: Date | null; params: SeriesParams; created_at: Date }[]
+		>`SELECT id, mode, state, finished_at, params, created_at FROM series WHERE id = ${id} FOR UPDATE`;
 		if (!row) throw new Error('Série introuvable.');
 		const state = row.state;
 		if (state.queue[0] !== input.questionId) throw new Error('Cette question n’est plus la question en cours.');
 		const item = state.items.find((i) => i.id === input.questionId)!;
 		const [q] = await tx<{ payload: Payload; type: string }[]>`SELECT payload, type FROM question WHERE id = ${input.questionId}`;
 		const result = grade(q.payload, input.answer);
+		let manual = !!input.override;
+		if (q.payload.type === 'developpement' && Array.isArray(input.adjusted) && input.adjusted.length === q.payload.elements.length) {
+			const total = q.payload.elements.reduce((s, e) => s + e.points, 0) || 1;
+			result.score = q.payload.elements.reduce((s, e, i) => s + (input.adjusted![i] ? e.points : 0), 0) / total;
+			result.correct = result.score >= DEVELOPPEMENT_SEUIL;
+			manual = true;
+		}
 		const correct = result.correct || !!input.override;
 		const confidence: Confidence = ['sur', 'hesitant', 'devine'].includes(input.confidence) ? input.confidence : 'sur';
 		const success = countsAsSuccess(correct, confidence);
@@ -309,14 +372,14 @@ export async function answerSeries(id: number, input: AnswerInput): Promise<Seri
 
 		await tx`INSERT INTO attempt (question_id, series_id, at, first_try, correct, score, confidence, overridden, answer, duration_ms)
 			VALUES (${input.questionId}, ${id}, ${now}, ${firstTry}, ${correct}, ${input.override ? 1 : result.score}, ${confidence},
-				${!!input.override}, ${tx.json(input.answer as never)}, ${input.durationMs ?? null})`;
+				${manual}, ${tx.json(input.answer as never)}, ${input.durationMs ?? null})`;
 
 		const next = applyAnswer(state, input.questionId, success);
 		const finished = next.queue.length === 0;
 		await tx`UPDATE series SET state = ${tx.json(next as never)}, finished_at = ${finished ? now : null} WHERE id = ${id}`;
-		return { mode: row.mode, state: next };
+		return { mode: row.mode, state: next, params: row.params, createdAt: row.created_at };
 	});
-	return buildView(id, view.mode, view.state);
+	return buildView(id, view.mode, view.state, view);
 }
 
 /** Retire la question en cours de la série (après un signalement). */
@@ -334,6 +397,16 @@ export async function skipCurrent(id: number, questionId: number) {
 		state.events = [];
 		await tx`UPDATE series SET state = ${tx.json(state as never)}, finished_at = ${state.queue.length ? null : new Date()} WHERE id = ${id}`;
 	});
+}
+
+/** Termine la série maintenant (fin du temps d'un examen blanc). */
+export async function finishSeries(id: number): Promise<SeriesView | null> {
+	await sql.begin(async (tx) => {
+		const [row] = await tx<{ state: SeriesState }[]>`SELECT state FROM series WHERE id = ${id} FOR UPDATE`;
+		if (!row) return;
+		await tx`UPDATE series SET state = ${tx.json(finishNow(row.state) as never)}, finished_at = coalesce(finished_at, now()) WHERE id = ${id}`;
+	});
+	return getSeries(id);
 }
 
 export async function currentSeriesId(): Promise<number | null> {

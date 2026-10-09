@@ -258,10 +258,10 @@ Série de jours, objectifs quotidiens, jalons (« 100 concepts ancrés »). Tout
 > **État au 9 octobre 2026**
 > - ✅ **Phase 0** : terminée (609 questions et 20 cours importés, restauration du code `QC1:`).
 > - ✅ **Phase 1** : terminée, sauf le filtre par étiquette dans le quiz ciblé (les étiquettes sont déjà enregistrées).
-> - 🟡 **Phase 2** : « J'avais raison » et « Demander à Claude » sont faits ; restent l'édition des questions dans l'app, la carte de couverture par diapo et l'ajustement manuel des notes de développement.
-> - ⬜ Phases 3 à 5 : à venir.
-
-Chaque phase est utilisable seule. On ne passe à la suivante que lorsque la précédente sert réellement à étudier.
+> - ✅ **Phase 2** : terminée (édition des questions, carte de couverture par diapo, « J'avais raison », ajustement des éléments clés, « Demander à Claude »).
+> - ✅ **Phase 3** : terminée (examens, préparation, examen blanc, sprint, journal d'examen, plan du jour, prévision de charge, graphiques, alertes, bilan hebdomadaire et export pour Claude).
+> - 🟡 **Phase 4** : app installable, accès depuis le téléphone sur le Wi-Fi, mot de passe optionnel et sauvegardes quotidiennes faits ; restent l'hébergement lui-même (ton choix de serveur) et la connexion directe avec Claude.
+> - ⬜ **Phase 5** : à venir selon tes envies.
 
 ### Phase 0 : Fondations et migration
 - Lancement en local en une commande.

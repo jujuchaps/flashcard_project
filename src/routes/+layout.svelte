@@ -6,12 +6,14 @@
 
 	const links = [
 		{ href: '/', label: 'Accueil' },
+		{ href: '/examens', label: 'Examens' },
+		{ href: '/progres', label: 'Progrès' },
 		{ href: '/cours', label: 'Cours' },
 		{ href: '/importer', label: 'Importer' },
 		{ href: '/reglages', label: 'Réglages' }
 	];
 
-	const inQuiz = $derived(page.url.pathname.startsWith('/serie/'));
+	const inQuiz = $derived(page.url.pathname.startsWith('/serie/') || page.url.pathname === '/connexion');
 </script>
 
 {#if !inQuiz}

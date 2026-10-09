@@ -20,6 +20,7 @@
 	--m-learning: #6f8fff;
 	--m-mastered: #2f5bea;
 	--m-anchored: #1e8e5a;
+	--chart: #2f5bea;
 	--radius: 14px;
 	color-scheme: light;
 }
@@ -45,6 +46,7 @@
 		--m-learning: #4f6ac8;
 		--m-mastered: #8ea6ff;
 		--m-anchored: #52c98f;
+		--chart: #5b7cf5;
 		color-scheme: dark;
 	}
 }
@@ -211,6 +213,8 @@ button {
 
 input[type='text'],
 input[type='number'],
+input[type='date'],
+input[type='password'],
 select,
 textarea {
 	width: 100%;

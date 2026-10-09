@@ -56,10 +56,11 @@ export async function importLots(lots: ImportLot[], target: ImportTarget = {}): 
 
 			const chapterName = (lots.length === 1 && target.chapterName?.trim()) || lot.chapterName;
 			const [ch] = await tx<{ id: number }[]>`
-				INSERT INTO chapter (course_id, name, source, position)
-				VALUES (${courseId}, ${chapterName}, ${lot.source},
+				INSERT INTO chapter (course_id, name, source, slide_count, position)
+				VALUES (${courseId}, ${chapterName}, ${lot.source}, ${lot.slideCount},
 					(SELECT coalesce(max(position), 0) + 1 FROM chapter WHERE course_id = ${courseId}))
-				ON CONFLICT (course_id, name) DO UPDATE SET source = coalesce(EXCLUDED.source, chapter.source)
+				ON CONFLICT (course_id, name) DO UPDATE SET source = coalesce(EXCLUDED.source, chapter.source),
+					slide_count = coalesce(EXCLUDED.slide_count, chapter.slide_count)
 				RETURNING id`;
 
 			let [{ pos }] = await tx<{ pos: number }[]>`

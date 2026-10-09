@@ -7,6 +7,8 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const id = Number(params.id);
+	const evaluations = await sql<{ id: number; name: string; date: string }[]>`
+		SELECT id, name, to_char(date, 'YYYY-MM-DD') AS date FROM evaluation WHERE course_id = ${id} AND date >= current_date ORDER BY date`;
 	const [course] = await sql<{ id: number; name: string; code: string; archived: boolean }[]>`
 		SELECT id, name, code, archived FROM course WHERE id = ${id}`;
 	if (!course) error(404, 'Cours introuvable.');
@@ -32,8 +34,8 @@ export const load: PageServerLoad = async ({ params }) => {
 			c.stability, c.last_ok, c.misconception, c.right_count, c.wrong_count
 		FROM question q LEFT JOIN card c ON c.question_id = q.id
 		WHERE q.course_id = ${id} ORDER BY q.chapter_id, q.position, q.id`;
-	const chapters = await sql<{ id: number; name: string; source: string | null }[]>`
-		SELECT id, name, source FROM chapter WHERE course_id = ${id} ORDER BY position, id`;
+	const chapters = await sql<{ id: number; name: string; source: string | null; slide_count: number | null }[]>`
+		SELECT id, name, source, slide_count FROM chapter WHERE course_id = ${id} ORDER BY position, id`;
 	const questions = rows.map((r) => ({
 		id: r.id,
 		chapterId: r.chapter_id,
@@ -49,7 +51,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			r.stability === null ? null : { stability: r.stability, lastOk: r.last_ok!, misconception: r.misconception! }
 		) as Mastery
 	}));
-	return { course, stats, chapters, questions };
+	return { course, stats, chapters, questions, evaluations };
 };
 
 export const actions: Actions = {
@@ -64,13 +66,16 @@ export const actions: Actions = {
 		const form = await request.formData();
 		const name = String(form.get('name') ?? '').trim();
 		const chapterId = Number(form.get('chapterId'));
+		const slides = Number(form.get('slideCount'));
+		const slideCount = Number.isInteger(slides) && slides > 0 && slides <= 1000 ? slides : null;
 		if (!name) return fail(400, { error: 'Le nom est obligatoire.' });
 		try {
-			await sql`UPDATE chapter SET name = ${name} WHERE id = ${chapterId} AND course_id = ${Number(params.id)}`;
+			await sql`UPDATE chapter SET name = ${name}, slide_count = ${slideCount}
+				WHERE id = ${chapterId} AND course_id = ${Number(params.id)}`;
 		} catch {
 			return fail(400, { error: 'Un chapitre porte déjà ce nom.' });
 		}
-		return { ok: 'Chapitre renommé.' };
+		return { ok: 'Chapitre mis à jour.' };
 	},
 	archiver: async ({ params }) => {
 		await sql`UPDATE course SET archived = NOT archived WHERE id = ${Number(params.id)}`;

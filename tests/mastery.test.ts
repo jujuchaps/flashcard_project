@@ -90,3 +90,24 @@ describe('boucle de maîtrise', () => {
 		expect(s).toEqual(copy);
 	});
 });
+
+describe('examen blanc', () => {
+	it('une seule tentative par question, sans reprise ni renforcement', () => {
+		const initial = [1, 2, 3, 4].map((i) => entry(i, 1));
+		let s = createSeries(initial, [entry(9, 1), entry(10, 1)], { exam: true });
+		for (let k = 0; k < 4; k++) s = answer(s, false);
+		expect(progress(s).finished).toBe(true);
+		expect(s.items).toHaveLength(4);
+		expect(progress(s).firstTryOk).toBe(0);
+	});
+	it('temps écoulé : les questions restantes sont non répondues', async () => {
+		const { finishNow } = await import('../src/lib/mastery');
+		let s = createSeries([1, 2, 3].map((i) => entry(i)), [], { exam: true });
+		s = answer(s, true);
+		s = finishNow(s);
+		const p = progress(s);
+		expect(p.finished).toBe(true);
+		expect(p.unanswered).toBe(2);
+		expect(p.firstTryOk).toBe(1);
+	});
+});

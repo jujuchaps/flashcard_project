@@ -11,7 +11,8 @@ export const load: PageServerLoad = async () => {
 		askConfidence: await getSetting('askConfidence', true),
 		retention: await getSetting('retention', 0.9),
 		newPerSeries: await getSetting('newPerSeries', 10),
-		reviewSize: await getSetting('reviewSize', 30)
+		reviewSize: await getSetting('reviewSize', 30),
+		dailyMinutes: await getSetting('dailyMinutes', 30)
 	};
 };
 
@@ -30,6 +31,7 @@ export const actions: Actions = {
 		await setSetting('retention', clamp(Number(form.get('retention')) / 100 || 0.9, 0.8, 0.97));
 		await setSetting('newPerSeries', clamp(Math.round(Number(form.get('newPerSeries')) || 10), 0, 100));
 		await setSetting('reviewSize', clamp(Math.round(Number(form.get('reviewSize')) || 30), 5, 200));
+		await setSetting('dailyMinutes', clamp(Math.round(Number(form.get('dailyMinutes')) || 30), 5, 240));
 		return { ok: true };
 	}
 };

@@ -36,6 +36,8 @@ export interface SeriesState {
 	reinforced: number[];
 	capNotified: boolean;
 	events: SeriesEvent[];
+	/** Examen blanc : une seule tentative par question, ni reprise ni renforcement. */
+	exam?: boolean;
 }
 
 export const RULES = {
@@ -58,9 +60,10 @@ function newItem(e: PoolEntry, origin: SeriesItem['origin']): SeriesItem {
 	return { ...e, attempts: 0, fails: 0, streak: 0, needed: 1, done: false, firstOk: null, origin };
 }
 
-export function createSeries(initial: PoolEntry[], pool: PoolEntry[]): SeriesState {
+export function createSeries(initial: PoolEntry[], pool: PoolEntry[], opts: { exam?: boolean } = {}): SeriesState {
 	const ids = new Set(initial.map((e) => e.id));
 	return {
+		exam: !!opts.exam,
 		initialSize: initial.length,
 		maxSize: Math.max(initial.length * RULES.growthFactor, initial.length + RULES.growthMin),
 		items: initial.map((e) => newItem(e, 'initiale')),
@@ -135,6 +138,11 @@ export function applyAnswer(
 	item.attempts++;
 	if (first) item.firstOk = correct;
 
+	if (s.exam) {
+		item.done = true;
+		return s;
+	}
+
 	if (correct) {
 		item.streak++;
 		if (item.streak >= item.needed) item.done = true;
@@ -170,6 +178,14 @@ export function applyAnswer(
 	return s;
 }
 
+/** Termine la série maintenant (temps écoulé) : les questions restantes ne sont pas comptées comme réussies. */
+export function finishNow(state: SeriesState): SeriesState {
+	const s: SeriesState = structuredClone(state);
+	s.queue = [];
+	s.events = [];
+	return s;
+}
+
 export function progress(s: SeriesState) {
 	const done = s.items.filter((i) => i.done).length;
 	const firsts = s.items.filter((i) => i.firstOk !== null);
@@ -179,6 +195,7 @@ export function progress(s: SeriesState) {
 		remaining: s.items.length - done,
 		firstTryCount: firsts.length,
 		firstTryOk: firsts.filter((i) => i.firstOk).length,
+		unanswered: s.items.filter((i) => i.firstOk === null).length,
 		finished: s.queue.length === 0
 	};
 }

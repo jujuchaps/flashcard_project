@@ -9,7 +9,7 @@ services:
       TZ: America/Toronto
       PGTZ: America/Toronto
     ports:
-      - '5432:5432'
+      - '127.0.0.1:5432:5432'
     volumes:
       - etude-db:/var/lib/postgresql/data
     healthcheck:
@@ -26,10 +26,35 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgres://etude:etude@db:5432/etude
-      ORIGIN: http://localhost:3000
       TZ: America/Toronto
+      # Mot de passe de l'app : à définir si elle est accessible hors de chez toi.
+      # Mets-le dans un fichier .env à côté de ce fichier : APP_PASSWORD=...
+      APP_PASSWORD: ${APP_PASSWORD:-}
     ports:
+      # Accessible depuis l'ordi (http://localhost:3000) et les appareils du même Wi-Fi.
       - '3000:3000'
+
+  # Sauvegarde automatique de la base, une fois par jour, dans le dossier ./backups (30 jours conservés).
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: etude
+      TZ: America/Toronto
+    volumes:
+      - ./backups:/backups
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        while true; do
+          pg_dump -h db -U etude etude | gzip > /backups/etude-$$(date +%F).sql.gz
+          find /backups -name 'etude-*.sql.gz' -mtime +30 -delete
+          sleep 86400
+        done
 
 volumes:
   etude-db:

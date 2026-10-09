@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { untrack } from 'svelte';
+	import { onDestroy, untrack } from 'svelte';
 	import { goto } from '$app/navigation';
 	import QuestionInput from '$lib/components/QuestionInput.svelte';
 	import { correctAnswerText, DEVELOPPEMENT_SEUIL, grade } from '$lib/grading';
@@ -16,6 +16,40 @@
 	let errorMsg = $state('');
 	let copied = $state(false);
 	let startedAt = Date.now();
+	let adjusted = $state(false);
+	let now = $state(Date.now());
+	const timer = setInterval(() => (now = Date.now()), 1000);
+	onDestroy(() => clearInterval(timer));
+
+	const remainingMs = $derived(view.exam?.endsAt ? new Date(view.exam.endsAt).getTime() - now : null);
+	let finishing = false;
+	$effect(() => {
+		if (remainingMs !== null && remainingMs <= 0 && view.current && !finishing) {
+			finishing = true;
+			finishExam();
+		}
+	});
+
+	async function finishExam() {
+		const res = await fetch(`/api/serie/${view.id}/terminer`, { method: 'POST' });
+		if (res.ok) view = await res.json();
+		reset();
+	}
+
+	function clock(ms: number) {
+		const t = Math.max(0, Math.ceil(ms / 1000));
+		return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+	}
+
+	/** Développement : l'étudiant peut cocher un élément clé que les mots-clés n'ont pas repéré. */
+	function adjust(i: number) {
+		if (!q || !result?.details || q.payload.type !== 'developpement') return;
+		const details = result.details.map((d, k) => (k === i ? !d : d));
+		const total = q.payload.elements.reduce((s, e) => s + e.points, 0) || 1;
+		const score = q.payload.elements.reduce((s, e, k) => s + (details[k] ? e.points : 0), 0) / total;
+		result = { details, score, correct: score >= DEVELOPPEMENT_SEUIL };
+		adjusted = true;
+	}
 
 	const q = $derived(view.current);
 	const pct = $derived(view.progress.total ? (view.progress.done / view.progress.total) * 100 : 0);
@@ -27,6 +61,10 @@
 	function onsubmit(a: Answer) {
 		if (!q || result) return;
 		submitted = a;
+		if (view.exam) {
+			send('sur');
+			return;
+		}
 		result = grade(q.payload, a);
 	}
 
@@ -43,6 +81,7 @@
 					answer: submitted,
 					confidence,
 					override,
+					adjusted: adjusted && result?.details ? result.details : undefined,
 					durationMs: Date.now() - startedAt
 				})
 			});
@@ -60,6 +99,7 @@
 		result = null;
 		submitted = null;
 		override = false;
+		adjusted = false;
 		copied = false;
 		startedAt = Date.now();
 		window.scrollTo(0, 0);
@@ -130,7 +170,24 @@
 <svelte:window onkeydown={onkey} />
 <svelte:head><title>Série · Étude</title></svelte:head>
 
-{#if q}
+{#if q && view.exam}
+	<div class="head">
+		<span class="note"><strong>{view.exam.title}</strong> · question {view.progress.done + 1} sur {view.progress.total}</span>
+		<div class="row">
+			{#if remainingMs !== null}
+				<span class="pill {remainingMs < 120000 ? 'bad' : ''}" aria-live="polite">⏱ {clock(remainingMs)}</span>
+			{/if}
+			<button class="btn small" onclick={() => confirm('Terminer l’examen maintenant? Les questions restantes compteront comme non répondues.') && finishExam()}>Terminer</button>
+		</div>
+	</div>
+	<div class="prog" aria-hidden="true"><div style="width:{pct}%"></div></div>
+	<p class="note">Conditions d’examen : la correction s’affiche à la fin.</p>
+	<div class="tags"><span class="note">{q.courseName}</span></div>
+	{#key q.id}
+		<QuestionInput payload={q.payload} prompt={q.prompt} result={null} submitted={null} {onsubmit} />
+	{/key}
+	{#if errorMsg}<p class="msg ko">{errorMsg}</p>{/if}
+{:else if q}
 	<div class="head">
 		<span class="note">{view.progress.done} réglée{view.progress.done > 1 ? 's' : ''} sur {view.progress.total}</span>
 		<div class="row">
@@ -153,13 +210,15 @@
 	</div>
 
 	{#key `${q.id}-${q.attempts}`}
-		<QuestionInput payload={q.payload} prompt={q.prompt} {result} {submitted} {onsubmit} />
+		<QuestionInput payload={q.payload} prompt={q.prompt} {result} {submitted} {onsubmit} onadjust={adjust} />
 	{/key}
 
 	{#if result}
 		<div class="fb {finalCorrect ? 'ok' : 'ko'}" role="status">
 			<strong>
-				{#if result.correct}
+				{#if adjusted && devScore}
+					{devScore.got} / {devScore.total} points après ton ajustement{result.correct ? ' : réussie.' : '.'}
+				{:else if result.correct}
 					Bonne réponse.
 				{:else if override}
 					Comptée comme bonne.
@@ -191,6 +250,7 @@
 					</button>
 				{/if}
 				<button class="btn small" onclick={askClaude}>{copied ? 'Message copié ✔' : 'Demander à Claude'}</button>
+				<a class="btn small" href="/questions/{q.id}" target="_blank" rel="noopener">Modifier</a>
 			</div>
 		</div>
 
@@ -207,6 +267,33 @@
 			<button class="go next" disabled={busy} onclick={() => send('sur')}>Suivante</button>
 		{/if}
 	{/if}
+{:else if view.review}
+	{@const total = view.review.length}
+	{@const ok = view.review.filter((r) => r.ok).length}
+	<h1>Examen terminé</h1>
+	<p class="sub">{view.exam?.title}</p>
+	<div class="panel">
+		<div class="score">{total ? Math.round((ok / total) * 100) : 0} %</div>
+		<p class="note">
+			{ok} bonne{ok > 1 ? 's' : ''} réponse{ok > 1 ? 's' : ''} sur {total}{view.progress.unanswered ? ` · ${view.progress.unanswered} non répondue(s)` : ''}.
+			Les questions ratées reviendront plus tôt dans tes révisions.
+		</p>
+	</div>
+	<div class="panel">
+		<h2>Corrigé</h2>
+		{#each view.review as r, i}
+			<div class="miss">
+				<p class="note">Question {i + 1} · {r.course}</p>
+				<p>
+					<span class={r.ok ? 'good' : r.ok === null ? 'note' : 'bad'}>{r.ok ? '✔' : r.ok === null ? '— non répondue :' : '✘'}</span>
+					{r.prompt}
+				</p>
+				{#if !r.ok}<p class="good"><strong>{correctAnswerText(r.payload)}</strong></p>{/if}
+				{#if !r.ok && r.explanation}<p class="note">{r.explanation}</p>{/if}
+			</div>
+		{/each}
+	</div>
+	<button class="go" onclick={() => goto('/examens')}>Retour aux examens</button>
 {:else}
 	<h1>Série terminée</h1>
 	{@const p = view.progress}

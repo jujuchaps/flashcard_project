@@ -5,7 +5,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		// La vérification d'origine est faite dans src/hooks.server.ts : elle compare l'hôte sans
+		// tenir compte du protocole, pour fonctionner en http sur le réseau local (téléphone).
+		csrf: { trustedOrigins: ['*'] }
 	}
 };
 

@@ -70,3 +70,14 @@ describe('parseImport', () => {
 		expect(lots.reduce((s, l) => s + l.questions.length, 0)).toBe(609);
 	});
 });
+
+describe('toV2', () => {
+	it('fait l’aller-retour avec parseQuestion pour tous les types', async () => {
+		const { parseQuestion, toV2 } = await import('../src/lib/import-format');
+		const example = JSON.parse(readFileSync(new URL('../data/exemples/exemple-tous-les-types.json', import.meta.url), 'utf8'));
+		for (const raw of example.questions) {
+			const q = parseQuestion(raw);
+			expect(parseQuestion(toV2(q))).toEqual(q);
+		}
+	});
+});

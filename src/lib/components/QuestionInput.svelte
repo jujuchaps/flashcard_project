@@ -8,13 +8,15 @@
 		prompt,
 		result,
 		submitted,
-		onsubmit
+		onsubmit,
+		onadjust
 	}: {
 		payload: Payload;
 		prompt: string;
 		result: GradeResult | null;
 		submitted: Answer | null;
 		onsubmit: (a: Answer) => void;
+		onadjust?: (index: number) => void;
 	} = $props();
 
 	function shuffled(n: number): number[] {
@@ -296,10 +298,18 @@
 	{#if result && result.details}
 		<div class="elements">
 			{#each payload.elements as el, i}
-				<p class={result.details[i] ? 'good' : 'bad'}>
+				<button
+					type="button"
+					class="element {result.details[i] ? 'good' : 'bad'}"
+					aria-pressed={result.details[i]}
+					disabled={!onadjust}
+					onclick={() => onadjust?.(i)}
+					title="Clique pour corriger : j'avais (ou je n'avais pas) cette idée"
+				>
 					{result.details[i] ? '✔' : '✘'} {el.idee} <span class="note">({el.points} pt{el.points > 1 ? 's' : ''})</span>
-				</p>
+				</button>
 			{/each}
+			{#if onadjust}<p class="note">Clique sur un élément si la correction automatique s’est trompée.</p>{/if}
 		</div>
 	{/if}
 {/if}
@@ -486,8 +496,24 @@
 	.elements {
 		margin-top: 12px;
 	}
-	.elements p {
-		margin: 4px 0;
+	.elements .element {
+		display: block;
+		width: 100%;
+		text-align: left;
+		background: none;
+		border: 1px dashed transparent;
+		border-radius: 8px;
+		padding: 4px 6px;
+		margin: 2px 0;
+	}
+	.elements .element:hover:not(:disabled) {
+		border-color: var(--line);
+	}
+	.elements .good {
+		color: var(--good);
+	}
+	.elements .bad {
+		color: var(--bad);
 	}
 	.validate {
 		margin-top: 16px;

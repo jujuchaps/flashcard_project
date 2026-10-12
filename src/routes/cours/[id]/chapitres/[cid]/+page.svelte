@@ -11,8 +11,9 @@
 	let filter = $state<'toutes' | 'faibles' | 'nouvelles'>('toutes');
 	let copied = $state(false);
 
-	const active = $derived(data.questions.filter((q) => !q.flagged));
+	const active = $derived(data.questions.filter((q) => !q.flagged && !q.ignored));
 	const flagged = $derived(data.questions.filter((q) => q.flagged));
+	const ignored = $derived(data.questions.filter((q) => q.ignored && !q.flagged));
 	const visible = $derived(
 		active.filter(
 			(q) =>
@@ -151,6 +152,22 @@
 						<button class="btn small danger">Supprimer</button>
 					</form>
 				</div>
+			</div>
+		{/each}
+	</section>
+{/if}
+
+{#if ignored.length}
+	<section class="panel">
+		<h2>Questions retirées ({ignored.length})</h2>
+		<p class="note">Tu as choisi de ne plus te les faire poser. Leur historique est conservé.</p>
+		{#each ignored as q}
+			<div class="flag">
+				<p>{q.prompt}</p>
+				<form method="POST" action="?/remettre" use:enhance>
+					<input type="hidden" name="questionId" value={q.id} />
+					<button class="btn small">Remettre dans les quiz</button>
+				</form>
 			</div>
 		{/each}
 	</section>

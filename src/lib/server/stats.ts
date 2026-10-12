@@ -61,7 +61,7 @@ export async function courseStats(now = new Date(), filter: { sessionId?: number
 			c.stability, c.last_ok, c.misconception, c.due
 		FROM course co
 		LEFT JOIN chapter ch ON ch.course_id = co.id
-		LEFT JOIN question q ON q.chapter_id = ch.id AND NOT q.flagged
+		LEFT JOIN question q ON q.chapter_id = ch.id AND NOT (q.flagged OR q.ignored)
 		LEFT JOIN card c ON c.question_id = q.id
 		WHERE NOT co.archived ${sessionFilter} ${courseFilter}
 		ORDER BY co.session_id NULLS LAST, co.position, co.name, ch.position, ch.id`;
@@ -159,7 +159,7 @@ export async function weakQuestions(limit = 6): Promise<WeakQuestion[]> {
 	return sql<WeakQuestion[]>`
 		SELECT q.id, q.prompt, co.name AS course, c.wrong_count AS wrong, c.misconception
 		FROM card c JOIN question q ON q.id = c.question_id JOIN course co ON co.id = q.course_id
-		WHERE NOT q.flagged AND NOT co.archived AND (c.wrong_count > 0 OR c.misconception)
+		WHERE NOT (q.flagged OR q.ignored) AND NOT co.archived AND (c.wrong_count > 0 OR c.misconception)
 		ORDER BY c.misconception DESC, (NOT c.last_ok) DESC, c.wrong_count DESC, c.stability ASC
 		LIMIT ${limit}`;
 }
@@ -167,10 +167,10 @@ export async function weakQuestions(limit = 6): Promise<WeakQuestion[]> {
 export async function counts() {
 	const [r] = await sql<{ due: number; fresh: number; misconceptions: number; leeches: number; flagged: number }[]>`
 		SELECT
-			count(*) FILTER (WHERE c.question_id IS NOT NULL AND c.due <= now() AND NOT q.flagged)::int AS due,
-			count(*) FILTER (WHERE c.question_id IS NULL AND NOT q.flagged)::int AS fresh,
-			count(*) FILTER (WHERE c.misconception AND NOT q.flagged)::int AS misconceptions,
-			count(*) FILTER (WHERE c.wrong_count >= 5 AND NOT q.flagged)::int AS leeches,
+			count(*) FILTER (WHERE c.question_id IS NOT NULL AND c.due <= now() AND NOT (q.flagged OR q.ignored))::int AS due,
+			count(*) FILTER (WHERE c.question_id IS NULL AND NOT (q.flagged OR q.ignored))::int AS fresh,
+			count(*) FILTER (WHERE c.misconception AND NOT (q.flagged OR q.ignored))::int AS misconceptions,
+			count(*) FILTER (WHERE c.wrong_count >= 5 AND NOT (q.flagged OR q.ignored))::int AS leeches,
 			count(*) FILTER (WHERE q.flagged)::int AS flagged
 		FROM question q JOIN course co ON co.id = q.course_id LEFT JOIN card c ON c.question_id = q.id
 		WHERE NOT co.archived`;

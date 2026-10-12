@@ -45,7 +45,7 @@
 		</label>
 		<label class="check">
 			<input type="checkbox" name="askConfidence" checked={data.askConfidence} />
-			Me demander mon niveau de confiance après chaque réponse (recommandé)
+			Me demander mon niveau de certitude après chaque réponse (sûr, hésitant, deviné)
 		</label>
 	</section>
 	<button class="go">Enregistrer</button>

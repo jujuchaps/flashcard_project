@@ -7,6 +7,8 @@ Application web pour étudier par session, matière et chapitre, avec une **bouc
 
 ## Démarrer
 
+> **Débutant?** Suis le guide pas à pas : [docs/INSTALLATION.md](docs/INSTALLATION.md) (installation, utilisation, mises à jour).
+
 Il faut [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash

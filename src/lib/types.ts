@@ -75,7 +75,8 @@ export interface GradeResult {
 	details?: boolean[];
 }
 
-export type Confidence = 'sur' | 'hesitant' | 'devine';
+/** « non » : la certitude n'a pas été demandée (réglage désactivé, examen blanc). */
+export type Confidence = 'sur' | 'hesitant' | 'devine' | 'non';
 
 export type Mastery = 'nouvelle' | 'fragile' | 'apprentissage' | 'maitrisee' | 'ancree';
 

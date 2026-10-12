@@ -21,6 +21,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			prompt: string;
 			slide: number | null;
 			flagged: boolean;
+			ignored: boolean;
 			flag_note: string | null;
 			stability: number | null;
 			last_ok: boolean | null;
@@ -29,7 +30,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			wrong_count: number | null;
 		}[]
 	>`
-		SELECT q.id, q.type, q.concept, q.prompt, q.slide, q.flagged, q.flag_note,
+		SELECT q.id, q.type, q.concept, q.prompt, q.slide, q.flagged, q.ignored, q.flag_note,
 			c.stability, c.last_ok, c.misconception, c.right_count, c.wrong_count
 		FROM question q LEFT JOIN card c ON c.question_id = q.id
 		WHERE q.chapter_id = ${chapterId} ORDER BY q.position, q.id`;
@@ -40,6 +41,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		prompt: r.prompt,
 		slide: r.slide,
 		flagged: r.flagged,
+		ignored: r.ignored,
 		flagNote: r.flag_note,
 		right: r.right_count ?? 0,
 		wrong: r.wrong_count ?? 0,
@@ -89,6 +91,12 @@ export const actions: Actions = {
 	retablir: async ({ request, params }) => {
 		const form = await request.formData();
 		await sql`UPDATE question SET flagged = false, flag_note = NULL
+			WHERE id = ${Number(form.get('questionId'))} AND chapter_id = ${Number(params.cid)}`;
+		return { ok: 'Question remise dans les quiz.' };
+	},
+	remettre: async ({ request, params }) => {
+		const form = await request.formData();
+		await sql`UPDATE question SET ignored = false
 			WHERE id = ${Number(form.get('questionId'))} AND chapter_id = ${Number(params.cid)}`;
 		return { ok: 'Question remise dans les quiz.' };
 	},

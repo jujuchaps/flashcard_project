@@ -62,7 +62,7 @@
 		if (!q || result) return;
 		submitted = a;
 		if (view.exam) {
-			send('sur');
+			send('non');
 			return;
 		}
 		result = grade(q.payload, a);
@@ -120,6 +120,20 @@
 		view.notices = ['Question signalée et retirée des quiz. Tu la retrouveras dans la page du cours.'];
 	}
 
+	async function retire() {
+		if (!q) return;
+		const label = q.courseName + (q.chapterName && q.chapterName !== 'Général' ? ` › ${q.chapterName}` : '');
+		await fetch(`/api/questions/${q.id}/retirer`, {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ seriesId: view.id })
+		});
+		const res = await fetch(`/api/serie/${view.id}`);
+		if (res.ok) view = await res.json();
+		reset();
+		view.notices = [`Question retirée : elle ne te sera plus posée. Pour la remettre, ouvre ${label} dans Cours.`];
+	}
+
 	async function askClaude() {
 		if (!q || !result) return;
 		const text = [
@@ -152,7 +166,7 @@
 			}
 		} else if (e.key === 'Enter') {
 			e.preventDefault();
-			send('sur');
+			send('non');
 		}
 	}
 
@@ -191,6 +205,7 @@
 	<div class="head">
 		<span class="note">{view.progress.done} réglée{view.progress.done > 1 ? 's' : ''} sur {view.progress.total}</span>
 		<div class="row">
+			<button class="btn small" onclick={retire} title="Retirer cette question de tous les quiz (tu pourras la remettre)">Ne plus me la poser</button>
 			<button class="btn small" onclick={flag} title="Question fausse, ambiguë ou mal formulée">Signaler</button>
 			<a class="btn small" href="/">Quitter</a>
 		</div>
@@ -240,7 +255,7 @@
 				<p><span class="note">Réponse modèle :</span> {q.payload.reponse_modele}</p>
 			{/if}
 			{#if q.explanation}<p>{q.explanation}</p>{/if}
-			{#if q.source || q.slide}
+			{#if (q.source && q.source !== 'artefact quiz-cégep') || q.slide}
 				<p class="note">Source : {q.source ?? q.chapterName}{q.slide ? `, diapo ${q.slide}` : ''}</p>
 			{/if}
 			<div class="row tools">
@@ -264,7 +279,7 @@
 				<button class="btn" disabled={busy} onclick={() => send('devine')}><span class="key">3</span>Deviné</button>
 			</div>
 		{:else}
-			<button class="go next" disabled={busy} onclick={() => send('sur')}>Suivante</button>
+			<button class="go next" disabled={busy} onclick={() => send('non')}>Suivante <span class="hint">(Entrée)</span></button>
 		{/if}
 	{/if}
 {:else if view.review}
@@ -399,6 +414,11 @@
 	}
 	.next {
 		margin-top: 14px;
+	}
+	.next .hint {
+		font-weight: 400;
+		opacity: 0.75;
+		font-size: 0.9rem;
 	}
 	.score {
 		font-family: 'Bricolage Grotesque', system-ui, sans-serif;

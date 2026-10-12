@@ -65,3 +65,11 @@ describe('progression de l’artefact', () => {
 		expect(masteryOf({ stability: weak.card.stability, lastOk: weak.lastOk, misconception: false })).toBe('fragile');
 	});
 });
+
+describe('certitude non demandée', () => {
+	it('une bonne réponse compte normalement, une mauvaise est à revoir', () => {
+		expect(ratingFor(true, 'non')).toBe(Rating.Good);
+		expect(ratingFor(false, 'non')).toBe(Rating.Again);
+		expect(countsAsSuccess(true, 'non')).toBe(true);
+	});
+});

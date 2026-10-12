@@ -11,6 +11,9 @@
 <h1>Modifier la question</h1>
 <p class="sub">Même format que les fichiers produits par Claude (voir le fichier d’instructions). L’app vérifie tout avant d’enregistrer.</p>
 
+{#if data.question.ignored && !data.question.flagged}
+	<p class="msg warn">Question retirée des quiz (« Ne plus me la poser »).</p>
+{/if}
 {#if data.question.flagged}
 	<p class="msg warn">Question signalée{data.question.flagNote ? ` : « ${data.question.flagNote} »` : ''}.</p>
 {/if}
@@ -30,7 +33,7 @@
 			</select>
 		</label>
 		<label class="check"><input type="checkbox" name="reset" /> Remettre ma progression à zéro (si la bonne réponse a changé)</label>
-		{#if data.question.flagged}
+		{#if data.question.flagged || data.question.ignored}
 			<label class="check"><input type="checkbox" name="unflag" checked /> Remettre la question dans les quiz</label>
 		{/if}
 	</section>

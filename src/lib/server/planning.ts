@@ -92,7 +92,7 @@ export async function evaluationScope(ev: Pick<Evaluation, 'courseId' | 'chapter
 	return sql<ScopeRow[]>`
 		SELECT q.id, q.chapter_id, c.fsrs, c.last_ok, c.misconception
 		FROM question q LEFT JOIN card c ON c.question_id = q.id
-		WHERE q.course_id = ${ev.courseId} AND NOT q.flagged
+		WHERE q.course_id = ${ev.courseId} AND NOT (q.flagged OR q.ignored)
 			AND (cardinality(${ev.chapterIds}::int[]) = 0 OR q.chapter_id = ANY(${ev.chapterIds}::int[]))`;
 }
 
@@ -222,7 +222,7 @@ export async function dailyPlan(now = new Date()): Promise<DailyPlan> {
 	}));
 	const [{ due }] = await sql<{ due: number }[]>`
 		SELECT count(*)::int AS due FROM card c JOIN question q ON q.id = c.question_id JOIN course co ON co.id = q.course_id
-		WHERE c.due <= ${now} AND NOT q.flagged AND NOT co.archived`;
+		WHERE c.due <= ${now} AND NOT (q.flagged OR q.ignored) AND NOT co.archived`;
 	const newToday = items.reduce((s, i) => s + i.remainingToday, 0);
 	const minutes = minutesFor(due + newToday);
 	return { items, reviews: due, newToday, minutes, targetMinutes, overloaded: minutes > targetMinutes, examNew };
@@ -239,7 +239,7 @@ export async function forecast(plan: DailyPlan, days = 14): Promise<ForecastDay[
 	const rows = await sql<{ d: string; n: number }[]>`
 		SELECT to_char(greatest(c.due, now()) AT TIME ZONE current_setting('TimeZone'), 'YYYY-MM-DD') AS d, count(*)::int AS n
 		FROM card c JOIN question q ON q.id = c.question_id JOIN course co ON co.id = q.course_id
-		WHERE NOT q.flagged AND NOT co.archived AND c.due < now() + make_interval(days => ${days})
+		WHERE NOT (q.flagged OR q.ignored) AND NOT co.archived AND c.due < now() + make_interval(days => ${days})
 		GROUP BY 1`;
 	const byDay = new Map(rows.map((r) => [r.d, r.n]));
 	const out: ForecastDay[] = [];
@@ -274,7 +274,7 @@ export async function alerts(evs: EvaluationStatus[], now = new Date()): Promise
 	const rows = await sql<{ chapter_id: number; chapter: string; course: string; fsrs: Record<string, unknown>; last_ok: boolean }[]>`
 		SELECT q.chapter_id, ch.name AS chapter, co.name AS course, c.fsrs, c.last_ok
 		FROM card c JOIN question q ON q.id = c.question_id JOIN chapter ch ON ch.id = q.chapter_id JOIN course co ON co.id = q.course_id
-		WHERE NOT q.flagged AND NOT co.archived`;
+		WHERE NOT (q.flagged OR q.ignored) AND NOT co.archived`;
 	const f = scheduler();
 	const chapters = new Map<number, { name: string; sum: number; n: number }>();
 	for (const r of rows) {
@@ -293,7 +293,7 @@ export async function alerts(evs: EvaluationStatus[], now = new Date()): Promise
 		out.push({ level: 'warn', text: `« ${c.name} » s’efface : rétention estimée ${Math.round((c.sum / c.n) * 100)} %.` });
 	const [{ leeches }] = await sql<{ leeches: number }[]>`
 		SELECT count(*)::int AS leeches FROM card c JOIN question q ON q.id = c.question_id
-		WHERE c.wrong_count >= 5 AND NOT q.flagged`;
+		WHERE c.wrong_count >= 5 AND NOT (q.flagged OR q.ignored)`;
 	if (leeches)
 		out.push({
 			level: 'info',

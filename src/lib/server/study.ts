@@ -59,7 +59,7 @@ async function loadCandidates(p: SeriesParams): Promise<Candidate[]> {
 		JOIN chapter ch ON ch.id = q.chapter_id
 		JOIN course co ON co.id = q.course_id
 		LEFT JOIN card c ON c.question_id = q.id
-		WHERE NOT q.flagged AND NOT co.archived ${courseFilter} ${chapterFilter}`;
+		WHERE NOT (q.flagged OR q.ignored) AND NOT co.archived ${courseFilter} ${chapterFilter}`;
 	return rows.map((r) => ({
 		id: r.id,
 		chapterId: r.chapter_id,
@@ -309,7 +309,7 @@ async function buildView(
 		notices,
 		missed,
 		review,
-		askConfidence: !state.exam && (await getSetting('askConfidence', true)),
+		askConfidence: !state.exam && (await getSetting('askConfidence', false)),
 		exam: state.exam ? await examInfo(meta.params, meta.createdAt) : null
 	};
 }
@@ -351,7 +351,7 @@ export async function answerSeries(id: number, input: AnswerInput): Promise<Seri
 			manual = true;
 		}
 		const correct = result.correct || !!input.override;
-		const confidence: Confidence = ['sur', 'hesitant', 'devine'].includes(input.confidence) ? input.confidence : 'sur';
+		const confidence: Confidence = ['sur', 'hesitant', 'devine', 'non'].includes(input.confidence) ? input.confidence : 'non';
 		const success = countsAsSuccess(correct, confidence);
 		const firstTry = item.attempts === 0;
 
@@ -360,7 +360,9 @@ export async function answerSeries(id: number, input: AnswerInput): Promise<Seri
 				SELECT fsrs, misconception FROM card WHERE question_id = ${input.questionId}`;
 			const retention = await getSetting('retention', 0.9);
 			const card = review(c ? cardFromJson(c.fsrs) : null, ratingFor(correct, confidence), now, retention);
-			const misconception = !correct && confidence === 'sur' ? true : correct && confidence === 'sur' ? false : (c?.misconception ?? false);
+			// Fausse croyance : ratée en étant sûr. Une bonne réponse (ni devinée ni hésitante) l'efface.
+			const misconception =
+				!correct && confidence === 'sur' ? true : correct && (confidence === 'sur' || confidence === 'non') ? false : (c?.misconception ?? false);
 			await tx`INSERT INTO card (question_id, fsrs, due, stability, last_ok, misconception, right_count, wrong_count, last_reviewed_at)
 				VALUES (${input.questionId}, ${tx.json(cardToJson(card) as never)}, ${card.due}, ${card.stability}, ${success},
 					${misconception}, ${correct ? 1 : 0}, ${correct ? 0 : 1}, ${now})

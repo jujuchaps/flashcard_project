@@ -8,7 +8,7 @@ export const load: PageServerLoad = async () => {
 	const [session] = await sql<{ name: string }[]>`SELECT name FROM study_session WHERE id = ${sessionId}`;
 	return {
 		sessionName: session.name,
-		askConfidence: await getSetting('askConfidence', true),
+		askConfidence: await getSetting('askConfidence', false),
 		retention: await getSetting('retention', 0.9),
 		newPerSeries: await getSetting('newPerSeries', 10),
 		reviewSize: await getSetting('reviewSize', 30),

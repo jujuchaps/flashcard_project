@@ -22,6 +22,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			tags: string[];
 			payload: Payload;
 			flagged: boolean;
+			ignored: boolean;
 			flag_note: string | null;
 		}[]
 	>`
@@ -38,7 +39,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		2
 	);
 	return {
-		question: { id: q.id, courseId: q.course_id, courseName: q.course_name, chapterId: q.chapter_id, flagged: q.flagged, flagNote: q.flag_note },
+		question: { id: q.id, courseId: q.course_id, courseName: q.course_name, chapterId: q.chapter_id, flagged: q.flagged, ignored: q.ignored, flagNote: q.flag_note },
 		json,
 		chapters,
 		attempts
@@ -69,6 +70,7 @@ export const actions: Actions = {
 					chapter_id = (SELECT id FROM chapter WHERE id = ${chapterId} AND course_id = ${cur.course_id}
 						UNION ALL SELECT chapter_id FROM question WHERE id = ${id} LIMIT 1),
 					flagged = CASE WHEN ${unflag} THEN false ELSE flagged END,
+					ignored = CASE WHEN ${unflag} THEN false ELSE ignored END,
 					updated_at = now()
 					WHERE id = ${id}`;
 				if (reset) await tx`DELETE FROM card WHERE question_id = ${id}`;

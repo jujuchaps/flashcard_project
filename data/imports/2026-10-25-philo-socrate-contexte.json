@@ -1,0 +1,582 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "philo",
+  "nom": "Philosophie et rationalité"
+ },
+ "chapitre": {
+  "nom": "Socrate et son contexte",
+  "source": "Philo 1 - Cours 14 - Socrate, père fondateur de la philo occidentale",
+  "diapos": 43
+ },
+ "questions": [
+  {
+   "type": "qcm",
+   "concept": "Guerres médiques",
+   "q": "Qui s'opposent pendant les guerres médiques?",
+   "choix": [
+    "Les Grecs et les Perses",
+    "Athènes et Sparte",
+    "Les Grecs et les Romains",
+    "Sparte et Corinthe"
+   ],
+   "reponse": 0,
+   "explication": "Les guerres médiques opposent les Grecs aux Perses pendant la première moitié du 5e siècle avant notre ère. Athènes contre Sparte, c'est la guerre du Péloponnèse.",
+   "diapo": 2
+  },
+  {
+   "type": "ordre",
+   "concept": "Guerres médiques",
+   "q": "Place ces événements dans l'ordre chronologique.",
+   "elements": [
+    "Révolte des cités grecques d'Ionie (Milet rasée)",
+    "Bataille des Thermopyles",
+    "Création de la Ligue de Délos",
+    "Paix de Callias et apogée d'Athènes sous Périclès"
+   ],
+   "explication": "-500 révolte d'Ionie; -480 Thermopyles; -478 Ligue de Délos; -448 paix de Callias.",
+   "diapo": 2
+  },
+  {
+   "type": "association",
+   "concept": "Bataille des Thermopyles",
+   "q": "Bataille des Thermopyles (-480) : associe chaque nom à son rôle.",
+   "paires": [
+    [
+     "Xerxès",
+     "Roi perse"
+    ],
+    [
+     "Léonidas Ier",
+     "Roi de Sparte"
+    ],
+    [
+     "Éphialtès",
+     "Traître qui a trahi les Grecs"
+    ]
+   ],
+   "explication": "Les 300 Spartiates de Léonidas ralentissent l'armée de Xerxès. Depuis, « Éphialtès » signifie « cauchemar » en grec et sert de synonyme de traître.",
+   "diapo": 4
+  },
+  {
+   "type": "courte",
+   "concept": "Bataille des Thermopyles",
+   "q": "Que signifie « Thermopyles » en grec?",
+   "reponses": [
+    "portes chaudes",
+    "les portes chaudes"
+   ],
+   "explication": "Les Thermopyles (« portes chaudes ») sont un passage étroit considéré comme la porte de la Grèce centrale.",
+   "diapo": 4
+  },
+  {
+   "type": "qcm",
+   "concept": "Ligue de Délos",
+   "q": "Pourquoi les cités alliées se retournent-elles contre Athènes après la paix de -448?",
+   "choix": [
+    "Elles continuent de payer un tribut à Athènes alors que la paix règne",
+    "Athènes refuse de combattre les Perses",
+    "Sparte les a conquises",
+    "Athènes devient une tyrannie"
+   ],
+   "reponse": 0,
+   "explication": "La Ligue de Délos, créée en -478 contre les Perses, perd son utilité après -448, mais les alliés paient toujours un tribut : ils s'allient contre l'hégémonie athénienne.",
+   "diapo": 8
+  },
+  {
+   "type": "trous",
+   "concept": "Guerre du Péloponnèse",
+   "texte": "La guerre du Péloponnèse dure de [[-431|431]] à [[-404|404]] et oppose Athènes à Sparte : l'équivalent d'une guerre mondiale antique.",
+   "explication": "Les dates sont avant notre ère; Sparte et Corinthe dirigent l'alliance contre Athènes.",
+   "diapo": 13
+  },
+  {
+   "type": "association",
+   "concept": "Guerre du Péloponnèse",
+   "q": "Associe chaque cité à ses caractéristiques.",
+   "paires": [
+    [
+     "Athènes",
+     "Démocratie, plus grande puissance maritime"
+    ],
+    [
+     "Sparte",
+     "Dyarchie militaire, armée terrestre la plus redoutable"
+    ]
+   ],
+   "explication": "Athènes domine la mer; Sparte, gouvernée par deux rois, domine sur terre.",
+   "diapo": 13
+  },
+  {
+   "type": "courte",
+   "concept": "Démocratie athénienne",
+   "q": "Quel dirigeant, réélu chaque année de -444 à -429, est l'emblème de la démocratie athénienne?",
+   "reponses": [
+    "Périclès",
+    "Pericles"
+   ],
+   "explication": "Périclès instaure notamment une rétribution pour les magistrats, bouleutes et héliastes, ce qui permet aux citoyens pauvres de participer à la politique.",
+   "diapo": 10
+  },
+  {
+   "type": "qcm",
+   "concept": "Démocratie athénienne",
+   "q": "Pourquoi Périclès instaure-t-il une rétribution pour les magistrats, bouleutes et héliastes?",
+   "choix": [
+    "Pour permettre aux citoyens plus pauvres de participer à la politique",
+    "Pour récompenser les aristocrates",
+    "Pour financer la guerre contre Sparte",
+    "Pour attirer des métèques à Athènes"
+   ],
+   "reponse": 0,
+   "explication": "La politique, autrefois réservée aux aristocrates, s'ouvre aux citoyens pauvres grâce à cette rétribution.",
+   "diapo": 10
+  },
+  {
+   "type": "association",
+   "concept": "Démocratie athénienne",
+   "q": "Associe chaque institution athénienne à sa description.",
+   "paires": [
+    [
+     "Ecclésia",
+     "Assemblée des citoyens libres"
+    ],
+    [
+     "Boulè",
+     "Conseil des Cinq-Cents tirés au sort"
+    ],
+    [
+     "Héliée",
+     "Tribunal populaire de 6 000 citoyens"
+    ],
+    [
+     "Magistrats",
+     "700 personnes qui appliquent les lois, mandat d'un an"
+    ]
+   ],
+   "explication": "La Boulè prépare les projets de lois et convoque l'Ecclésia; le jugement de l'Héliée est sans appel.",
+   "diapo": 11
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Démocratie athénienne",
+   "q": "Les membres de la Boulè sont élus par vote populaire.",
+   "reponse": false,
+   "explication": "Faux : les 500 bouleutes (50 par tribu) sont tirés au sort parmi les citoyens de plus de 30 ans.",
+   "diapo": 11
+  },
+  {
+   "type": "qcm",
+   "concept": "Sparte",
+   "q": "Qu'est-ce que la dyarchie spartiate?",
+   "choix": [
+    "Le gouvernement simultané de deux rois",
+    "Le pouvoir de l'assemblée du peuple",
+    "Le règne d'un seul tyran",
+    "Le pouvoir des prêtres"
+   ],
+   "reponse": 0,
+   "explication": "Deux rois à la fois : l'un représente l'autorité religieuse, l'autre dirige les stratégies militaires.",
+   "diapo": 15
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Sparte",
+   "q": "Quelles sont les trois caractéristiques de l'agogè, l'éducation spartiate? (plusieurs réponses)",
+   "choix": [
+    "Obligatoire",
+    "Collective",
+    "Organisée par la Cité",
+    "Réservée aux filles",
+    "Facultative"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "L'agogè est obligatoire (prérequis pour être citoyen), collective (par tranche d'âge) et organisée par la Cité, pour son bien.",
+   "diapo": 16
+  },
+  {
+   "type": "trous",
+   "concept": "Socrate",
+   "texte": "Socrate d'Athènes (né vers [[-470|470]], mort en [[-399|399]]) est considéré comme le père fondateur de la philosophie occidentale.",
+   "explication": "Il meurt en -399, à 70 ans, condamné par le tribunal athénien.",
+   "diapo": 20
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Les sources sur Socrate",
+   "q": "Quelles sont les trois sources principales pour connaître Socrate? (plusieurs réponses)",
+   "choix": [
+    "Platon",
+    "Xénophon",
+    "Aristote",
+    "Homère",
+    "Hésiode"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Platon, Xénophon et Aristote présentent trois Socrate très différents, d'autant plus que Socrate n'a rien écrit.",
+   "diapo": 21
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Les sources sur Socrate",
+   "q": "Socrate a laissé de nombreux écrits philosophiques.",
+   "reponse": false,
+   "explication": "Faux : Socrate n'a rien écrit. On le connaît par ses disciples (Platon, Xénophon) et par Aristote… d'où la difficulté de savoir qui il était vraiment.",
+   "diapo": 21
+  },
+  {
+   "type": "association",
+   "concept": "Les sources sur Socrate",
+   "q": "Associe chaque trait au Socrate qui le présente.",
+   "paires": [
+    [
+     "S'intéresse seulement à la philosophie morale",
+     "Le Socrate de Xénophon"
+    ],
+    [
+     "Philosophie réservée à une élite",
+     "Le Socrate de Platon"
+    ]
+   ],
+   "explication": "Xénophon : moraliste, nul en maths, veut diffuser la philosophie au plus grand nombre. Platon : métaphysicien, mathématicien accompli, philosophie pour une élite.",
+   "diapo": 21
+  },
+  {
+   "type": "qcm",
+   "concept": "Les sources sur Socrate",
+   "q": "Selon Platon, comment s'appelle la voix intérieure divine que Socrate entendait?",
+   "choix": [
+    "Le daïmon",
+    "La Pythie",
+    "Le logos",
+    "L'apeiron"
+   ],
+   "reponse": 0,
+   "explication": "Chez Platon, la relation de Socrate au divin est mystique : un « daïmon », sorte de divinité intérieure qui inspire le jugement. Chez Xénophon, elle est pratique et éthique.",
+   "diapo": 22
+  },
+  {
+   "type": "association",
+   "concept": "Vie de Socrate",
+   "q": "Associe chaque parent de Socrate à son métier.",
+   "paires": [
+    [
+     "Sophronisque (père)",
+     "Sculpteur d'atelier"
+    ],
+    [
+     "Phainarète (mère)",
+     "Sage-femme"
+    ]
+   ],
+   "explication": "Le métier de sa mère inspire le nom de sa méthode : la maïeutique, l'art d'« accoucher » les esprits.",
+   "diapo": 23
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Vie de Socrate",
+   "q": "À quelles batailles Socrate a-t-il combattu comme soldat? (plusieurs réponses)",
+   "choix": [
+    "Potidée",
+    "Délion",
+    "Amphipolis",
+    "Thermopyles",
+    "Marathon"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Potidée (-431 à -430), Délion (-424) et Amphipolis (-422) : il y fait preuve de courage, d'endurance et de discipline.",
+   "diapo": 23
+  },
+  {
+   "type": "qcm",
+   "concept": "Vie de Socrate",
+   "q": "En -404, qu'a refusé Socrate face au gouvernement des Trente (les tyrans)?",
+   "choix": [
+    "D'arrêter illégalement Léon de Salamine",
+    "De payer un tribut à Sparte",
+    "De quitter Athènes",
+    "De juger les généraux des Arginuses"
+   ],
+   "reponse": 0,
+   "explication": "Il refuse l'arrestation illégale de Léon de Salamine. En -406, il s'était déjà opposé au procès en bloc des généraux des Arginuses.",
+   "diapo": 23
+  },
+  {
+   "type": "qcm",
+   "concept": "Vie de Socrate",
+   "q": "Pourquoi la laideur de Socrate était-elle un paradoxe pour les Grecs?",
+   "choix": [
+    "La beauté de l'âme devait se refléter dans celle du corps",
+    "Les laids ne pouvaient pas être citoyens",
+    "Les philosophes devaient être des athlètes",
+    "La laideur était un signe de richesse"
+   ],
+   "reponse": 0,
+   "explication": "Platon le compare à Silène. Socrate montre que « le beau n'est pas forcément le signe extérieur du bon ».",
+   "diapo": 24
+  },
+  {
+   "type": "courte",
+   "concept": "Vie de Socrate",
+   "q": "À quel personnage mythologique, un satyre, Platon compare-t-il Socrate à cause de sa laideur?",
+   "reponses": [
+    "Silène",
+    "Silene"
+   ],
+   "explication": "Silène, père adoptif de Dionysos.",
+   "diapo": 24
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Procès de Socrate",
+   "q": "De quoi Socrate est-il accusé en -399? (plusieurs réponses)",
+   "choix": [
+    "Ne pas croire aux dieux de la Cité",
+    "Chercher à les remplacer par de nouvelles divinités",
+    "Corrompre la jeunesse",
+    "Trahir Athènes au profit de Sparte",
+    "Voler le trésor de la Ligue de Délos"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Accusé par Lykon, Anytos et Meletos, il est condamné à boire la ciguë.",
+   "diapo": 25
+  },
+  {
+   "type": "qcm",
+   "concept": "Procès de Socrate",
+   "q": "Par quel moyen Socrate est-il exécuté?",
+   "choix": [
+    "Une coupe de ciguë",
+    "La lapidation",
+    "L'exil",
+    "La décapitation"
+   ],
+   "reponse": 0,
+   "explication": "Il aurait pu fuir, mais il a préféré rester et subir son destin.",
+   "diapo": 25
+  },
+  {
+   "type": "qcm",
+   "concept": "L'oracle de Delphes",
+   "q": "Quelle réponse la Pythie de Delphes a-t-elle donnée à Chéréphon, qui demandait s'il existait un homme plus sage que Socrate?",
+   "choix": [
+    "Non, personne n'est plus sage que Socrate",
+    "Oui, Périclès est plus sage",
+    "Oui, tous les poètes sont plus sages",
+    "Elle a refusé de répondre"
+   ],
+   "reponse": 0,
+   "explication": "Au sanctuaire d'Apollon, la Pythie répond qu'aucun homme n'est plus sage que Socrate. Socrate part alors chercher pourquoi.",
+   "diapo": 25
+  },
+  {
+   "type": "association",
+   "concept": "Double ignorance",
+   "q": "Socrate interroge ceux qui sont réputés sages. Associe chaque groupe à ce qu'il découvre.",
+   "paires": [
+    [
+     "Hommes politiques",
+     "Ils se croient sages alors qu'ils ne le sont pas"
+    ],
+    [
+     "Poètes",
+     "Inspiration divine, mais aucune véritable connaissance"
+    ],
+    [
+     "Artisans",
+     "Compétents dans leur art, mais se croient savants sur les choses importantes"
+    ]
+   ],
+   "explication": "Tous souffrent d'une double ignorance.",
+   "diapo": 31
+  },
+  {
+   "type": "trous",
+   "concept": "Double ignorance",
+   "texte": "La double ignorance : ignorer la nature des choses dont on parle, et ignorer qu'on les [[ignore]].",
+   "explication": "C'est l'erreur que Socrate ne commet pas : il sait qu'il ne sait rien.",
+   "diapo": 31
+  },
+  {
+   "type": "qcm",
+   "concept": "Philosophe",
+   "q": "Selon Socrate, quelle est toute sa sagesse?",
+   "choix": [
+    "Il sait qu'il ne sait rien",
+    "Il connaît la nature de toutes choses",
+    "Il sait convaincre n'importe qui",
+    "Il possède un savoir divin"
+   ],
+   "reponse": 0,
+   "explication": "Les hommes pensent savoir, les dieux savent, Socrate ne pense pas savoir : il occupe la position intermédiaire du philosophe.",
+   "diapo": 32
+  },
+  {
+   "type": "association",
+   "concept": "Philosophe",
+   "q": "Décompose le mot « philosophe ».",
+   "paires": [
+    [
+     "Philein",
+     "Aspirer, aimer"
+    ],
+    [
+     "Sophia",
+     "Sagesse"
+    ]
+   ],
+   "explication": "Le philosophe aspire à la sagesse : il ne peut la chercher que s'il reconnaît son ignorance.",
+   "diapo": 32
+  },
+  {
+   "type": "ordre",
+   "concept": "Ironie socratique",
+   "q": "Place les étapes de la réfutation socratique dans l'ordre.",
+   "elements": [
+    "L'interlocuteur défend une thèse A",
+    "Socrate lui fait accepter les idées B et C",
+    "Socrate montre que B et C impliquent non-A",
+    "Socrate affirme que A a été démontrée fausse"
+   ],
+   "explication": "Socrate feint l'ignorance, puis amène l'interlocuteur à se contredire : c'est l'ironie socratique.",
+   "diapo": 33
+  },
+  {
+   "type": "qcm",
+   "concept": "Ironie socratique",
+   "q": "En quoi consiste l'ironie socratique?",
+   "choix": [
+    "Feindre l'ignorance et demander à l'interlocuteur de l'instruire, puis l'amener à se contredire",
+    "Se moquer publiquement des dieux",
+    "Réciter de longs discours pour convaincre",
+    "Répondre à une question par une autre question pour éviter le sujet"
+   ],
+   "reponse": 0,
+   "explication": "Socrate joue le rôle de l'élève désirant apprendre; il recourt aux hyperboles, antiphrases et à la dissimulation (« Salut au savant Hippias, homme supérieur et accompli »).",
+   "diapo": 33
+  },
+  {
+   "type": "courte",
+   "concept": "Connais-toi toi-même",
+   "q": "Quelle devise, inscrite à Delphes, est la base de la tradition philosophique grecque selon laquelle la sagesse débute par le retour vers soi?",
+   "reponses": [
+    "Connais-toi toi-même",
+    "Connais toi toi meme",
+    "Connais-toi",
+    "Nosce te ipsum"
+   ],
+   "explication": "« Connais-toi toi-même » : apprends ce que tu es, sache dans quel état tu es.",
+   "diapo": 35
+  },
+  {
+   "type": "qcm",
+   "concept": "Maïeutique",
+   "q": "Dans ses dialogues tardifs, que provoque le Socrate « accoucheur » de Platon en posant les bonnes questions?",
+   "choix": [
+    "Le ressouvenir de connaissances que l'âme a contemplées avant son incarnation",
+    "La colère de son interlocuteur",
+    "L'oubli des fausses croyances par la punition",
+    "La découverte de nouvelles divinités"
+   ],
+   "reponse": 0,
+   "explication": "Socrate ne montre plus à quel point l'interlocuteur est ignorant, mais à quel point il est savant : son âme contient des connaissances cachées.",
+   "diapo": 35
+  },
+  {
+   "type": "courte",
+   "concept": "Procès de Socrate",
+   "q": "Quel surnom vaut à Socrate ses railleries contre les sophistes et les milieux conservateurs?",
+   "reponses": [
+    "Le taon de la cité",
+    "taon de la cite",
+    "taon"
+   ],
+   "explication": "Comme un taon qui pique, il dérange la cité pour la réveiller.",
+   "diapo": 39
+  },
+  {
+   "type": "qcm",
+   "concept": "Procès de Socrate",
+   "q": "Selon le cours, quel rôle Socrate joue-t-il lors de son procès, alors que la démocratie est sans cesse mise à l'épreuve?",
+   "choix": [
+    "Bouc émissaire",
+    "Tyran",
+    "Général",
+    "Prêtre d'Apollon"
+   ],
+   "reponse": 0,
+   "explication": "Une accusation dont beaucoup auraient pu répondre : le vieil homme sert de bouc émissaire.",
+   "diapo": 40
+  },
+  {
+   "type": "qcm",
+   "concept": "Procès de Socrate",
+   "q": "Dans « La Mort de Socrate » de Jacques-Louis David (1787), que symbolise la chouette?",
+   "choix": [
+    "La philosophie, qui accompagne Athéna, déesse de la sagesse",
+    "La mort imminente",
+    "Les accusateurs de Socrate",
+    "La ville de Sparte"
+   ],
+   "reponse": 0,
+   "explication": "La chouette accompagne Athéna (Minerve chez les Romains), déesse de la sagesse.",
+   "diapo": 41
+  },
+  {
+   "type": "developpement",
+   "concept": "Double ignorance",
+   "q": "En quelques phrases, explique pourquoi Socrate, qui ignorait beaucoup de choses, était considéré comme le plus sage des hommes.",
+   "elements": [
+    {
+     "idee": "Socrate sait qu'il ne sait rien",
+     "mots": [
+      "sait qu'il ne sait rien",
+      "sait qu il ne sait rien",
+      "ne sait rien",
+      "reconnait son ignorance",
+      "reconnaît son ignorance"
+     ],
+     "points": 2
+    },
+    {
+     "idee": "Les autres souffrent de double ignorance",
+     "mots": [
+      "double ignorance",
+      "croient savoir",
+      "pensent savoir",
+      "se croient sages"
+     ],
+     "points": 2
+    },
+    {
+     "idee": "L'oracle de Delphes / la Pythie",
+     "mots": [
+      "oracle",
+      "pythie",
+      "delphes"
+     ],
+     "points": 1
+    }
+   ],
+   "reponse_modele": "D'après l'oracle de Delphes, personne n'était plus sage que Socrate. En interrogeant politiciens, poètes et artisans, il découvre qu'ils croient savoir alors qu'ils ne savent pas : c'est la double ignorance. Socrate, lui, sait qu'il ne sait rien; c'est toute sa sagesse.",
+   "explication": "Le savoir de son ignorance place Socrate entre les hommes qui pensent savoir et les dieux qui savent.",
+   "diapo": 31
+  }
+ ]
+}

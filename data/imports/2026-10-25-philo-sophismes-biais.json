@@ -1,0 +1,465 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "philo",
+  "nom": "Philosophie et rationalité"
+ },
+ "chapitre": {
+  "nom": "Sophismes et biais cognitifs"
+ },
+ "questions": [
+  {
+   "type": "qcm",
+   "concept": "Sophisme et biais",
+   "q": "Quelle est la différence entre un sophisme et un biais cognitif?",
+   "choix": [
+    "Un sophisme est un argument fallacieux; un biais cognitif est une erreur systématique et souvent inconsciente de notre jugement",
+    "Ce sont deux mots pour la même chose",
+    "Un sophisme est toujours involontaire; un biais est toujours volontaire",
+    "Un biais concerne seulement les statistiques"
+   ],
+   "reponse": 0,
+   "explication": "Le sophisme est dans l'argument (on peut l'utiliser pour tromper); le biais est dans notre façon de penser (un raccourci mental qui nous trompe nous-mêmes).",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Ad hominem",
+   "q": "« Tu ne peux pas parler d'environnement, tu as une voiture! » Quel sophisme est utilisé?",
+   "choix": [
+    "Attaque personnelle (ad hominem)",
+    "Homme de paille",
+    "Pente glissante",
+    "Appel à l'autorité"
+   ],
+   "reponse": 0,
+   "explication": "On attaque la personne au lieu de répondre à son argument. Avoir une voiture ne rend pas son argument faux.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Homme de paille",
+   "q": "A : « Il faudrait réduire un peu le budget militaire. » B : « Donc tu veux laisser le pays sans défense! » Quel sophisme commet B?",
+   "choix": [
+    "Homme de paille",
+    "Ad hominem",
+    "Faux dilemme",
+    "Appel à la popularité"
+   ],
+   "reponse": 0,
+   "explication": "B déforme la position de A pour la rendre plus facile à attaquer.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Pente glissante",
+   "q": "« Si on permet les cellulaires en classe, bientôt plus personne n'écoutera, puis tout le monde échouera et le cégep fermera. » Quel sophisme est utilisé?",
+   "choix": [
+    "Pente glissante",
+    "Généralisation hâtive",
+    "Faux dilemme",
+    "Pétition de principe"
+   ],
+   "reponse": 0,
+   "explication": "On enchaîne des conséquences de plus en plus graves sans montrer qu'elles sont probables.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Faux dilemme",
+   "q": "« Soit tu es avec nous, soit tu es contre nous. » Quel sophisme est utilisé?",
+   "choix": [
+    "Faux dilemme",
+    "Pente glissante",
+    "Ad hominem",
+    "Appel à la tradition"
+   ],
+   "reponse": 0,
+   "explication": "On présente seulement deux options alors qu'il en existe d'autres.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Appel à la popularité",
+   "q": "« Tout le monde achète ce téléphone, c'est donc le meilleur. » Quel sophisme est utilisé?",
+   "choix": [
+    "Appel à la popularité (ad populum)",
+    "Appel à l'autorité",
+    "Généralisation hâtive",
+    "Fausse causalité"
+   ],
+   "reponse": 0,
+   "explication": "Qu'une idée soit populaire ne prouve pas qu'elle soit vraie. C'est l'arme favorite du démagogue, qui flatte la foule.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Appel à l'autorité",
+   "q": "« Ce joueur de hockey dit que ce vaccin est dangereux, donc c'est vrai. » Quel sophisme est utilisé?",
+   "choix": [
+    "Appel à l'autorité",
+    "Appel à la popularité",
+    "Ad hominem",
+    "Appel à l'ignorance"
+   ],
+   "reponse": 0,
+   "explication": "On s'appuie sur une personne célèbre qui n'est pas compétente dans le domaine.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Généralisation hâtive",
+   "q": "« J'ai eu deux mauvais profs de maths, donc tous les profs de maths sont mauvais. » Quel sophisme est utilisé?",
+   "choix": [
+    "Généralisation hâtive",
+    "Fausse causalité",
+    "Homme de paille",
+    "Faux dilemme"
+   ],
+   "reponse": 0,
+   "explication": "On tire une conclusion générale à partir de trop peu de cas (un échantillon trop petit, comme en stats).",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Fausse causalité",
+   "q": "« J'ai porté mon chandail chanceux et on a gagné : c'est grâce au chandail. » Quel sophisme est utilisé?",
+   "choix": [
+    "Fausse causalité (post hoc)",
+    "Pente glissante",
+    "Appel à la tradition",
+    "Pétition de principe"
+   ],
+   "reponse": 0,
+   "explication": "Ce n'est pas parce qu'un événement suit un autre qu'il en est la cause.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Pétition de principe",
+   "q": "« Ce livre dit la vérité, car il est écrit dans ce livre qu'il dit la vérité. » Quel sophisme est utilisé?",
+   "choix": [
+    "Pétition de principe (raisonnement circulaire)",
+    "Appel à l'autorité",
+    "Généralisation hâtive",
+    "Homme de paille"
+   ],
+   "reponse": 0,
+   "explication": "La conclusion est déjà supposée dans la prémisse : le raisonnement tourne en rond.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Appel à l'ignorance",
+   "q": "« Personne n'a prouvé que les fantômes n'existent pas, donc ils existent. » Quel sophisme est utilisé?",
+   "choix": [
+    "Appel à l'ignorance",
+    "Appel à la popularité",
+    "Faux dilemme",
+    "Fausse causalité"
+   ],
+   "reponse": 0,
+   "explication": "L'absence de preuve contraire ne prouve pas qu'une affirmation est vraie.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Appel à la tradition",
+   "q": "« On a toujours fait comme ça, alors c'est la bonne façon. » Quel sophisme est utilisé?",
+   "choix": [
+    "Appel à la tradition",
+    "Appel à la popularité",
+    "Pente glissante",
+    "Ad hominem"
+   ],
+   "reponse": 0,
+   "explication": "L'ancienneté d'une pratique ne prouve pas qu'elle est bonne.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Tu quoque",
+   "q": "« Tu me dis de ne pas fumer, mais tu fumais à mon âge! » Quel sophisme est utilisé?",
+   "choix": [
+    "Tu quoque (« toi aussi »)",
+    "Homme de paille",
+    "Faux dilemme",
+    "Appel à l'autorité"
+   ],
+   "reponse": 0,
+   "explication": "On rejette un argument en montrant que la personne ne l'applique pas elle-même : ça ne rend pas l'argument faux. C'est une forme d'ad hominem.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Diversion",
+   "q": "Questionné sur la hausse des frais de scolarité, un ministre parle plutôt de la nouvelle piste cyclable. Quel sophisme est utilisé?",
+   "choix": [
+    "Diversion (hareng rouge)",
+    "Pente glissante",
+    "Pétition de principe",
+    "Généralisation hâtive"
+   ],
+   "reponse": 0,
+   "explication": "On détourne l'attention vers un autre sujet pour éviter la question.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "association",
+   "concept": "Sophismes",
+   "q": "Associe chaque sophisme à sa définition.",
+   "paires": [
+    [
+     "Ad hominem",
+     "Attaquer la personne plutôt que son argument"
+    ],
+    [
+     "Homme de paille",
+     "Déformer l'argument de l'autre pour mieux le réfuter"
+    ],
+    [
+     "Faux dilemme",
+     "Réduire un choix à deux options seulement"
+    ],
+    [
+     "Pente glissante",
+     "Prédire une chaîne de conséquences catastrophiques non prouvées"
+    ]
+   ],
+   "explication": "Ces quatre sophismes sont parmi les plus fréquents dans les débats.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Sophismes",
+   "q": "Un argument qui contient un sophisme a forcément une conclusion fausse.",
+   "reponse": false,
+   "explication": "Faux : un sophisme rend le raisonnement invalide, mais la conclusion peut quand même être vraie par hasard. On ne peut simplement pas la défendre avec cet argument.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Biais de confirmation",
+   "q": "Quel biais nous pousse à rechercher et à retenir surtout les informations qui confirment ce que l'on croit déjà?",
+   "choix": [
+    "Biais de confirmation",
+    "Biais d'ancrage",
+    "Effet de halo",
+    "Biais de disponibilité"
+   ],
+   "reponse": 0,
+   "explication": "On ignore les informations qui contredisent nos croyances : l'inverse de l'attitude de Socrate, qui passe ses idées à l'épreuve.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Effet Dunning-Kruger",
+   "q": "Quel biais pousse les personnes peu compétentes dans un domaine à surestimer leur compétence?",
+   "choix": [
+    "Effet Dunning-Kruger",
+    "Biais de confirmation",
+    "Biais rétrospectif",
+    "Effet de halo"
+   ],
+   "reponse": 0,
+   "explication": "C'est une version moderne de la double ignorance de Socrate : ne pas savoir que l'on ne sait pas.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Biais d'ancrage",
+   "q": "Un vendeur annonce d'abord un prix de 2 000 $, puis offre l'article à 1 200 $ : ça paraît une aubaine. Quel biais est exploité?",
+   "choix": [
+    "Biais d'ancrage",
+    "Biais de confirmation",
+    "Effet de groupe",
+    "Biais d'autocomplaisance"
+   ],
+   "reponse": 0,
+   "explication": "On se fie trop à la première information reçue (l'ancre) pour juger la suite.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Biais de disponibilité",
+   "q": "Après avoir vu plusieurs reportages sur des écrasements d'avion, on juge l'avion plus dangereux que l'auto. Quel biais est en jeu?",
+   "choix": [
+    "Biais de disponibilité",
+    "Biais d'ancrage",
+    "Effet de halo",
+    "Biais rétrospectif"
+   ],
+   "reponse": 0,
+   "explication": "On juge la fréquence d'un événement selon la facilité avec laquelle des exemples nous viennent en tête. En réalité, l'auto est bien plus risquée.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Effet de halo",
+   "q": "On suppose qu'une personne très belle est aussi intelligente et honnête. Quel biais est en jeu?",
+   "choix": [
+    "Effet de halo",
+    "Biais de confirmation",
+    "Effet de groupe",
+    "Biais de disponibilité"
+   ],
+   "reponse": 0,
+   "explication": "Une qualité visible influence notre jugement sur les autres qualités. Socrate, laid mais sage, contredisait justement l'idée que le beau est le signe du bon.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Biais rétrospectif",
+   "q": "Après le match : « Je le savais depuis le début qu'ils allaient perdre! » Quel biais est en jeu?",
+   "choix": [
+    "Biais rétrospectif",
+    "Biais d'ancrage",
+    "Biais d'autocomplaisance",
+    "Effet Dunning-Kruger"
+   ],
+   "reponse": 0,
+   "explication": "Une fois le résultat connu, on a l'impression qu'il était prévisible.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Biais d'autocomplaisance",
+   "q": "« J'ai réussi parce que je suis bon; j'ai échoué parce que l'examen était injuste. » Quel biais est en jeu?",
+   "choix": [
+    "Biais d'autocomplaisance",
+    "Biais de confirmation",
+    "Biais rétrospectif",
+    "Effet de halo"
+   ],
+   "reponse": 0,
+   "explication": "On s'attribue les succès et on attribue les échecs aux circonstances.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Effet de groupe",
+   "q": "On adopte une opinion parce que la majorité de son entourage la partage. Quel biais est en jeu?",
+   "choix": [
+    "Effet de groupe (conformisme)",
+    "Biais d'ancrage",
+    "Biais rétrospectif",
+    "Effet de halo"
+   ],
+   "reponse": 0,
+   "explication": "Socrate refusait de suivre l'opinion de la majorité : il fallait se gouverner soi-même selon la raison.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Coût irrécupérable",
+   "q": "« J'ai payé le billet, alors je reste jusqu'à la fin du film même s'il est ennuyant. » Quel biais est en jeu?",
+   "choix": [
+    "Le biais des coûts irrécupérables",
+    "Le biais d'ancrage",
+    "L'effet de halo",
+    "Le biais rétrospectif"
+   ],
+   "reponse": 0,
+   "explication": "L'argent déjà dépensé est perdu dans tous les cas : il ne devrait pas influencer la décision.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "association",
+   "concept": "Biais cognitifs",
+   "q": "Associe chaque biais à sa définition.",
+   "paires": [
+    [
+     "Biais de confirmation",
+     "Retenir surtout ce qui confirme nos croyances"
+    ],
+    [
+     "Biais d'ancrage",
+     "Trop se fier à la première information reçue"
+    ],
+    [
+     "Effet de halo",
+     "Une qualité influence le jugement sur les autres"
+    ],
+    [
+     "Biais de disponibilité",
+     "Juger selon les exemples qui viennent facilement en tête"
+    ]
+   ],
+   "explication": "Connaître ces biais aide à s'en méfier : c'est une forme moderne du « Connais-toi toi-même ».",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Esprit critique",
+   "q": "Quelles attitudes aident à se protéger des sophismes et des biais? (plusieurs réponses)",
+   "choix": [
+    "Chercher des informations qui contredisent son opinion",
+    "Vérifier la source et la compétence de l'auteur",
+    "Passer l'information au test des trois passoires",
+    "Croire ce que la majorité pense",
+    "Retenir surtout ce qui confirme ce qu'on pense"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Les deux dernières décrivent l'effet de groupe et le biais de confirmation.",
+   "tags": [
+    "hors document"
+   ]
+  }
+ ]
+}

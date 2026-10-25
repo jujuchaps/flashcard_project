@@ -1,0 +1,333 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "stat",
+  "nom": "Analyse quantitative"
+ },
+ "chapitre": {
+  "nom": "Mesures de tendance centrale",
+  "source": "16_mesures_tendance_centrale_A26.pdf",
+  "diapos": 20
+ },
+ "questions": [
+  {
+   "type": "qcm",
+   "concept": "Mesures de tendance centrale",
+   "q": "Quel est le rôle des mesures de tendance centrale?",
+   "choix": [
+    "Résumer une série statistique par une seule valeur ou modalité",
+    "Mesurer l'écart entre la plus grande et la plus petite donnée",
+    "Vérifier si un échantillon est représentatif",
+    "Classer les variables selon leur nature"
+   ],
+   "reponse": 0,
+   "explication": "Elles cherchent à résumer l'ensemble des données d'une série par une seule valeur ou modalité : moyenne, médiane ou mode.",
+   "diapo": 4
+  },
+  {
+   "type": "association",
+   "concept": "Mesures de tendance centrale",
+   "q": "Associe chaque mesure à sa description.",
+   "paires": [
+    [
+     "Moyenne",
+     "Point d'équilibre"
+    ],
+    [
+     "Médiane",
+     "Valeur du milieu"
+    ],
+    [
+     "Mode",
+     "Le plus populaire"
+    ]
+   ],
+   "explication": "Moyenne = point d'équilibre; médiane = valeur centrale qui sépare la série en deux parties égales; mode = valeur la plus fréquente.",
+   "diapo": 4
+  },
+  {
+   "type": "qcm",
+   "concept": "Moyenne",
+   "q": "Quel symbole désigne la moyenne d'une population?",
+   "choix": [
+    "μ (mu)",
+    "x̄ (x barre)",
+    "Md",
+    "σ (sigma)"
+   ],
+   "reponse": 0,
+   "explication": "μ (mu) pour la population (N données); x̄ (x barre) pour un échantillon (n données).",
+   "diapo": 7
+  },
+  {
+   "type": "qcm",
+   "concept": "Moyenne",
+   "q": "Quel symbole représente la moyenne d'un échantillon?",
+   "choix": [
+    "x̄",
+    "μ",
+    "Md",
+    "Mo"
+   ],
+   "reponse": 0,
+   "explication": "x̄ (x barre) est la moyenne d'un échantillon; μ celle d'une population. Md = médiane, Mo = mode.",
+   "diapo": 7
+  },
+  {
+   "type": "qcm",
+   "concept": "Moyenne",
+   "q": "Pour quelle nature de variable peut-on calculer une moyenne?",
+   "choix": [
+    "Quantitative seulement",
+    "Qualitative ordinale ou quantitative",
+    "Toutes les natures de variables",
+    "Qualitative seulement"
+   ],
+   "reponse": 0,
+   "explication": "La moyenne exige des valeurs numériques : variable quantitative seulement. La médiane accepte aussi l'ordinale; le mode, toutes.",
+   "diapo": 7
+  },
+  {
+   "type": "trous",
+   "concept": "Moyenne",
+   "texte": "Moyenne = somme des [[données]] ÷ [[nombre de données|nombre de donnees|effectif total|effectif]].",
+   "explication": "La moyenne est la somme de toutes les données divisée par le nombre de données (N pour une population, n pour un échantillon).",
+   "diapo": 7
+  },
+  {
+   "type": "numerique",
+   "concept": "Moyenne",
+   "q": "Données : 8, 10, 10, 12. Quelle est la moyenne?",
+   "reponse": 10,
+   "tolerance": 0,
+   "explication": "(8 + 10 + 10 + 12) ÷ 4 = 40 ÷ 4 = 10.",
+   "diapo": 6
+  },
+  {
+   "type": "numerique",
+   "concept": "Moyenne",
+   "q": "Données : 8, 10, 10, 24. Quelle est la moyenne?",
+   "reponse": 13,
+   "tolerance": 0,
+   "explication": "(8 + 10 + 10 + 24) ÷ 4 = 52 ÷ 4 = 13. La valeur extrême 24 déplace le point d'équilibre vers la droite.",
+   "diapo": 6
+  },
+  {
+   "type": "numerique",
+   "concept": "Moyenne",
+   "q": "Pour 100 étudiants en Sciences humaines, le nombre de frères et sœurs se répartit ainsi : 0 (10 étudiants), 1 (42), 2 (30), 3 (16), 4 (1), 5 (1). Quelle est la moyenne du nombre de frères et sœurs (au centième près)?",
+   "reponse": 1.59,
+   "tolerance": 0.005,
+   "explication": "(0×10 + 1×42 + 2×30 + 3×16 + 4×1 + 5×1) ÷ 100 = 159 ÷ 100 = 1,59.",
+   "diapo": 8
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Moyenne",
+   "q": "La moyenne est sensible aux valeurs extrêmes.",
+   "reponse": true,
+   "explication": "Vrai : avec 8, 10, 10, 12 la moyenne vaut 10, mais avec 8, 10, 10, 24 elle passe à 13. La médiane (10) ne bouge pas.",
+   "diapo": 6
+  },
+  {
+   "type": "trous",
+   "concept": "Moyenne",
+   "texte": "Interprétation : les [[unités statistiques|unites statistiques]] de l'échantillon ont [[en moyenne]] x̄ de la variable étudiée (+ contexte).",
+   "explication": "Formule d'interprétation de la moyenne vue en classe, à compléter avec le contexte de la variable.",
+   "diapo": 7
+  },
+  {
+   "type": "qcm",
+   "concept": "Médiane",
+   "q": "Quelle est la définition de la médiane?",
+   "choix": [
+    "La valeur ou modalité centrale qui sépare la série en 2 parties égales",
+    "La valeur qui revient le plus souvent",
+    "La somme des données divisée par leur nombre",
+    "La différence entre le maximum et le minimum"
+   ],
+   "reponse": 0,
+   "explication": "La médiane (Md) est la valeur du milieu : elle sépare la série ordonnée en deux parties égales.",
+   "diapo": 9
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Médiane",
+   "q": "Pour quelles natures de variables peut-on déterminer une médiane? (plusieurs réponses)",
+   "choix": [
+    "Qualitative ordinale",
+    "Quantitative",
+    "Qualitative nominale"
+   ],
+   "reponses": [
+    0,
+    1
+   ],
+   "explication": "La notion d'ordre est essentielle : qualitative ordinale ou quantitative. Une variable nominale n'a pas d'ordre.",
+   "diapo": 10
+  },
+  {
+   "type": "trous",
+   "concept": "Médiane",
+   "texte": "Pour trouver la médiane, on calcule les fréquences relatives [[cumulées|cumulees]] : la médiane est sur la ligne où [[50 %|50%|50]] est atteint ou dépassé.",
+   "explication": "C'est la méthode présentée en classe pour un tableau de distribution.",
+   "diapo": 10
+  },
+  {
+   "type": "numerique",
+   "concept": "Médiane",
+   "q": "Pour 100 étudiants en Sciences humaines, le nombre de frères et sœurs se répartit ainsi : 0 (10 étudiants), 1 (42), 2 (30), 3 (16), 4 (1), 5 (1). Quelle est la médiane?",
+   "reponse": 1,
+   "tolerance": 0,
+   "explication": "Fréquences relatives cumulées : 0 → 10 %, 1 → 52 %. Le 50 % est atteint à la ligne 1, donc Md = 1.",
+   "diapo": 11
+  },
+  {
+   "type": "numerique",
+   "concept": "Médiane",
+   "q": "Données : 8, 10, 10, 24. Quelle est la médiane?",
+   "reponse": 10,
+   "tolerance": 0,
+   "explication": "Série ordonnée : 8, 10, 10, 24. Les deux valeurs centrales sont 10 et 10, donc Md = 10, même si la valeur 24 est extrême.",
+   "diapo": 9
+  },
+  {
+   "type": "qcm",
+   "concept": "Médiane",
+   "q": "Quelle est la bonne interprétation de Md = 1 frère ou sœur?",
+   "choix": [
+    "Au moins 50 % des étudiants ont 1 frère ou sœur ou moins",
+    "La majorité des étudiants a exactement 1 frère ou sœur",
+    "Les étudiants ont en moyenne 1 frère ou sœur",
+    "Exactement la moitié des étudiants a 1 frère ou sœur"
+   ],
+   "reponse": 0,
+   "explication": "Interprétation de la médiane : au moins 50 % des unités statistiques ont des valeurs inférieures ou égales (ou supérieures ou égales) à Md.",
+   "diapo": 10
+  },
+  {
+   "type": "qcm",
+   "concept": "Mode",
+   "q": "Quelle est la définition du mode?",
+   "choix": [
+    "La valeur ou modalité qui se répète le plus souvent",
+    "La valeur du milieu de la série",
+    "Le point d'équilibre de la série",
+    "La valeur la plus élevée"
+   ],
+   "reponse": 0,
+   "explication": "Le mode (Mo) est la valeur, la modalité ou la classe qui a la plus haute fréquence (absolue ou relative).",
+   "diapo": 12
+  },
+  {
+   "type": "qcm",
+   "concept": "Mode",
+   "q": "Pour quelle nature de variable peut-on déterminer un mode?",
+   "choix": [
+    "Toutes",
+    "Quantitative seulement",
+    "Qualitative ordinale ou quantitative",
+    "Qualitative nominale seulement"
+   ],
+   "reponse": 0,
+   "explication": "Le mode s'applique à toutes les variables : c'est la seule mesure possible pour une variable qualitative nominale.",
+   "diapo": 13
+  },
+  {
+   "type": "numerique",
+   "concept": "Mode",
+   "q": "Pour 100 étudiants en Sciences humaines, le nombre de frères et sœurs se répartit ainsi : 0 (10 étudiants), 1 (42), 2 (30), 3 (16), 4 (1), 5 (1). Quel est le mode?",
+   "reponse": 1,
+   "tolerance": 0,
+   "explication": "La plus haute fréquence est 42 (42 %), pour la valeur 1 : Mo = 1.",
+   "diapo": 14
+  },
+  {
+   "type": "trous",
+   "concept": "Mode",
+   "texte": "Interprétation : la [[pluralité|pluralite]] ou la [[majorité|majorite]] des unités statistiques de l'échantillon a Mo de la variable étudiée.",
+   "explication": "On parle de pluralité quand le mode regroupe moins de 50 % des unités (ici 42 %), de majorité quand il en regroupe plus de 50 %.",
+   "diapo": 13
+  },
+  {
+   "type": "association",
+   "concept": "Formes de distributions",
+   "q": "Associe chaque forme de distribution à l'ordre de ses mesures.",
+   "paires": [
+    [
+     "Symétrique",
+     "Mode, médiane et moyenne presque égaux"
+    ],
+    [
+     "Asymétrique à droite",
+     "Moyenne plus grande que la médiane"
+    ],
+    [
+     "Asymétrique à gauche",
+     "Moyenne plus petite que la médiane"
+    ],
+    [
+     "Bimodale",
+     "Deux modes distincts ou plus"
+    ]
+   ],
+   "explication": "Symétrique : Mo ≈ Md ≈ x̄. À droite : Mo < Md < x̄. À gauche : x̄ < Md < Mo. La moyenne est tirée du côté de la longue queue (les valeurs extrêmes).",
+   "diapo": 17
+  },
+  {
+   "type": "association",
+   "concept": "Choix de la meilleure mesure",
+   "q": "Associe chaque forme de distribution à la mesure la plus représentative.",
+   "paires": [
+    [
+     "Symétrique",
+     "Moyenne"
+    ],
+    [
+     "Asymétrique (à droite ou à gauche)",
+     "Médiane"
+    ],
+    [
+     "Bimodale",
+     "Mode"
+    ]
+   ],
+   "explication": "Symétrique : moyenne; asymétrique : médiane, car elle n'est pas tirée par les valeurs extrêmes; bimodale : mode.",
+   "diapo": 17
+  },
+  {
+   "type": "ordre",
+   "concept": "Formes de distributions",
+   "q": "Distribution asymétrique à droite : place les mesures de la plus petite à la plus grande.",
+   "elements": [
+    "Mo",
+    "Md",
+    "x̄"
+   ],
+   "explication": "Asymétrique à droite : Mo < Md < x̄ (la moyenne est tirée vers les grandes valeurs).",
+   "diapo": 17
+  },
+  {
+   "type": "qcm",
+   "concept": "Choix de la meilleure mesure",
+   "q": "Les salaires d'une entreprise : la plupart sont modestes, quelques dirigeants gagnent énormément. Quelle mesure représente le mieux le salaire typique?",
+   "choix": [
+    "La médiane",
+    "La moyenne",
+    "Le mode",
+    "L'étendue"
+   ],
+   "reponse": 0,
+   "explication": "C'est une distribution asymétrique à droite : la moyenne est gonflée par les salaires extrêmes, la médiane ne l'est pas.",
+   "diapo": 17
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Formes de distributions",
+   "q": "Dans une distribution asymétrique à gauche, la moyenne est plus grande que le mode.",
+   "reponse": false,
+   "explication": "Faux : asymétrique à gauche, x̄ < Md < Mo. La moyenne est tirée vers les petites valeurs.",
+   "diapo": 17
+  }
+ ]
+}

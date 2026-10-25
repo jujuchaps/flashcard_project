@@ -1,0 +1,328 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "gest",
+  "nom": "Gestion des organisations"
+ },
+ "chapitre": {
+  "nom": "Comptabilité : l'état des résultats",
+  "source": "Cours 06 Comptabilité partie 02",
+  "diapos": 19
+ },
+ "questions": [
+  {
+   "type": "qcm",
+   "concept": "États financiers",
+   "q": "Que sont les états financiers?",
+   "choix": [
+    "Des rapports comptables produits périodiquement qui présentent de façon organisée les opérations financières de l'entreprise",
+    "Les déclarations de revenus envoyées au gouvernement",
+    "La liste des employés et de leurs salaires",
+    "Les prévisions de ventes pour l'année suivante"
+   ],
+   "reponse": 0,
+   "explication": "Les états financiers font état des opérations financières de l'entreprise, présentées de façon organisée, à intervalles réguliers.",
+   "diapo": 3
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "États financiers",
+   "q": "À qui l'information comptable est-elle destinée? (plusieurs réponses)",
+   "choix": [
+    "Aux utilisateurs internes",
+    "Aux utilisateurs externes",
+    "Seulement au propriétaire",
+    "Seulement au gouvernement"
+   ],
+   "reponses": [
+    0,
+    1
+   ],
+   "explication": "L'information comptable sert des utilisateurs internes (gestionnaires, propriétaire) et externes (banques, investisseurs, gouvernement…).",
+   "diapo": 3
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "États financiers",
+   "q": "Quels sont les trois principaux états financiers? (plusieurs réponses)",
+   "choix": [
+    "L'état des résultats",
+    "L'état des capitaux propres",
+    "Le bilan",
+    "Le budget de caisse",
+    "Le plan d'affaires"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Figure 1.1 : état des résultats, état des capitaux propres et bilan.",
+   "diapo": 4
+  },
+  {
+   "type": "association",
+   "concept": "États financiers",
+   "q": "Associe chaque état financier à ce qu'il montre.",
+   "paires": [
+    [
+     "État des résultats",
+     "Si l'entreprise a réalisé un bénéfice ou subi une perte"
+    ],
+    [
+     "État des capitaux propres",
+     "Les changements survenus dans le capital pendant l'exercice"
+    ],
+    [
+     "Bilan",
+     "L'actif et ses sources de financement (passif et capitaux propres)"
+    ]
+   ],
+   "explication": "L'état des résultats mesure la rentabilité; l'état des capitaux propres, l'évolution du capital; le bilan, ce que l'entreprise possède et comment c'est financé.",
+   "diapo": 4
+  },
+  {
+   "type": "courte",
+   "concept": "État des résultats",
+   "q": "Quel état financier révèle si l'entreprise est rentable, c'est-à-dire si elle a réalisé un bénéfice ou subi une perte?",
+   "reponses": [
+    "État des résultats",
+    "Etat des resultats",
+    "L'état des résultats"
+   ],
+   "explication": "L'état des résultats compare les produits et les charges d'une période.",
+   "diapo": 5
+  },
+  {
+   "type": "trous",
+   "concept": "Produits d'exploitation",
+   "texte": "Un produit d'exploitation représente l'[[augmentation]] des revenus de l'entreprise et provient habituellement de la [[vente]] de biens ou de la prestation de services.",
+   "explication": "Définition du cours : le produit d'exploitation est une composante de l'état des résultats.",
+   "diapo": 7
+  },
+  {
+   "type": "trous",
+   "concept": "Charges d'exploitation",
+   "texte": "Une charge d'exploitation est une somme engagée par l'entreprise dans le cadre de ses activités [[courantes]], dans le but de générer des [[produits d'exploitation|produits d exploitation|produits|revenus]].",
+   "explication": "On engage des charges pour réaliser des produits.",
+   "diapo": 9
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Produits d'exploitation",
+   "q": "Lesquels sont des produits d'exploitation? (plusieurs réponses)",
+   "choix": [
+    "Honoraires professionnels",
+    "Revenus de location",
+    "Commissions gagnées",
+    "Loyer",
+    "Charges d'intérêts",
+    "Publicité"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Figure 2.2 : ventes, services rendus, commissions gagnées, honoraires professionnels, redevances gagnées, revenus de location, produits d'intérêts. Loyer, intérêts payés et publicité sont des charges.",
+   "diapo": 8
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Charges d'exploitation",
+   "q": "Lesquelles sont des charges d'exploitation? (plusieurs réponses)",
+   "choix": [
+    "Électricité",
+    "Télécommunications",
+    "Frais de déplacement",
+    "Redevances gagnées",
+    "Services rendus",
+    "Produits d'intérêts"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Figure 2.3 : salaires, électricité, charges d'intérêts, frais de bureau, entretien et réparation, loyer, assurance, publicité, frais de déplacement, télécommunications.",
+   "diapo": 10
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Produits et charges",
+   "q": "Lesquels sont des PRODUITS (et non des charges)? (plusieurs réponses)",
+   "choix": [
+    "Produits d'intérêts",
+    "Charges d'intérêts",
+    "Revenus de location",
+    "Loyer"
+   ],
+   "reponses": [
+    0,
+    2
+   ],
+   "explication": "Attention au piège : les intérêts reçus sont un produit, les intérêts payés sont une charge. Le loyer payé est une charge, le revenu de location un produit.",
+   "diapo": 8
+  },
+  {
+   "type": "trous",
+   "concept": "Bénéfice net et perte nette",
+   "texte": "Produits d'exploitation − [[charges d'exploitation|charges d exploitation|charges]] = [[bénéfice net|benefice net|bénéfice|benefice]]",
+   "explication": "Si les produits dépassent les charges, la différence est un bénéfice net.",
+   "diapo": 11
+  },
+  {
+   "type": "qcm",
+   "concept": "Bénéfice net et perte nette",
+   "q": "Que se passe-t-il quand le total des charges dépasse le total des produits pour une période?",
+   "choix": [
+    "L'entreprise subit une perte nette",
+    "L'entreprise réalise un bénéfice net",
+    "La marge bénéficiaire brute augmente",
+    "Les capitaux propres augmentent"
+   ],
+   "reponse": 0,
+   "explication": "Perte nette = excédent du total des charges sur le total des produits pour une période donnée.",
+   "diapo": 11
+  },
+  {
+   "type": "association",
+   "concept": "Bénéfice net et perte nette",
+   "q": "Quel est l'effet sur les capitaux propres?",
+   "paires": [
+    [
+     "Bénéfice net",
+     "Augmentation des capitaux propres"
+    ],
+    [
+     "Perte nette",
+     "Diminution des capitaux propres"
+    ]
+   ],
+   "explication": "Le bénéfice net augmente les capitaux propres; la perte nette les diminue.",
+   "diapo": 12
+  },
+  {
+   "type": "numerique",
+   "concept": "Bénéfice net et perte nette",
+   "q": "Clinique Animo : services rendus 29 000 $; charges d'exploitation totales 15 390 $. Quel est le bénéfice net?",
+   "reponse": 13610,
+   "tolerance": 0,
+   "explication": "29 000 $ − 15 390 $ = 13 610 $.",
+   "unite": "$",
+   "diapo": 6
+  },
+  {
+   "type": "numerique",
+   "concept": "Bénéfice net et perte nette",
+   "q": "Clinique Animo : salaires 8 664 $, publicité 2 000 $, frais de bureau 2 272 $, entretien et réparation 1 636 $, assurance 818 $. Quel est le total des charges d'exploitation?",
+   "reponse": 15390,
+   "tolerance": 0,
+   "explication": "8 664 + 2 000 + 2 272 + 1 636 + 818 = 15 390 $.",
+   "unite": "$",
+   "diapo": 6
+  },
+  {
+   "type": "numerique",
+   "concept": "Bénéfice net et perte nette",
+   "q": "Une entreprise a 80 000 $ de produits d'exploitation et 95 000 $ de charges d'exploitation. Quel est le montant de sa perte nette?",
+   "reponse": 15000,
+   "tolerance": 0,
+   "explication": "Charges > produits : 95 000 − 80 000 = 15 000 $ de perte nette.",
+   "unite": "$",
+   "diapo": 11
+  },
+  {
+   "type": "qcm",
+   "concept": "Entreprise manufacturière",
+   "q": "Dans l'état des résultats simplifié d'une entreprise manufacturière, par quoi remplace-t-on le titre « Produits d'exploitation »?",
+   "choix": [
+    "Ventes",
+    "Marge bénéficiaire brute",
+    "Coût de fabrication",
+    "Honoraires"
+   ],
+   "reponse": 0,
+   "explication": "Pour le cours, « Produits d'exploitation » devient « Ventes », et on ajoute le coût de fabrication et la marge bénéficiaire brute.",
+   "diapo": 16
+  },
+  {
+   "type": "trous",
+   "concept": "Entreprise manufacturière",
+   "texte": "La marge bénéficiaire brute est l'excédent des [[ventes]] sur le [[coût de fabrication des produits finis|cout de fabrication des produits finis|coût de fabrication|cout de fabrication]].",
+   "explication": "Ventes − coût de fabrication des produits finis = marge bénéficiaire brute.",
+   "diapo": 16
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Entreprise manufacturière",
+   "q": "Lesquels font partie du coût de fabrication des produits finis? (plusieurs réponses)",
+   "choix": [
+    "Main-d'œuvre directe",
+    "Matières premières",
+    "Fournitures de production",
+    "Publicité",
+    "Assurance"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Le coût de fabrication regroupe les coûts liés à la fabrication : main-d'œuvre directe, matières premières, fournitures de production, etc. Publicité et assurance sont des charges d'exploitation.",
+   "diapo": 16
+  },
+  {
+   "type": "numerique",
+   "concept": "Entreprise manufacturière",
+   "q": "Fabricant XYZ : ventes 500 000 $; coût de fabrication des produits finis 250 000 $. Quelle est la marge bénéficiaire brute?",
+   "reponse": 250000,
+   "tolerance": 0,
+   "explication": "500 000 − 250 000 = 250 000 $.",
+   "unite": "$",
+   "diapo": 17
+  },
+  {
+   "type": "numerique",
+   "concept": "Entreprise manufacturière",
+   "q": "Fabricant XYZ : marge bénéficiaire brute 250 000 $; total des charges d'exploitation 208 406 $. Quel est le bénéfice net?",
+   "reponse": 41594,
+   "tolerance": 0,
+   "explication": "250 000 − 208 406 = 41 594 $.",
+   "unite": "$",
+   "diapo": 17
+  },
+  {
+   "type": "ordre",
+   "concept": "Entreprise manufacturière",
+   "q": "Place les lignes de l'état des résultats d'une entreprise manufacturière dans l'ordre, de haut en bas.",
+   "elements": [
+    "Ventes",
+    "Coût de fabrication des produits finis",
+    "Marge bénéficiaire brute",
+    "Charges d'exploitation",
+    "Bénéfice net"
+   ],
+   "explication": "Ventes − coût de fabrication = marge brute; marge brute − charges d'exploitation = bénéfice net.",
+   "diapo": 17
+  },
+  {
+   "type": "numerique",
+   "concept": "États financiers",
+   "q": "État des capitaux propres : capital au début 60 000 $, bénéfice net 13 610 $, apports 5 000 $, retraits 3 000 $. Quel est le capital à la fin?",
+   "reponse": 75610,
+   "tolerance": 0,
+   "explication": "60 000 + 13 610 + 5 000 − 3 000 = 75 610 $.",
+   "unite": "$",
+   "diapo": 4
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "États financiers",
+   "q": "Dans le bilan, le total de l'actif est égal au total du passif et des capitaux propres.",
+   "reponse": true,
+   "explication": "Vrai : Clinique Animo, actif 453 110 $ = passif 377 500 $ + capitaux propres 75 610 $.",
+   "diapo": 4
+  }
+ ]
+}

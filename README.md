@@ -38,6 +38,8 @@ Ta progression est déjà appliquée automatiquement. Si tu as étudié sur un a
 2. Dans Claude, joins ce fichier et ton PowerPoint (ou PDF), puis écris : *« Suis les instructions du fichier. Cours : Philosophie et rationalité (code philo). Chapitre : Les présocratiques. »*
 3. Dépose le `.json` obtenu dans **Importer**, vérifie l'aperçu, puis importe.
 
+Les fichiers placés dans `data/imports/` sont importés automatiquement au démarrage, une seule fois chacun (c'est ainsi que Claude ajoute des questions directement dans le code). Une question modifiée ou retirée dans l'app ne revient donc pas.
+
 Un exemple avec les 9 types de questions : [data/exemples/exemple-tous-les-types.json](data/exemples/exemple-tous-les-types.json).
 
 ## Examens et suivi

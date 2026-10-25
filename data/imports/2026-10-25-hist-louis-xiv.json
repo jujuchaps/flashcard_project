@@ -1,0 +1,442 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "hist",
+  "nom": "Histoire du monde"
+ },
+ "chapitre": {
+  "nom": "Louis XIV et l'absolutisme"
+ },
+ "questions": [
+  {
+   "type": "numerique",
+   "concept": "Règne",
+   "q": "En quelle année Louis XIV devient-il roi (à 4 ans)?",
+   "reponse": 1643,
+   "tolerance": 0,
+   "explication": "Il devient roi à la mort de son père Louis XIII en 1643.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "numerique",
+   "concept": "Règne",
+   "q": "En quelle année meurt Louis XIV?",
+   "reponse": 1715,
+   "tolerance": 0,
+   "explication": "1643–1715 : 72 ans de règne, le plus long de l'histoire de France. Son arrière-petit-fils Louis XV lui succède.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Régence",
+   "q": "Qui gouverne la France pendant l'enfance de Louis XIV?",
+   "choix": [
+    "Sa mère Anne d'Autriche, avec le cardinal Mazarin",
+    "Le cardinal Richelieu",
+    "Colbert",
+    "Le Parlement de Paris"
+   ],
+   "reponse": 0,
+   "explication": "Anne d'Autriche est régente et Mazarin principal ministre jusqu'à sa mort en 1661.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Fronde",
+   "q": "Qu'est-ce que la Fronde (1648–1653)?",
+   "choix": [
+    "Une révolte des parlements et des grands nobles contre le pouvoir royal",
+    "Une guerre contre l'Espagne",
+    "Une révolte des protestants",
+    "Une famine"
+   ],
+   "reponse": 0,
+   "explication": "Enfant, Louis XIV doit fuir Paris en pleine nuit. Il en garde une méfiance durable envers les grands nobles et Paris.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Fronde",
+   "q": "Le souvenir de la Fronde explique en partie pourquoi Louis XIV veut contrôler la noblesse.",
+   "reponse": true,
+   "explication": "Vrai : les grands nobles s'étaient révoltés contre la monarchie. Une fois adulte, le roi fait tout pour qu'ils ne puissent plus le menacer.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "numerique",
+   "concept": "Règne personnel",
+   "q": "En quelle année, à la mort de Mazarin, Louis XIV décide-t-il de gouverner seul, sans principal ministre?",
+   "reponse": 1661,
+   "tolerance": 0,
+   "explication": "En 1661 commence le règne personnel : le roi décide de tout lui-même.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Droit divin",
+   "q": "Que signifie la monarchie de droit divin?",
+   "choix": [
+    "Le pouvoir du roi vient de Dieu, et il n'a de comptes à rendre qu'à Dieu",
+    "Le roi est élu par le clergé",
+    "Le roi partage le pouvoir avec le pape",
+    "Le peuple choisit son roi au nom de Dieu"
+   ],
+   "reponse": 0,
+   "explication": "Le roi est le « lieutenant de Dieu sur terre ». Lui désobéir, c'est désobéir à Dieu.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Droit divin",
+   "q": "Quelle cérémonie, à la cathédrale de Reims, montre que le roi tient son pouvoir de Dieu?",
+   "choix": [
+    "Le sacre",
+    "Le lever",
+    "Le lit de justice",
+    "Les États généraux"
+   ],
+   "reponse": 0,
+   "explication": "Au sacre, le roi est oint avec une huile sainte : il devient un personnage sacré.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Bossuet",
+   "q": "Quel évêque théorise la monarchie de droit divin sous Louis XIV?",
+   "choix": [
+    "Bossuet",
+    "Mazarin",
+    "Colbert",
+    "Molière"
+   ],
+   "reponse": 0,
+   "explication": "Dans « Politique tirée des propres paroles de l'Écriture sainte », Bossuet explique que l'autorité royale est sacrée, paternelle et absolue.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Monarchie absolue",
+   "q": "Dans une monarchie absolue, quels pouvoirs le roi concentre-t-il? (plusieurs réponses)",
+   "choix": [
+    "Faire les lois",
+    "Les faire appliquer et gouverner",
+    "Rendre la justice",
+    "Aucun : il partage tout avec un parlement élu"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "« Absolu » vient du latin absolutus : délié, libre de toute autorité humaine. Le roi reste toutefois soumis à Dieu et aux lois fondamentales du royaume.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Roi-Soleil",
+   "q": "La phrase « L'État, c'est moi » a sûrement été prononcée par Louis XIV.",
+   "reponse": false,
+   "explication": "Faux : les historiens pensent qu'elle est inventée. Elle résume quand même bien l'absolutisme. Sur son lit de mort, il aurait dit : « Je m'en vais, mais l'État demeurera toujours. »",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "courte",
+   "concept": "Roi-Soleil",
+   "q": "Quel astre Louis XIV choisit-il comme emblème?",
+   "reponses": [
+    "soleil",
+    "le soleil"
+   ],
+   "explication": "Le Roi-Soleil : comme le soleil éclaire tout, le roi est le centre autour duquel tourne le royaume.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Versailles",
+   "q": "Qu'était Versailles avant les travaux de Louis XIV?",
+   "choix": [
+    "Un pavillon de chasse de son père Louis XIII",
+    "Une forteresse médiévale",
+    "Un monastère",
+    "Le palais de Mazarin"
+   ],
+   "reponse": 0,
+   "explication": "Louis XIV transforme le petit pavillon en immense palais à partir de 1661.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "numerique",
+   "concept": "Versailles",
+   "q": "En quelle année la cour et le gouvernement s'installent-ils officiellement à Versailles?",
+   "reponse": 1682,
+   "tolerance": 0,
+   "explication": "En 1682, Versailles devient le siège du pouvoir, loin de Paris, la ville de la Fronde.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "association",
+   "concept": "Versailles",
+   "q": "Associe chaque artiste à son rôle à Versailles.",
+   "paires": [
+    [
+     "Le Vau puis Hardouin-Mansart",
+     "Architectes du château"
+    ],
+    [
+     "Le Nôtre",
+     "Jardins à la française"
+    ],
+    [
+     "Le Brun",
+     "Peintures et décors"
+    ]
+   ],
+   "explication": "La galerie des Glaces (Hardouin-Mansart, plafond de Le Brun) célèbre les victoires du roi.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Domestication de la noblesse",
+   "q": "Pourquoi les grands nobles viennent-ils vivre à la cour de Versailles?",
+   "choix": [
+    "Parce que c'est là que le roi distribue faveurs, pensions et charges",
+    "Parce que leurs châteaux ont été détruits",
+    "Parce que la loi les y oblige sous peine de mort",
+    "Pour diriger les ministères"
+   ],
+   "reponse": 0,
+   "explication": "Loin du roi, pas de faveurs : « un noble absent est un noble oublié ». Rester en province, c'est perdre toute chance de promotion.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Domestication de la noblesse",
+   "q": "Qu'est-ce que l'étiquette à la cour de Versailles?",
+   "choix": [
+    "L'ensemble des règles précises qui organisent la vie de la cour autour du roi",
+    "Le prix des charges à vendre",
+    "Une taxe sur les nobles",
+    "Le règlement de l'armée"
+   ],
+   "reponse": 0,
+   "explication": "Assister au lever ou au coucher du roi, lui tendre sa chemise : ces honneurs deviennent l'objet de rivalités entre nobles, qui se disputent les faveurs au lieu de défier le roi.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Domestication de la noblesse",
+   "q": "Comment Louis XIV éloigne-t-il la noblesse du vrai pouvoir? (plusieurs réponses)",
+   "choix": [
+    "Il la retient à Versailles, loin de ses terres et de ses fidèles",
+    "Il l'occupe avec l'étiquette et les rivalités de cour",
+    "Il l'endette avec les dépenses de luxe, ce qui la rend dépendante de ses pensions",
+    "Il confie les ministères à des bourgeois plutôt qu'aux grands nobles",
+    "Il lui donne le droit de voter les impôts"
+   ],
+   "reponses": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "explication": "Surveillés, occupés, ruinés et écartés des conseils : les grands nobles brillent à la cour, mais ne gouvernent plus. Versailles est une « cage dorée ».",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Ministres",
+   "q": "À qui Louis XIV confie-t-il surtout ses ministères?",
+   "choix": [
+    "À des hommes d'origine bourgeoise ou de noblesse récente, comme Colbert et Louvois",
+    "Aux princes de sang royal",
+    "Aux grands nobles d'épée",
+    "Aux évêques"
+   ],
+   "reponse": 0,
+   "explication": "Ces ministres doivent tout au roi : il peut les renvoyer à tout moment, contrairement aux grands nobles qui ont leur propre puissance.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Colbert",
+   "q": "Quel est le rôle principal de Colbert?",
+   "choix": [
+    "Contrôleur général des finances : il développe l'économie et les manufactures",
+    "Chef des armées",
+    "Architecte de Versailles",
+    "Évêque et théoricien du droit divin"
+   ],
+   "reponse": 0,
+   "explication": "Colbert applique le mercantilisme : enrichir le royaume en exportant plus qu'il n'importe. Louvois, lui, réorganise l'armée.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Intendants",
+   "q": "Qui représente le roi dans les provinces pour y faire appliquer ses décisions?",
+   "choix": [
+    "Les intendants",
+    "Les daimyos",
+    "Les gouverneurs élus",
+    "Les curés"
+   ],
+   "reponse": 0,
+   "explication": "Choisis par le roi et révocables, les intendants s'occupent de la justice, de la police et des finances. Ils réduisent l'influence des nobles locaux.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "États généraux",
+   "q": "Louis XIV ne réunit jamais les États généraux.",
+   "reponse": true,
+   "explication": "Vrai : ils ne sont pas réunis de 1614 à 1789. Le roi absolu n'a pas besoin de consulter les représentants des trois ordres.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Édit de Nantes",
+   "q": "Que fait Louis XIV en 1685?",
+   "choix": [
+    "Il révoque l'édit de Nantes et interdit le protestantisme en France",
+    "Il signe l'édit de Nantes",
+    "Il convoque les États généraux",
+    "Il quitte Versailles"
+   ],
+   "reponse": 0,
+   "explication": "« Un roi, une foi, une loi » : environ 200 000 protestants (huguenots) quittent la France.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "ordre",
+   "concept": "Chronologie",
+   "q": "Mets ces événements du règne de Louis XIV dans l'ordre chronologique.",
+   "elements": [
+    "Louis XIV devient roi",
+    "La Fronde",
+    "Début du règne personnel",
+    "La cour s'installe à Versailles",
+    "Révocation de l'édit de Nantes"
+   ],
+   "explication": "1643, 1648–1653, 1661, 1682, 1685.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Comparaison",
+   "q": "Quel point commun y a-t-il entre Versailles sous Louis XIV et le sankin-kōtai du Japon d'Edo?",
+   "choix": [
+    "Les deux gardent les nobles près du pouvoir central pour les surveiller et les affaiblir financièrement",
+    "Les deux donnent plus de pouvoir aux nobles",
+    "Les deux interdisent le christianisme",
+    "Les deux créent un parlement"
+   ],
+   "reponse": 0,
+   "explication": "Le shogun et le roi de France, à la même époque, neutralisent la noblesse en la rapprochant d'eux et en lui imposant des dépenses ruineuses.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "developpement",
+   "concept": "Synthèse",
+   "q": "Explique comment Louis XIV éloigne la noblesse du vrai pouvoir.",
+   "elements": [
+    {
+     "idee": "Il attire et retient les nobles à Versailles, loin de leurs terres",
+     "mots": [
+      "versailles",
+      "cour",
+      "terres",
+      "province"
+     ],
+     "points": 1
+    },
+    {
+     "idee": "Il les occupe avec l'étiquette et la course aux faveurs",
+     "mots": [
+      "etiquette",
+      "faveur",
+      "lever",
+      "coucher",
+      "pension"
+     ],
+     "points": 1
+    },
+    {
+     "idee": "Le luxe de la cour les ruine et les rend dépendants du roi",
+     "mots": [
+      "luxe",
+      "depense",
+      "ruine",
+      "dependant",
+      "endette"
+     ],
+     "points": 1
+    },
+    {
+     "idee": "Il gouverne avec des ministres bourgeois comme Colbert, sans les grands nobles",
+     "mots": [
+      "colbert",
+      "louvois",
+      "ministre",
+      "bourgeois"
+     ],
+     "points": 1
+    }
+   ],
+   "reponse_modele": "Louis XIV attire les grands nobles à Versailles, loin de leurs terres et de leurs fidèles. Il les occupe avec l'étiquette (lever, coucher) et la course aux faveurs et aux pensions. Le luxe de la cour les ruine et les rend dépendants du roi. Enfin, il gouverne avec des ministres bourgeois comme Colbert et Louvois, qui lui doivent tout : les grands nobles brillent mais ne décident plus.",
+   "explication": "Quatre idées : éloignement, occupation, dépendance financière, exclusion du gouvernement.",
+   "tags": [
+    "hors document"
+   ]
+  }
+ ]
+}

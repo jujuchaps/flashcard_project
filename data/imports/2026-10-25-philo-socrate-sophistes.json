@@ -1,0 +1,460 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "philo",
+  "nom": "Philosophie et rationalité"
+ },
+ "chapitre": {
+  "nom": "Socrate et les sophistes démagogues",
+  "source": "Philo 1 - Cours 15 - Socrate et les sophistes démagogues",
+  "diapos": 36
+ },
+ "questions": [
+  {
+   "type": "qcm",
+   "concept": "Rôle de la raison",
+   "q": "Selon Socrate, à quoi doit servir la raison?",
+   "choix": [
+    "À la recherche et à la découverte de la vérité, et à une conduite juste",
+    "À convaincre à tout prix et remporter les débats",
+    "À s'enrichir en enseignant l'art oratoire",
+    "À expliquer l'origine de l'univers matériel"
+   ],
+   "reponse": 0,
+   "explication": "Socrate s'oppose aux sophistes, dont l'enseignement est trop utilitaire : la raison ne doit pas servir uniquement à convaincre.",
+   "diapo": 6
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Rôle de la raison",
+   "q": "Quelles sont les quatre valeurs que Socrate jugeait indissociables? (plusieurs réponses)",
+   "choix": [
+    "La Vérité",
+    "Le Bien",
+    "La Beauté",
+    "La Justice",
+    "La Richesse",
+    "La Gloire"
+   ],
+   "reponses": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "explication": "Une action juste est belle, bonne et vraie; ce qui est vrai ne peut qu'être juste, beau et bien.",
+   "diapo": 7
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Rôle de la raison",
+   "q": "Pour Socrate, il s'agit de faire triompher des thèses en répondant à un discours par un autre discours.",
+   "reponse": false,
+   "explication": "Faux : ça, c'est la manière des sophistes. Socrate examine les thèses et les passe à l'épreuve en questionnant son interlocuteur.",
+   "diapo": 7
+  },
+  {
+   "type": "association",
+   "concept": "Test des trois passoires",
+   "q": "Associe chaque passoire de Socrate à la question qu'elle pose.",
+   "paires": [
+    [
+     "La vérité",
+     "L'information est-elle vraie, repose-t-elle sur des faits?"
+    ],
+    [
+     "La bienveillance (bonté)",
+     "Quelle est l'intention derrière le message?"
+    ],
+    [
+     "L'utilité",
+     "L'information est-elle utile?"
+    ]
+   ],
+   "explication": "Le test des trois passoires aide à déterminer si une information mérite d'être partagée.",
+   "diapo": 8
+  },
+  {
+   "type": "ordre",
+   "concept": "Test des trois passoires",
+   "q": "Place les trois passoires dans l'ordre du test.",
+   "elements": [
+    "La vérité",
+    "La bienveillance",
+    "L'utilité"
+   ],
+   "explication": "1. Vérité, 2. Bienveillance (bonté), 3. Utilité.",
+   "diapo": 8
+  },
+  {
+   "type": "courte",
+   "concept": "Ironie socratique",
+   "q": "De quel mot grec, qui signifie « celui qui interroge », vient le mot « ironie »?",
+   "reponses": [
+    "eiron",
+    "eirôn"
+   ],
+   "explication": "Ironie vient du grec « eiron » : celui qui interroge.",
+   "diapo": 9
+  },
+  {
+   "type": "courte",
+   "concept": "Ironie socratique",
+   "q": "Complète la célèbre phrase de Socrate : « La seule chose que je sais, c'est que… »",
+   "reponses": [
+    "je ne sais rien",
+    "que je ne sais rien"
+   ],
+   "explication": "Socrate est présenté comme le professeur le plus modeste de tous les temps.",
+   "diapo": 9
+  },
+  {
+   "type": "trous",
+   "concept": "Maïeutique",
+   "texte": "La maïeutique est l'art d'[[accoucher]] les esprits : interroger ses disciples pour faire sortir de leur esprit les vérités qu'ils portent en eux. Le savoir est [[en nous]].",
+   "explication": "La connaissance ne s'acquiert pas comme on remplit une cruche vide : c'est un processus.",
+   "diapo": 10
+  },
+  {
+   "type": "qcm",
+   "concept": "Savoir et opinion",
+   "q": "Selon Socrate, pourquoi s'imaginer que l'on sait presque tout est-il dangereux?",
+   "choix": [
+    "Cela devient un obstacle à la connaissance et à la recherche",
+    "Cela rend les dieux jaloux",
+    "Cela empêche de convaincre les autres",
+    "Cela mène à la tyrannie"
+   ],
+   "reponse": 0,
+   "explication": "Il faut faire preuve de modestie et être à la recherche de la vérité. Socrate apprend à distinguer le savoir et l'opinion.",
+   "diapo": 11
+  },
+  {
+   "type": "courte",
+   "concept": "Vertu",
+   "q": "Quelle célèbre phrase de Socrate signifie que le mal vient de l'ignorance?",
+   "reponses": [
+    "Nul n'est méchant volontairement",
+    "Nul n est mechant volontairement",
+    "Personne ne fait le mal volontairement"
+   ],
+   "explication": "Lorsque l'on sait ce qu'est la Justice ou le Bien, on ne peut faire autrement que d'être juste et bon.",
+   "diapo": 12
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Vertu",
+   "q": "Selon le cours, quelles deux vertus commandent toutes les autres? (plusieurs réponses)",
+   "choix": [
+    "La maîtrise de soi",
+    "La justice",
+    "Le courage physique",
+    "La richesse",
+    "L'éloquence"
+   ],
+   "reponses": [
+    0,
+    1
+   ],
+   "explication": "La maîtrise de soi (agir selon la Raison) et la justice (la Raison appliquée à la conduite).",
+   "diapo": 12
+  },
+  {
+   "type": "qcm",
+   "concept": "Vertu",
+   "q": "Dans le dialogue Criton, que démontre Socrate à son ami, à la veille de son exécution?",
+   "choix": [
+    "Qu'il ne peut pas s'évader",
+    "Qu'il faut fuir Athènes",
+    "Que les dieux le sauveront",
+    "Que ses juges étaient des sophistes"
+   ],
+   "reponse": 0,
+   "explication": "Il faut se gouverner soi-même et ne faire que ce que la raison approuve, plutôt que suivre l'opinion de la majorité.",
+   "diapo": 12
+  },
+  {
+   "type": "qcm",
+   "concept": "Vertu",
+   "q": "Pour Socrate, qu'est-ce qui est le plus important?",
+   "choix": [
+    "Non pas vivre, mais bien vivre",
+    "Vivre le plus longtemps possible",
+    "Être aimé du peuple",
+    "Gagner tous les débats"
+   ],
+   "reponse": 0,
+   "explication": "C'est pourquoi il préfère mourir pour ses idées, afin d'être fidèle à ses principes.",
+   "diapo": 23
+  },
+  {
+   "type": "trous",
+   "concept": "Vertu",
+   "texte": "Pour Socrate, c'est par la [[raison]] qu'on acquiert la vertu, et c'est par la vertu qu'on atteint le [[bonheur]].",
+   "explication": "La vertu est la force morale par laquelle l'humain tend au bien.",
+   "diapo": 21
+  },
+  {
+   "type": "association",
+   "concept": "Disciples de Socrate",
+   "q": "Associe chaque disciple à ce qui le caractérise.",
+   "paires": [
+    [
+     "Antisthène d'Athènes",
+     "Fondateur de l'école cynique"
+    ],
+    [
+     "Aristippe de Cyrène",
+     "Fondateur de l'hédonisme"
+    ],
+    [
+     "Xénophon",
+     "Inventeur de la sténographie"
+    ],
+    [
+     "Platon",
+     "Fondateur de l'Académie"
+    ]
+   ],
+   "explication": "Platon, le « grand socratique », fonde l'Académie, qui subsiste près de 1 000 ans. Euclide de Mégare venait écouter Socrate la nuit, travesti en femme.",
+   "diapo": 14
+  },
+  {
+   "type": "qcm",
+   "concept": "Disciples de Socrate",
+   "q": "Quel disciple venait écouter Socrate la nuit, travesti en femme, parce qu'il ne pouvait pas entrer à Athènes sous peine de mort?",
+   "choix": [
+    "Euclide de Mégare",
+    "Platon",
+    "Xénophon",
+    "Alcibiade"
+   ],
+   "reponse": 0,
+   "explication": "Euclide de Mégare risquait la mort en entrant à Athènes.",
+   "diapo": 14
+  },
+  {
+   "type": "courte",
+   "concept": "Vie de Socrate",
+   "q": "Comment s'appelle l'épouse de Socrate, réputée être une mégère?",
+   "reponses": [
+    "Xanthippe",
+    "Xantippe"
+   ],
+   "explication": "Socrate épouse Xanthippe en -416; une seconde épouse, Myrto, est aussi mentionnée.",
+   "diapo": 17
+  },
+  {
+   "type": "qcm",
+   "concept": "Vie de Socrate",
+   "q": "Quel poète comique met Socrate en scène dans sa pièce « Les Nuées »?",
+   "choix": [
+    "Aristophane",
+    "Sophocle",
+    "Homère",
+    "Euripide"
+   ],
+   "reponse": 0,
+   "explication": "Aristophane, son principal détracteur, est aussi une des sources qui nous font connaître Socrate.",
+   "diapo": 5
+  },
+  {
+   "type": "qcm",
+   "concept": "Vie de Socrate",
+   "q": "En -432, à quel jeune Athénien Socrate, alors hoplite, sauve-t-il la vie?",
+   "choix": [
+    "Alcibiade",
+    "Platon",
+    "Périclès",
+    "Xénophon"
+   ],
+   "reponse": 0,
+   "explication": "Plus tard, à Délion (-424), Alcibiade, à cheval, ne quittera pas les côtés de Socrate en retraite à pied.",
+   "diapo": 5
+  },
+  {
+   "type": "qcm",
+   "concept": "Méthode socratique",
+   "q": "Qu'est-ce que la dialectique, selon le cours?",
+   "choix": [
+    "Une quête commune de la vérité",
+    "L'art de détruire son adversaire dans un débat",
+    "Un discours flatteur pour gagner l'adhésion du peuple",
+    "L'étude de la nature et de l'univers"
+   ],
+   "reponse": 0,
+   "explication": "Débattre ensemble, puis se réfuter, c'est se convaincre l'un et l'autre. Le sophiste, lui, veut triompher et détruire son adversaire.",
+   "diapo": 19
+  },
+  {
+   "type": "qcm",
+   "concept": "Sophistes",
+   "q": "Qui étaient les sophistes?",
+   "choix": [
+    "Des professeurs itinérants de rhétorique qui se faisaient payer",
+    "Des philosophes de la nature qui cherchaient le principe de l'univers",
+    "Les juges de l'Héliée",
+    "Les prêtres du temple de Delphes"
+   ],
+   "reponse": 0,
+   "explication": "Au 5e siècle avant notre ère, ils allaient de ville en ville enseigner l'art d'argumenter, parfois très cher. « Sophiste » signifie sage ou savant.",
+   "diapo": 33
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Sophistes",
+   "q": "Quels sont les deux sophistes les plus connus? (plusieurs réponses)",
+   "choix": [
+    "Protagoras d'Abdère",
+    "Gorgias",
+    "Thalès de Milet",
+    "Anaximène",
+    "Xénophon"
+   ],
+   "reponses": [
+    0,
+    1
+   ],
+   "explication": "Protagoras d'Abdère et Gorgias. Thalès et Anaximène sont des philosophes de la nature (présocratiques).",
+   "diapo": 33
+  },
+  {
+   "type": "qcm",
+   "concept": "Sophistes",
+   "q": "Pourquoi la démocratie athénienne a-t-elle favorisé les sophistes?",
+   "choix": [
+    "Les citoyens devaient savoir débattre et convaincre pour faire passer leurs solutions",
+    "Les sophistes étaient payés par l'État",
+    "Les femmes et les esclaves voulaient apprendre la rhétorique",
+    "Sparte interdisait l'art oratoire"
+   ],
+   "reponse": 0,
+   "explication": "En démocratie directe, il fallait maîtriser l'art oratoire, l'art de la discussion et de convaincre.",
+   "diapo": 30
+  },
+  {
+   "type": "association",
+   "concept": "Démocratie athénienne",
+   "q": "Pyramide sociale d'Athènes : associe chaque groupe à sa situation.",
+   "paires": [
+    [
+     "Citoyens",
+     "Hommes libres nés de parents athéniens, participent à la vie politique"
+    ],
+    [
+     "Métèques",
+     "Étrangers libres qui paient une taxe, mais ne sont pas citoyens"
+    ],
+    [
+     "Femmes de citoyens",
+     "Aucun droit politique, dirigent la maison"
+    ],
+    [
+     "Esclaves",
+     "Considérés comme des objets, sans droits"
+    ]
+   ],
+   "explication": "Seuls les hommes libres, les véritables citoyens, participaient aux décisions.",
+   "diapo": 28
+  },
+  {
+   "type": "trous",
+   "concept": "Démagogie",
+   "texte": "La démagogie est une politique par laquelle on [[flatte]] les masses pour gagner et exploiter leur [[adhésion|adhesion]].",
+   "explication": "Exemple : faire de la démagogie pour se faire élire.",
+   "diapo": 32
+  },
+  {
+   "type": "qcm",
+   "concept": "Démagogie",
+   "q": "Que désigne aujourd'hui le mot « sophisme »?",
+   "choix": [
+    "Un argument fallacieux et trompeur",
+    "Un raisonnement scientifique rigoureux",
+    "Une forme de poésie grecque",
+    "Un discours philosophique sincère"
+   ],
+   "reponse": 0,
+   "explication": "Sous son aspect négatif, l'art des sophistes vise à convaincre et triompher par la parole, même en trompant l'adversaire.",
+   "diapo": 35
+  },
+  {
+   "type": "qcm",
+   "concept": "Sophistes",
+   "q": "Pourquoi les sophistes rejettent-ils l'idée d'une vérité universelle?",
+   "choix": [
+    "Les philosophes de la nature se contredisaient : eau, apeiron, air, feu…",
+    "Socrate le leur avait enseigné",
+    "Les dieux l'avaient interdite",
+    "Les Perses avaient imposé cette idée"
+   ],
+   "reponse": 0,
+   "explication": "Thalès (eau), Anaximandre (apeiron), Anaximène (air), Héraclite (feu) : ces contradictions ont incité les sophistes à rejeter toute vérité universelle.",
+   "diapo": 35
+  },
+  {
+   "type": "qcm",
+   "concept": "Démagogie",
+   "q": "Dans le Gorgias de Platon, quel rhéteur défend une morale opposant les « forts » aux « faibles » et veut donner libre cours à ses passions?",
+   "choix": [
+    "Calliclès",
+    "Criton",
+    "Chéréphon",
+    "Hippias"
+   ],
+   "reponse": 0,
+   "explication": "Calliclès conteste les lois de la cité; Socrate le pousse à définir la rhétorique et à quoi elle sert.",
+   "diapo": 31
+  },
+  {
+   "type": "developpement",
+   "concept": "Démagogie",
+   "q": "En quelques phrases, explique ce qu'est un démagogue et en quoi il est à l'opposé du philosophe.",
+   "elements": [
+    {
+     "idee": "Le démagogue flatte les masses pour gagner leur adhésion",
+     "mots": [
+      "flatte",
+      "flatter",
+      "flatterie",
+      "plaire"
+     ],
+     "points": 2
+    },
+    {
+     "idee": "Il vise le pouvoir ou la victoire, pas la vérité",
+     "mots": [
+      "pouvoir",
+      "convaincre",
+      "triompher",
+      "gagner",
+      "victoire"
+     ],
+     "points": 2
+    },
+    {
+     "idee": "Le philosophe cherche la vérité",
+     "mots": [
+      "verite",
+      "vérité"
+     ],
+     "points": 2
+    },
+    {
+     "idee": "Le philosophe vise le savoir, l'éthique ou la vertu",
+     "mots": [
+      "savoir",
+      "ethique",
+      "éthique",
+      "vertu",
+      "bien"
+     ],
+     "points": 1
+    }
+   ],
+   "reponse_modele": "Le démagogue flatte les masses pour gagner et exploiter leur adhésion : il cherche à convaincre et à triompher, même en trompant, pour obtenir le pouvoir. Le philosophe, au contraire, ne vise pas le pouvoir mais le savoir et la vérité, non pas l'honneur mais l'éthique et la vertu.",
+   "explication": "Voir les diapos sur l'importance de la raison et sur la démagogie (exercice du Gorgias).",
+   "diapo": 20
+  }
+ ]
+}

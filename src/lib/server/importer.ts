@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { dedupKey, parseImport, type ImportLot } from '$lib/import-format';
 import { getSetting, setSetting, sql } from './db';
@@ -125,6 +125,35 @@ export async function seedIfEmpty() {
 		console.log(`[seed] ${s.added} questions importées depuis l'artefact.`);
 	}
 	await setSetting('seeded', true);
+}
+
+/**
+ * Importe une seule fois chaque fichier de questions livré avec l'app (data/imports/*.json),
+ * dans l'ordre des noms de fichier. Un fichier déjà importé n'est jamais relu, même si la question
+ * a été modifiée ou supprimée depuis dans l'app.
+ */
+export async function importBundledOnce(dir = join(process.cwd(), 'data/imports')) {
+	let files: string[];
+	try {
+		files = (await readdir(dir)).filter((f) => f.endsWith('.json')).sort();
+	} catch {
+		return;
+	}
+	const done = new Set((await sql<{ name: string }[]>`SELECT name FROM data_migration`).map((r) => r.name));
+	for (const file of files) {
+		const name = `import:${file}`;
+		if (done.has(name)) continue;
+		const { lots, error } = parseImport(await readFile(join(dir, file), 'utf8'));
+		if (error) {
+			console.error(`[import] ${file} ignoré : ${error}`);
+			continue;
+		}
+		for (const lot of lots)
+			for (const e of lot.errors) console.error(`[import] ${file}, question ${e.index + 1} ignorée : ${e.message}`);
+		const s = await importLots(lots);
+		await sql`INSERT INTO data_migration (name) VALUES (${name})`;
+		console.log(`[import] ${file} : ${s.added} ajoutées, ${s.updated} mises à jour.`);
+	}
 }
 
 export interface LegacyRestoreSummary {

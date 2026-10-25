@@ -1,0 +1,339 @@
+{
+ "format": "quiz-etude/v2",
+ "cours": {
+  "code": "hist",
+  "nom": "Histoire du monde"
+ },
+ "chapitre": {
+  "nom": "Japon d'Edo"
+ },
+ "questions": [
+  {
+   "type": "numerique",
+   "concept": "Dates",
+   "q": "En quelle année commence l'époque d'Edo, quand Tokugawa Ieyasu devient shogun?",
+   "reponse": 1603,
+   "tolerance": 0,
+   "explication": "1603 : l'empereur nomme Ieyasu shogun. L'époque d'Edo dure jusqu'en 1868.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "numerique",
+   "concept": "Dates",
+   "q": "En quelle année se termine l'époque d'Edo (restauration de Meiji)?",
+   "reponse": 1868,
+   "tolerance": 0,
+   "explication": "En 1868, le dernier shogun rend le pouvoir à l'empereur Meiji : c'est la restauration de Meiji.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Sekigahara",
+   "q": "Quelle bataille, en 1600, permet à Tokugawa Ieyasu de dominer le Japon?",
+   "choix": [
+    "Sekigahara",
+    "Nagashino",
+    "Shimabara",
+    "Kanagawa"
+   ],
+   "reponse": 0,
+   "explication": "À Sekigahara (1600), Ieyasu bat ses rivaux et met fin à plus d'un siècle de guerres entre seigneurs.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "courte",
+   "concept": "Shogun",
+   "q": "Quel titre porte le chef militaire qui détient le vrai pouvoir au Japon à l'époque d'Edo?",
+   "reponses": [
+    "shogun",
+    "shōgun",
+    "le shogun"
+   ],
+   "explication": "Le shogun gouverne au nom de l'empereur. Sous les Tokugawa, le titre est héréditaire dans la famille.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Empereur",
+   "q": "Quel est le rôle de l'empereur à l'époque d'Edo?",
+   "choix": [
+    "Un rôle surtout symbolique et religieux, à Kyoto",
+    "Il dirige l'armée depuis Edo",
+    "Il nomme les daimyos et lève les impôts",
+    "Il n'existe plus"
+   ],
+   "reponse": 0,
+   "explication": "L'empereur reste à Kyoto, respecté mais sans pouvoir réel. Le gouvernement (bakufu) est à Edo.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Edo",
+   "q": "Quelle ville actuelle correspond à Edo, la capitale des shoguns?",
+   "choix": [
+    "Tokyo",
+    "Kyoto",
+    "Osaka",
+    "Nagasaki"
+   ],
+   "reponse": 0,
+   "explication": "Edo devient l'une des plus grandes villes du monde au 18e siècle. Elle est renommée Tokyo (« capitale de l'Est ») en 1868.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "courte",
+   "concept": "Bakufu",
+   "q": "Comment appelle-t-on le gouvernement militaire du shogun?",
+   "reponses": [
+    "bakufu",
+    "shogunat",
+    "le shogunat",
+    "le bakufu"
+   ],
+   "explication": "Bakufu signifie « gouvernement de la tente » : un gouvernement de guerriers.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Daimyos",
+   "q": "Qui sont les daimyos?",
+   "choix": [
+    "Des seigneurs qui gouvernent un domaine et doivent obéir au shogun",
+    "Des marchands enrichis",
+    "Des moines bouddhistes",
+    "Des acteurs de kabuki"
+   ],
+   "reponse": 0,
+   "explication": "Il y a environ 260 daimyos. Chacun dirige son domaine avec ses samouraïs, mais sous le contrôle du shogun.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Sankin-kōtai",
+   "q": "Qu'impose le système du sankin-kōtai (résidence alternée) aux daimyos?",
+   "choix": [
+    "Vivre une année sur deux à Edo et y laisser leur femme et leurs enfants en permanence",
+    "Payer un impôt en riz chaque année",
+    "Se convertir au christianisme",
+    "Envoyer leurs fils étudier en Hollande"
+   ],
+   "reponse": 0,
+   "explication": "La famille restée à Edo sert d'otage : le daimyo ne peut pas se révolter sans la mettre en danger.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Sankin-kōtai",
+   "q": "Pourquoi le sankin-kōtai affaiblit-il les daimyos? (plusieurs réponses)",
+   "choix": [
+    "Les voyages et les deux résidences coûtent très cher",
+    "Leur famille sert d'otage à Edo",
+    "Ils passent la moitié du temps loin de leur domaine",
+    "Ils doivent céder leurs terres à l'empereur",
+    "Ils perdent leur titre de noblesse"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Ruinés, surveillés et éloignés de leurs terres, les daimyos n'ont plus les moyens de défier le shogun. On peut comparer avec la noblesse de Louis XIV à Versailles.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "ordre",
+   "concept": "Société",
+   "q": "Classe les groupes sociaux du plus prestigieux au moins prestigieux selon l'ordre officiel d'Edo.",
+   "elements": [
+    "Samouraïs",
+    "Paysans",
+    "Artisans",
+    "Marchands"
+   ],
+   "explication": "Inspiré du confucianisme : les paysans produisent la nourriture, donc ils passent avant les artisans et les marchands, jugés moins utiles même si certains marchands deviennent très riches.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "vrai_faux",
+   "concept": "Société",
+   "q": "À l'époque d'Edo, les marchands sont au bas de la hiérarchie officielle, mais beaucoup deviennent riches.",
+   "reponse": true,
+   "explication": "Vrai : avec la paix et la croissance des villes, les marchands s'enrichissent et financent la culture urbaine, même si leur rang reste bas.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Samouraïs",
+   "q": "Que deviennent beaucoup de samouraïs pendant la longue paix d'Edo?",
+   "choix": [
+    "Des administrateurs et fonctionnaires au service de leur seigneur",
+    "Des marchands",
+    "Des paysans",
+    "Des missionnaires"
+   ],
+   "reponse": 0,
+   "explication": "Sans guerre à faire, les samouraïs gardent leur rang et leurs deux sabres, mais travaillent surtout dans l'administration.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "courte",
+   "concept": "Sakoku",
+   "q": "Comment s'appelle la politique de fermeture du Japon aux étrangers à l'époque d'Edo?",
+   "reponses": [
+    "sakoku",
+    "le sakoku"
+   ],
+   "explication": "Sakoku signifie « pays enchaîné » ou « pays fermé ». Elle se met en place dans les années 1630.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Sakoku",
+   "q": "Quels étrangers peuvent encore commercer avec le Japon pendant le sakoku?",
+   "choix": [
+    "Les Hollandais (sur l'île de Dejima) et les Chinois, à Nagasaki",
+    "Les Portugais et les Espagnols",
+    "Les Anglais et les Français",
+    "Aucun étranger"
+   ],
+   "reponse": 0,
+   "explication": "Les Hollandais sont acceptés parce qu'ils viennent pour le commerce, pas pour convertir. Ils sont confinés sur l'îlot artificiel de Dejima.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm_multi",
+   "concept": "Sakoku",
+   "q": "Quelles mesures font partie du sakoku? (plusieurs réponses)",
+   "choix": [
+    "Interdiction du christianisme",
+    "Expulsion des Portugais",
+    "Interdiction aux Japonais de quitter le pays",
+    "Obligation d'apprendre le néerlandais",
+    "Fermeture de tous les ports au commerce"
+   ],
+   "reponses": [
+    0,
+    1,
+    2
+   ],
+   "explication": "Le commerce continue, mais très contrôlé, à Nagasaki seulement. Les shoguns craignent que les missionnaires préparent une conquête.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Pax Tokugawa",
+   "q": "Qu'appelle-t-on la « Pax Tokugawa »?",
+   "choix": [
+    "Environ 250 ans de paix intérieure sous les shoguns Tokugawa",
+    "Un traité de paix avec la Chine",
+    "Le traité signé avec les États-Unis",
+    "Une loi qui interdit les sabres"
+   ],
+   "reponse": 0,
+   "explication": "Après des siècles de guerres, le Japon connaît une très longue période de paix, de stabilité et de croissance des villes.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "association",
+   "concept": "Culture d'Edo",
+   "q": "Associe chaque élément culturel à sa description.",
+   "paires": [
+    [
+     "Ukiyo-e",
+     "Estampes du « monde flottant »"
+    ],
+    [
+     "Kabuki",
+     "Théâtre populaire spectaculaire"
+    ],
+    [
+     "Hokusai",
+     "Artiste de La Grande Vague de Kanagawa"
+    ],
+    [
+     "Bashō",
+     "Grand poète du haïku"
+    ]
+   ],
+   "explication": "Cette culture urbaine est financée en bonne partie par les marchands enrichis.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "qcm",
+   "concept": "Fin d'Edo",
+   "q": "Qui arrive au Japon en 1853 avec ses « navires noirs » et exige l'ouverture du pays?",
+   "choix": [
+    "Le commodore américain Matthew Perry",
+    "Un amiral hollandais",
+    "Un missionnaire portugais",
+    "L'empereur de Chine"
+   ],
+   "reponse": 0,
+   "explication": "Impressionné par la puissance des canons américains, le shogun accepte en 1854 le traité de Kanagawa, qui ouvre des ports. Son autorité en sort très affaiblie.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "ordre",
+   "concept": "Chronologie",
+   "q": "Mets ces événements dans l'ordre chronologique.",
+   "elements": [
+    "Bataille de Sekigahara",
+    "Ieyasu devient shogun",
+    "Fermeture du pays (sakoku)",
+    "Arrivée de Perry",
+    "Restauration de Meiji"
+   ],
+   "explication": "1600, 1603, années 1630, 1853, 1868.",
+   "tags": [
+    "hors document"
+   ]
+  },
+  {
+   "type": "trous",
+   "concept": "Résumé",
+   "texte": "De [[1603]] à 1868, le Japon est dirigé par les shoguns de la famille [[Tokugawa]], installés à [[Edo|Tokyo]], tandis que l'empereur reste à Kyoto.",
+   "explication": "C'est pour cette ville que la période porte le nom d'Edo.",
+   "tags": [
+    "hors document"
+   ]
+  }
+ ]
+}
